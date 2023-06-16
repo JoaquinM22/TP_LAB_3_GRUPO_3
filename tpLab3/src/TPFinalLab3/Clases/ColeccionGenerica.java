@@ -51,11 +51,6 @@ public class ColeccionGenerica <T> implements Serializable, Iterable<T>
 
     public void listar()
     {
-//        for(int i = 0; i < listaGenerica.size(); i++)
-//        {
-//            System.out.println(listaGenerica.get(i).toString());
-//        }
-
         for(T t : listaGenerica)
         {
             System.out.println(t.toString());

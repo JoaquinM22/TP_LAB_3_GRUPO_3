@@ -7,10 +7,14 @@ public class Recepcionista extends Persona implements Serializable
     /** SERIAL VERSION UID **/
     private static final long serialVersionUID = -739450841937426159L;
 
+
+
     /** ATRIBUTOS **/
     private String password;
     private double sueldo;
     private static Scanner teclado = new Scanner(System.in);
+
+
 
     /** CONSTRUCTOR **/
     public Recepcionista(String nombre, String direccion, int dni, String password, double sueldo)
@@ -29,6 +33,7 @@ public class Recepcionista extends Persona implements Serializable
     {
         this.sueldo = sueldo;
     }
+
 
     /** GETTERS **/
     public String getPassword()
@@ -114,7 +119,7 @@ public class Recepcionista extends Persona implements Serializable
 
     public void verHabitaciones(Hotel datos) /** MIRA TODAS LAS HABITACIONES JUNTO A SUS ESTADOS **/
     {
-
+        datos.mostrarHabitaciones();
     }
 
 }

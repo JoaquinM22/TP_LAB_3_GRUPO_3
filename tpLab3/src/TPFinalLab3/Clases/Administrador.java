@@ -6,9 +6,13 @@ public class Administrador extends Persona implements Serializable
     /** SERIAL VERSION UID **/
     private static final long serialVersionUID = 352942585576717560L;
 
+
+
     /** ATRIBUTOS **/
     private String password;
     private double sueldo;
+
+
 
     /** CONSTRUCTOR **/
     public Administrador(String nombre, String direccion, int dni, String password, double sueldo)
