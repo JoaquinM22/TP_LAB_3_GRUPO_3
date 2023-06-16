@@ -36,8 +36,27 @@ public class Hotel implements Serializable
     public void setListaRegistro(ColeccionGenerica<Registro> listaRegistro) {this.listaRegistro = listaRegistro;}
 
     /** METODOS **/
+    public void agregarCliente(Cliente cliente){
+        listaClientes.agregar(cliente);
+    }
+
+    public void agregarEmpleado(Empleado empleado){
+        listaEmpleados.agregar(empleado);
+    }
+
+    public void agregarHabitacion(Habitacion habitacion){
+        listaHabitaciones.agregar(habitacion);
+    }
+
+    public void agregarRegistro(Registro registro){
+        listaRegistro.agregar(registro);
+    }
     public void mostrarEmpleados(){listaEmpleados.listar();}
+
     public void mostrarClientes(){listaClientes.listar();}
+
     public void mostrarHabitaciones(){listaHabitaciones.listar();}
+
     public void mostrarRegistro(){listaRegistro.listar();}
+
 }
