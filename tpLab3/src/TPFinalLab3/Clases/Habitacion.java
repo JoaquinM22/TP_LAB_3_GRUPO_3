@@ -8,9 +8,32 @@ public class Habitacion implements Serializable
 
     /** ATRIBUTOS **/
     private int id;
-    //enum estado;
     private Cliente ocupante;
     private double precio;
+    private Estado estado;
+
+    public enum Estado
+    {
+        /** ATRIBUTOS **/
+        OCUPADO("O"),
+        DISPONIBLE("D"),
+        RESERVADO("R"),
+        MANTENIMIENTO("M");
+
+        private String abreviatura;
+
+        /** CONSTRUCTOR **/
+        Estado(String abreviatura)
+        {
+            this.abreviatura = abreviatura;
+        }
+
+        /** GETTER **/
+        public String getAbreviatura()
+        {
+            return abreviatura;
+        }
+    }
 
     /** CONSTRUCTOR **/
     public Habitacion(int id, Cliente ocupante, double precio)
@@ -18,6 +41,7 @@ public class Habitacion implements Serializable
         this.id = id;
         this.ocupante = ocupante;
         this.precio = precio;
+        this.estado = Estado.DISPONIBLE;
     }
 
     /** SETTERS **/
@@ -37,7 +61,6 @@ public class Habitacion implements Serializable
 
 
     /** GETTERS **/
-    public Estado getEstado() {return estado;}
     public int getId()
     {
         return id;
@@ -49,6 +72,10 @@ public class Habitacion implements Serializable
     public double getPrecio()
     {
         return precio;
+    }
+    public Estado getEstado()
+    {
+        return estado;
     }
 
     /** METODOS **/
