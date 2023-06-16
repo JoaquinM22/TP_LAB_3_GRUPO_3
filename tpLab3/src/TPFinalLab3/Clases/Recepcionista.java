@@ -1,5 +1,6 @@
 package TPFinalLab3.Clases;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Scanner;
 
 public class Recepcionista extends Persona implements Serializable
@@ -87,16 +88,86 @@ public class Recepcionista extends Persona implements Serializable
 
             System.out.println("\nIngrese el saldo de su cuenta: ");
             aux.setSaldo(teclado.nextInt());
+
+            datos.listaClientes.agregar(aux);
         }
 
         return aux;
     }
+
+    public void mostrarHabitacionesDisponibles(ColeccionGenerica<Habitacion> listaHabitaciones)
+    {
+        for(int i = 0;  i < listaHabitaciones.tamanio(); i++)
+        {
+            if(listaHabitaciones.obtener(i).getEstado() == Habitacion.Estado.DISPONIBLE)
+            {
+                listaHabitaciones.obtener(i).toString();
+            }
+        }
+    }
+
+    private int buscarHabitacion(int id, ColeccionGenerica<Habitacion> listaHabitaciones)
+    {
+        int i = 0;
+        int pos = -1;
+        while(i < listaHabitaciones.tamanio() && id != listaHabitaciones.obtener(i).getId())
+        {
+            i++;
+        }
+        if(id == listaHabitaciones.obtener(i).getId())
+        {
+            pos = i;
+        }
+
+        return pos;
+    }
+
+    private boolean consultarSaldo(Cliente aux, double precio) 
+    {
+        boolean resultado = false;
+        char resp;
+        do 
+        {
+            System.out.println("Usted no tiene el saldo suficiente para pagar la habitacion");
+            System.out.println("Precio habitacion" + precio);
+            System.out.println("Quiere cargar mas saldo? (S/N)");
+            resp = teclado.nextLine().charAt(0); 
+            if(resp == 'S')
+            {
+                System.out.println("Ingrse la cantidad a cargar: ");
+                aux.setSaldo(teclado.nextInt());
+            }
+        }while(resp != 'N' && aux.getSaldo() < precio);
+        if(aux.getSaldo() >= precio)
+        {
+            resultado = true;
+        }
+        return resultado;
+    }
+
     public void checkIn(Hotel datos) /** Llama a "agregarCliente()" **/
     {
         Cliente aux = agregarCliente(datos);
-
-
+        mostrarHabitacionesDisponibles(datos.listaHabitaciones);
+        System.out.println("Ingrese el id de la habitacion que desea: ");
+        int pos = buscarHabitacion(teclado.nextInt(), datos.listaHabitaciones);
+        if(pos == -1)
+        {
+            System.out.println("El id ingresado no le corresponde a ninguna habitacion");
+        }
+        else
+        {
+            boolean resp = consultarSaldo(aux, datos.listaHabitaciones.obtener(pos).getPrecio());
+            if(resp == true)
+            {
+                aux.setSaldo(aux.getSaldo() - datos.listaHabitaciones.obtener(pos).getPrecio());
+                datos.listaHabitaciones.obtener(pos).setEstado(Habitacion.Estado.OCUPADO);
+                /** FALTA METODO PARA CARGAR REGISTRO **/ 
+            }
+        }
+        
     }
+    
 
     public void checkOut()
     {
