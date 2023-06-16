@@ -1,5 +1,6 @@
 package TPFinalLab3.Clases;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Scanner;
 
@@ -221,26 +222,29 @@ public class Recepcionista extends Persona implements Serializable
 
 
 
-//    private void señarHabitacion(Cliente aux, double precio)
-//    {
-//        if(aux.getSaldo() < precio)
-//        {
-//            //char resp;
-//            do
-//            {
-//                System.out.println("Usted no tiene el saldo suficiente para pagar la habitacion. Cargue saldo a su cuenta a continuacion: ");
-//                System.out.println("Precio habitacion: $" + precio);
-//                System.out.println("Ingrese la cantidad a cargar: ");
-//                aux.setSaldo(aux.getSaldo() + teclado.nextInt());
-//            }while(aux.getSaldo() < precio);
-//        }
-//
-//        //return resultado;
-//    }
-//
+    private void señarHabitacion(Cliente aux, double precio)
+    {
+        double nuevoPrecio = precio*0.20;
+        if(aux.getSaldo() < nuevoPrecio)
+        {
+            //char resp;
+            do
+            {
+                System.out.println("Usted no tiene el saldo suficiente para pagar la habitacion. Cargue saldo a su cuenta a continuacion: ");
+                System.out.println("Precio senia: $" + nuevoPrecio);
+                System.out.println("Ingrese la cantidad a cargar: ");
+                aux.setSaldo(aux.getSaldo() + teclado.nextInt());
+            }while(aux.getSaldo() < nuevoPrecio);
+        }
+    }
+
     public void hacerReserva(Hotel unHotel)
     {
+        Cliente aux = agregarCliente(unHotel);
+
         System.out.println("Que habitacion desea reservar?");
+        System.out.println("Para la reserva debe abonar el 20% del total del precio, y el resto al momento del CheckIn");
+        System.out.println("Si cancela la reserva se le devolvera el dinero");
         mostrarHabitacionesDisponibles(unHotel.listaHabitaciones);
         Habitacion existeHab;
         do
@@ -254,11 +258,28 @@ public class Recepcionista extends Persona implements Serializable
 
         }while(existeHab == null);
 
+        System.out.println("Cuantos dias va a hospedarse? ");
+        int cantDias = teclado.nextInt();
 
+        System.out.println("Ingrese fecha de ingreso: ");
+        System.out.print("\nDia: ");
+        int diaIngreso = teclado.nextInt();
+        System.out.print("\nMes: ");
+        int mesIngreso = teclado.nextInt();
+        System.out.print("\nAnio: ");
+        int anioIngreso = teclado.nextInt();
+        LocalDate inicioReserva = LocalDate.of(diaIngreso, mesIngreso, anioIngreso);
 
+        señarHabitacion(aux, (existeHab.getPrecio()*cantDias));
 
+        double senia = existeHab.getPrecio()*0.20;
+        aux.setSaldo(aux.getSaldo() - senia);
+        existeHab.setEstado(Habitacion.Estado.RESERVADO);
+        existeHab.setFechaInicioReserva(inicioReserva);
+        //existeHab.setFechaFinReserva(finReserva);
 
-
+        System.out.println(".... La Reserva se realizo exitosamene! ....");
+        /** FALTA METODO PARA CARGAR REGISTRO **/
     }
     public void cancelarReserva()
     {

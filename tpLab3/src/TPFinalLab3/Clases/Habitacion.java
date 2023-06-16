@@ -1,5 +1,6 @@
 package TPFinalLab3.Clases;
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class Habitacion implements Serializable
 {
@@ -11,6 +12,8 @@ public class Habitacion implements Serializable
     private Cliente ocupante;
     private double precio;
     private Estado estado;
+    private LocalDate fechaInicioReserva = null;
+    private LocalDate fechaFinReserva = null;
 
     public enum Estado
     {
@@ -58,7 +61,14 @@ public class Habitacion implements Serializable
         this.precio = precio;
     }
     public void setEstado(Estado estado) {this.estado = estado;}
-
+    public void setFechaInicioReserva(LocalDate fechaInicioReserva)
+    {
+        this.fechaInicioReserva = fechaInicioReserva;
+    }
+    public void setFechaFinReserva(LocalDate fechaFinReserva)
+    {
+        this.fechaFinReserva = fechaFinReserva;
+    }
 
     /** GETTERS **/
     public int getId()
@@ -76,6 +86,14 @@ public class Habitacion implements Serializable
     public Estado getEstado()
     {
         return estado;
+    }
+    public LocalDate getFechaInicioReserva()
+    {
+        return fechaInicioReserva;
+    }
+    public LocalDate getFechaFinReserva()
+    {
+        return fechaFinReserva;
     }
 
     /** METODOS **/
