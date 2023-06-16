@@ -188,8 +188,10 @@ public class Recepcionista extends Persona implements Serializable
 //        }
         aux.setSaldo(aux.getSaldo() - existeHab.getPrecio());
         existeHab.setEstado(Habitacion.Estado.OCUPADO);
-        System.out.println(".... El CheckIn se realizo exitosamene! ....");
         /** FALTA METODO PARA CARGAR REGISTRO **/
+        /** FALTA CARGAR HABITACION ELEGIDA EN LISTAOCUPADAS DE CLIENTE **/
+        System.out.println(".... El CheckIn se realizo exitosamene! ....");
+
         
     }
     
