@@ -33,8 +33,11 @@ public class Habitacion implements Serializable
     {
         this.precio = precio;
     }
+    public void setEstado(Estado estado) {this.estado = estado;}
+
 
     /** GETTERS **/
+    public Estado getEstado() {return estado;}
     public int getId()
     {
         return id;
