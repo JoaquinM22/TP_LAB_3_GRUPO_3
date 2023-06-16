@@ -8,7 +8,6 @@ public class Habitacion implements Serializable
 
     /** ATRIBUTOS **/
     private int id;
-
     //enum estado;
     private Cliente ocupante;
     private double precio;
@@ -61,5 +60,4 @@ public class Habitacion implements Serializable
                 ocupante.toString() +
                 "\n------------------------";
     }
-
 }

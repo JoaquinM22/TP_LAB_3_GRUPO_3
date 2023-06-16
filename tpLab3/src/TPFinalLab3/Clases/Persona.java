@@ -12,6 +12,10 @@ public abstract class Persona implements Serializable
     private int dni;
 
     /** CONSTRUCTOR **/
+    public Persona()
+    {
+
+    }
     public Persona(String nombre, String direccion, int dni)
     {
         this.nombre = nombre;
