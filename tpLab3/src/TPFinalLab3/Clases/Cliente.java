@@ -10,6 +10,10 @@ public class Cliente extends Persona implements Serializable
     private int saldo;
 
     /** CONSTRUCTOR **/
+    public Cliente()
+    {
+        super();
+    }
     public Cliente(String nombre, String direccion, int dni, int saldo)
     {
         super(nombre, direccion, dni);
@@ -39,10 +43,6 @@ public class Cliente extends Persona implements Serializable
                 "\nDomicilio: " + super.getDireccion() +
                 "\nDNI: " + super.getDni() +
                 "\n--------------------";
-    }
-    public void reservarHabitacion()
-    {
-
     }
     public void realizarConsumo()
     {

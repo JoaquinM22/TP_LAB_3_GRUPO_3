@@ -2,7 +2,7 @@ package TPFinalLab3.Clases;
 import java.io.Serializable;
 import java.util.*;
 
-public class ColeccionGenerica <T> implements Serializable
+public class ColeccionGenerica <T> implements Serializable, Iterable<T>
 {
     /** SERIAL VERSION UID **/
     private static final long serialVersionUID = -502083389422603888L;
@@ -60,5 +60,11 @@ public class ColeccionGenerica <T> implements Serializable
         {
             System.out.println(t.toString());
         }
+    }
+
+
+    @Override
+    public Iterator<T> iterator() {
+        return listaGenerica.iterator();
     }
 }

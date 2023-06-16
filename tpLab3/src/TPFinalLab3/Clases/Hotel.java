@@ -7,7 +7,7 @@ public class Hotel implements Serializable
     private static final long serialVersionUID = 2885413278418867930L;
 
     /** ATRIBUTOS **/
-    String nombre_hotel;
+    String nombreHotel;
     ColeccionGenerica<Habitacion> listaHabitaciones = new ColeccionGenerica<>();
     ColeccionGenerica<Cliente> listaClientes = new ColeccionGenerica<>();
     ColeccionGenerica<Persona> listaEmpleados = new ColeccionGenerica<>();

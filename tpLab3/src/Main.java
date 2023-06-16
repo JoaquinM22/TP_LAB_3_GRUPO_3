@@ -22,7 +22,7 @@ public class Main
         {
             System.out.println("\n                    Bienvenido al hotel (Placeholder)!!");
             System.out.println("\n¿Como desea ingresar al sistema?");
-            System.out.println("\n1- Administrador          2- Personal          3- Cliente");
+            System.out.println("\n1- Administrador          2- Recepcionistas          3- Cliente");
             System.out.println("\n\n\n");
             System.out.println("\n0- Salir");
 
@@ -48,10 +48,10 @@ public class Main
              */
 
 
-            if(seleccion != 0)
+            if(seleccion <= 3 && seleccion > 0)
             {
                 menus_especificos(teclado, seleccion);
-            }else
+            }else if(seleccion == 0)
             {
                 System.out.println("\nSeguro que desea salir? s/n");
                 confirmacion = teclado.next().charAt(0);
@@ -60,6 +60,9 @@ public class Main
                 {
                     seleccion = -1;
                 }
+            }else
+            {
+                System.out.println("\nLa opcion ingresada es invalida.");
             }
 
 
@@ -107,9 +110,12 @@ public class Main
                 case 4 -> System.out.println("\nSe ejecuta la opcion 4");
                 case 5, 6 ->
                 {
-                    if(ref != 1 || ref != 2)
+                    if(ref != 1 && ref != 2)
                     {
                         System.out.println("\nNo tiene permiso para realizar esta accion.");
+                    }else
+                    {
+                        System.out.println("\nSe ejecuta la opcion 5 o 6");
                     }
                 }
                 case 7 ->
@@ -117,6 +123,9 @@ public class Main
                     if(ref != 1)
                     {
                         System.out.println("\nNo tiene permiso para realizar esta accion.");
+                    }else
+                    {
+                        System.out.println("\nSe ejecuta la opcion 7");
                     }
                 }
                 case 0 -> System.out.println("\nVolviendo al inicio...");

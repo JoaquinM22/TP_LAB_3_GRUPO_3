@@ -1,5 +1,6 @@
 package TPFinalLab3.Clases;
 import java.io.Serializable;
+import java.util.Scanner;
 
 public class Recepcionista extends Persona implements Serializable
 {
@@ -9,6 +10,7 @@ public class Recepcionista extends Persona implements Serializable
     /** ATRIBUTOS **/
     private String password;
     private double sueldo;
+    private static Scanner teclado = new Scanner(System.in);
 
     /** CONSTRUCTOR **/
     public Recepcionista(String nombre, String direccion, int dni, String password, double sueldo)
@@ -52,16 +54,47 @@ public class Recepcionista extends Persona implements Serializable
                 "\n--------------------";
     }
 
-    public Cliente existeCliente(Cliente dato) /** Si no existe lanzar excepcion **/
+    public Cliente existeCliente(int dato, Hotel datos) /** Si no existe lanzar excepcion **/
     {
-        return null;
+        Cliente encontrado = null;
+        for(Cliente aux: datos.listaClientes)
+        {
+            if(dato == aux.getDni())
+            {
+                encontrado = aux;
+            }
+        }
+        return encontrado;
     }
-    public void agregarCliente()
+    public Cliente agregarCliente(Hotel datos)
     {
+        Cliente aux = new Cliente();
 
+        System.out.println("\nPor favor ingrese su DNI: ");
+        int dni = teclado.nextInt();
+
+        aux = existeCliente(dni, datos);
+
+        if(aux == null)
+        {
+            aux.setDni(dni);
+
+            System.out.println("\nPor favor ingrese su nombre: ");
+            aux.setNombre(teclado.next());
+
+            System.out.println("\nIngrese su direccion: ");
+            aux.setDireccion(teclado.next());
+
+            System.out.println("\nIngrese el saldo de su cuenta: ");
+            aux.setSaldo(teclado.nextInt());
+        }
+
+        return aux;
     }
-    public void checkIn() /** Llama a "agregarCliente()" **/
+    public void checkIn(Hotel datos) /** Llama a "agregarCliente()" **/
     {
+        Cliente aux = agregarCliente(datos);
+
 
     }
 
@@ -79,7 +112,7 @@ public class Recepcionista extends Persona implements Serializable
 
     }
 
-    public void verHabitaciones() /** MIRA TODAS LAS HABITACIONES JUNTO A SUS ESTADOS **/
+    public void verHabitaciones(Hotel datos) /** MIRA TODAS LAS HABITACIONES JUNTO A SUS ESTADOS **/
     {
 
     }
