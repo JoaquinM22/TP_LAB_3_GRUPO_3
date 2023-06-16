@@ -4,7 +4,8 @@ public class Main
 {
     public static void main(String[] args)
     {
-        menu();
+        System.out.println("Hola Mundo!");
+        //menu();
     }
 
 
