@@ -103,8 +103,20 @@ public class Recepcionista extends Persona implements Serializable
 
     }
 
-    public void hacerReserva()
+//    public void verHabitacionesPorEstado(ColeccionGenerica<Habitacion> lista, String estado)
+//    {
+//        for(Habitacion aux : lista)
+//        {
+//            if(lista.get)
+//            {
+//
+//            }
+//        }
+//    }
+    public void hacerReserva(Hotel unHotel)
     {
+        System.out.println("Que habitacion desea reservar?");
+
 
     }
     public void cancelarReserva()

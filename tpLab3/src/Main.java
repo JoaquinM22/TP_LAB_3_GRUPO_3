@@ -4,7 +4,19 @@ public class Main
 {
     public static void main(String[] args)
     {
-        System.out.println("Hola Mundo!");
+        /*
+        //System.out.print("Hola Mundo!");
+        //System.out.print("... Pules enter para continuar ...");
+//        System.out.print("\r");
+//        //System.out.;
+//        for(int i=0; i<20; i++)
+//        {
+//            System.out.print(" ");
+//        }
+//        System.out.print("\r");
+        //System.out.print("Hola de nuevo, esto es BOCA");
+        */
+
         //menu();
     }
 
