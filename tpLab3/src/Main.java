@@ -9,7 +9,7 @@ public class Main
 
 
 
-    ///Funciones aparte del main
+    /** Funciones aparte del main **/
     private static void menu()
     {
         Scanner teclado = new Scanner(System.in);
@@ -64,7 +64,7 @@ public class Main
 
 
         }while(seleccion != 0);
-
+        teclado.close();
     }
 
     private static void menus_especificos(Scanner teclado, int ref)

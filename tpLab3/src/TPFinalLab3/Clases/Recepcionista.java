@@ -1,17 +1,17 @@
 package TPFinalLab3.Clases;
-import java.io.*;
+import java.io.Serializable;
 
-public class Administrador extends Persona implements Serializable
+public class Recepcionista extends Persona implements Serializable
 {
     /** SERIAL VERSION UID **/
-    private static final long serialVersionUID = 352942585576717560L;
+    private static final long serialVersionUID = -739450841937426159L;
 
     /** ATRIBUTOS **/
     private String password;
     private double sueldo;
 
     /** CONSTRUCTOR **/
-    public Administrador(String nombre, String direccion, int dni, String password, double sueldo)
+    public Recepcionista(String nombre, String direccion, int dni, String password, double sueldo)
     {
         super(nombre, direccion, dni);
         this.password = password;
@@ -43,7 +43,7 @@ public class Administrador extends Persona implements Serializable
     public String toString()
     {
         return  "\n--------------------" +
-                "\nDATOS ADMINISTRADOR" +
+                "\nDATOS RECEPCIONISTA" +
                 "\n--------------------" +
                 "\nNombre: " + super.getNombre() +
                 "\nDomicilio: " + super.getDireccion() +
@@ -51,29 +51,37 @@ public class Administrador extends Persona implements Serializable
                 "\nSueldo: $" + sueldo +
                 "\n--------------------";
     }
-    public void hacerBackUp(String dato) /** DESPUES HAY QUE CAMBIAR "STRING" POR LA CLASE "HOTEL" **/
+
+    public Cliente existeCliente(Cliente dato) /** Si no existe lanzar excepcion **/
     {
-        try
-        {
-            FileOutputStream fOutput = new FileOutputStream(new File("mi_archivo.txt"));
-            ObjectOutputStream objOutput = new ObjectOutputStream(fOutput);
-            System.out.println("Guardando Archivo...");
-            objOutput.writeObject(dato);
-            objOutput.close();
-            System.out.println(".... El Archivo se guardo correctamente ....");
-        }catch(IOException e)
-        {
-            System.out.println("Error al escribir en el Archivo");
-            e.getMessage();
-            e.printStackTrace();
-        }
+        return null;
     }
-    public void concederPermisos()
+    public void agregarCliente()
     {
 
     }
-    public void agregarRecepcionista()
+    public void checkIn() /** Llama a "agregarCliente()" **/
     {
 
     }
+
+    public void checkOut()
+    {
+
+    }
+
+    public void hacerReserva()
+    {
+
+    }
+    public void cancelarReserva()
+    {
+
+    }
+
+    public void verHabitaciones() /** MIRA TODAS LAS HABITACIONES JUNTO A SUS ESTADOS **/
+    {
+
+    }
+
 }
