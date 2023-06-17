@@ -1,21 +1,37 @@
+import TPFinalLab3.Clases.Administrador;
+import TPFinalLab3.Clases.Habitacion;
+import TPFinalLab3.Clases.Hotel;
+import TPFinalLab3.Clases.Recepcionista;
+
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Main
 {
     public static void main(String[] args)
     {
-        /*
-        //System.out.print("Hola Mundo!");
-        //System.out.print("... Pules enter para continuar ...");
-//        System.out.print("\r");
-//        //System.out.;
-//        for(int i=0; i<20; i++)
-//        {
-//            System.out.print(" ");
-//        }
-//        System.out.print("\r");
-        //System.out.print("Hola de nuevo, esto es BOCA");
-        */
+        Habitacion unaHab1 = new Habitacion(1, 5000);
+        Habitacion unaHab2 = new Habitacion(2, 8000);
+        Habitacion unaHab3 = new Habitacion(3, 3000);
+
+        Recepcionista unRecepcionista = new Recepcionista("Pepe", "Luro 1212", 12345, "boca", 1200);
+        Administrador unAdministrador = new Administrador("Mario", "Colon 3434", 4567, "river", 5000);
+
+
+        Hotel unHotel = new Hotel("CostaGalana");
+        unHotel.agregarEmpleado(unRecepcionista);
+        unHotel.agregarEmpleado(unAdministrador);
+
+        unHotel.agregarHabitacion(unaHab1);
+        unHotel.agregarHabitacion(unaHab2);
+        unHotel.agregarHabitacion(unaHab3);
+        unHotel.datosHotel();
+
+//        unRecepcionista.hacerReserva(unHotel);
+//        unRecepcionista.cancelarReserva(unHotel);
+        unRecepcionista.checkIn(unHotel);
+        System.out.println("Lista Habitaciones");
+        unHotel.mostrarHabitaciones();
 
         //menu();
     }

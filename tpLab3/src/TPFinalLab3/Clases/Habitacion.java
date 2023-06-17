@@ -1,6 +1,7 @@
 package TPFinalLab3.Clases;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class Habitacion implements Serializable
 {
@@ -39,10 +40,10 @@ public class Habitacion implements Serializable
     }
 
     /** CONSTRUCTOR **/
-    public Habitacion(int id, Cliente ocupante, double precio)
+    public Habitacion(int id, double precio)
     {
         this.id = id;
-        this.ocupante = ocupante;
+        this.ocupante = null;
         this.precio = precio;
         this.estado = Estado.DISPONIBLE;
     }
@@ -104,8 +105,39 @@ public class Habitacion implements Serializable
                 "\nDATOS HABITACION" +
                 "\n--------------------" +
                 "\nNro Habitacion: " + id +
-                "\nPrecio: $" + precio +
-                ocupante.toString() +
+                "\nPrecio: $" + precio + " /dia" +
+                "\nEstado: " + estado +
                 "\n------------------------";
+    }
+    public void datosReserva()
+    {
+        System.out.println("----------------------");
+        System.out.println("DATOS RESERVA");
+        System.out.println("----------------------");
+        System.out.println("Num Habitacion: " + id);
+        int cantDias = (int) ChronoUnit.DAYS.between(this.getFechaFinReserva(), this.getFechaInicioReserva());
+        cantDias = cantDias * (-1);
+        double nuevoPrecio = cantDias*precio;
+        System.out.println("Precio: " + nuevoPrecio);
+        System.out.println(this.getOcupante().toString());
+        System.out.println("Fecha inicio Reserva: " + fechaInicioReserva);
+        System.out.println("Fecha Fin Reserva: " + fechaFinReserva);
+        System.out.println("Total de Dias: " + cantDias);
+        System.out.println("Estado: " + estado.getAbreviatura());
+        System.out.println("----------------------");
+    }
+    public void datosHabitacion()
+    {
+        System.out.println("----------------------");
+        System.out.println("DATOS HABITACION");
+        System.out.println("----------------------");
+        System.out.println("Num Habitacion: " + id);
+        if(this.ocupante != null)
+        {
+            System.out.println(this.ocupante.toString());
+        }
+        System.out.println("Precio: " + precio);
+        System.out.println("Estado: " + estado.getAbreviatura());
+        System.out.println("----------------------");
     }
 }

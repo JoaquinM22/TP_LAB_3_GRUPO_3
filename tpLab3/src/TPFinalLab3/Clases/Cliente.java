@@ -42,6 +42,7 @@ public class Cliente extends Persona implements Serializable
                 "\nNombre: " + super.getNombre() +
                 "\nDomicilio: " + super.getDireccion() +
                 "\nDNI: " + super.getDni() +
+                "\nSaldo: " + saldo +
                 "\n--------------------";
     }
     public void realizarConsumo()
