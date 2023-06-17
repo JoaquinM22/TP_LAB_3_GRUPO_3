@@ -8,35 +8,37 @@ public class Registro implements Serializable
 {
     private static final long serialVersionUID = -6232542664770078482L;
 
-    LocalDateTime fechaEntrada;
-    LocalDateTime fechaSalida;
-    Habitacion ocupada;
-    double precioPagado;
+    private LocalDate fechaEntrada;
+    private LocalDate fechaSalida;
+    private Habitacion ocupada;
+    private Cliente ocupante;
+    private double precioPagado;
 
     public Registro()
     {
 
     }
-    public Registro(LocalDateTime fechaEntrada, Habitacion ocupada, double precioPagado) {
+    public Registro(LocalDate fechaEntrada, LocalDate fechaSalida, Habitacion ocupada, Cliente ocupante, double precioPagado) {
         this.fechaEntrada = fechaEntrada;
-        //this.fechaSalida = fechaSalida;
+        this.fechaSalida = fechaSalida;
         this.ocupada = ocupada;
+        this.ocupante = ocupante;
         this.precioPagado = precioPagado;
     }
 
-    public LocalDateTime getFechaEntrada() {
+    public LocalDate getFechaEntrada() {
         return fechaEntrada;
     }
 
-    public void setFechaEntrada(LocalDateTime fechaEntrada) {
+    public void setFechaEntrada(LocalDate fechaEntrada) {
         this.fechaEntrada = fechaEntrada;
     }
 
-    public LocalDateTime getFechaSalida() {
+    public LocalDate getFechaSalida() {
         return fechaSalida;
     }
 
-    public void setFechaSalida(LocalDateTime fechaSalida) {
+    public void setFechaSalida(LocalDate fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
 
@@ -48,6 +50,14 @@ public class Registro implements Serializable
         this.ocupada = ocupada;
     }
 
+    public Cliente getOcupante() {
+        return ocupante;
+    }
+
+    public void setOcupante(Cliente ocupante) {
+        this.ocupante = ocupante;
+    }
+
     public double getPrecioPagado() {
         return precioPagado;
     }
@@ -56,5 +66,14 @@ public class Registro implements Serializable
         this.precioPagado = precioPagado;
     }
 
-
+    @Override
+    public String toString() {
+        return "Registro{" +
+                "fechaEntrada=" + fechaEntrada +
+                ", fechaSalida=" + fechaSalida +
+                ", ocupada=" + ocupada +
+                ", ocupante=" + ocupante +
+                ", precioPagado=" + precioPagado +
+                '}';
+    }
 }
