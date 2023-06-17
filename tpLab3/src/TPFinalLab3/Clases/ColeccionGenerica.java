@@ -57,6 +57,10 @@ public class ColeccionGenerica <T> implements Serializable, Iterable<T>
         }
     }
 
+    public int tamanio()
+    {
+        return listaGenerica.size();
+    }
 
     @Override
     public Iterator<T> iterator() {

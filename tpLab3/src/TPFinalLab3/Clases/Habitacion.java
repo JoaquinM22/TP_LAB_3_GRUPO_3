@@ -1,5 +1,4 @@
 package TPFinalLab3.Clases;
-
 import java.io.Serializable;
 
 public class Habitacion implements Serializable
@@ -13,24 +12,26 @@ public class Habitacion implements Serializable
     private double precio;
     private Estado estado;
 
-    /** ENUM **/
     public enum Estado
     {
+        /** ATRIBUTOS **/
         OCUPADO("O"),
-        RESERVADO("R"),
         DISPONIBLE("D"),
+        RESERVADO("R"),
         MANTENIMIENTO("M");
 
         private String abreviatura;
 
+        /** CONSTRUCTOR **/
         Estado(String abreviatura)
         {
             this.abreviatura = abreviatura;
         }
 
-        private String getAbreviatura()
+        /** GETTER **/
+        public String getAbreviatura()
         {
-            return this.abreviatura;
+            return abreviatura;
         }
     }
 
@@ -56,6 +57,8 @@ public class Habitacion implements Serializable
     {
         this.precio = precio;
     }
+    public void setEstado(Estado estado) {this.estado = estado;}
+
 
     /** GETTERS **/
     public int getId()
@@ -70,6 +73,10 @@ public class Habitacion implements Serializable
     {
         return precio;
     }
+    public Estado getEstado()
+    {
+        return estado;
+    }
 
     /** METODOS **/
     @Override
@@ -83,5 +90,4 @@ public class Habitacion implements Serializable
                 ocupante.toString() +
                 "\n------------------------";
     }
-
 }
