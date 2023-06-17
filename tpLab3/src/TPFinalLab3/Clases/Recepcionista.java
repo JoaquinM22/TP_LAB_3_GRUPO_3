@@ -1,4 +1,5 @@
 package TPFinalLab3.Clases;
+import TPFinalLab3.Excepciones.ErrorEnArchivoException;
 import TPFinalLab3.Interfaces.CargarDinero;
 import TPFinalLab3.Interfaces.FuncionesEmpleados;
 import TPFinalLab3.Interfaces.MetodosValidaciones;
@@ -87,7 +88,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
     {
         System.out.println("Hola Recepcionista" + this.getNombre() + ", tu sueldo es de $" + this.getSueldo() + " pesos por mes");
     }
-    public void hacerBackUp(Hotel unHotel)
+    public void hacerBackUp(Hotel unHotel) throws ErrorEnArchivoException
     {
         if(this.tienePermiso)
         {

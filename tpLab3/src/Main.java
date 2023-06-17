@@ -2,7 +2,12 @@ import TPFinalLab3.Clases.Administrador;
 import TPFinalLab3.Clases.Habitacion;
 import TPFinalLab3.Clases.Hotel;
 import TPFinalLab3.Clases.Recepcionista;
+import TPFinalLab3.Excepciones.ErrorEnArchivoException;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -164,5 +169,27 @@ public class Main
 
         }while(seleccion != 0);
 
+    }
+
+    private static Hotel leerArchivo() throws ErrorEnArchivoException
+    {
+        try
+        {
+            FileInputStream fInput = new FileInputStream(new File("mi_archivo.txt"));
+            ObjectInputStream objInput = new ObjectInputStream(fInput);
+            System.out.println("Leyendo el Archivo...");
+            Hotel unHotel = (Hotel) objInput.readObject();
+            System.out.println(".... El Archivo se leyo correctamente ....");
+            return unHotel;
+        }catch(ClassNotFoundException e)
+        {
+            System.out.println("Error al buscar la clase");
+            e.printStackTrace();
+        }catch(IOException e)
+        {
+            throw new ErrorEnArchivoException(2);
+        }
+
+        return null;
     }
 }

@@ -1,4 +1,5 @@
 package TPFinalLab3.Clases;
+import TPFinalLab3.Excepciones.ErrorEnArchivoException;
 import TPFinalLab3.Interfaces.FuncionesEmpleados;
 import TPFinalLab3.Interfaces.MetodosValidaciones;
 
@@ -101,7 +102,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
 
 
 
-    public void hacerBackUp(Hotel dato) /** DESPUES HAY QUE CAMBIAR "STRING" POR LA CLASE "HOTEL" **/
+    public void hacerBackUp(Hotel dato) throws ErrorEnArchivoException /** DESPUES HAY QUE CAMBIAR "STRING" POR LA CLASE "HOTEL" **/
     {
         try
         {
@@ -113,9 +114,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
             System.out.println(".... El Archivo se guardo correctamente ....");
         }catch(IOException e)
         {
-            System.out.println("Error al escribir en el Archivo");
-            e.getMessage();
-            e.printStackTrace();
+            throw new ErrorEnArchivoException(1);
         }
     }
 
