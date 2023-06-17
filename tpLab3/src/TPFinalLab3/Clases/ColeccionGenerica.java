@@ -34,6 +34,18 @@ public class ColeccionGenerica <T> implements Serializable, Iterable<T>
         T aux = listaGenerica.get(index);
         return aux;
     }
+    public T obtener(T dato)
+    {
+        T encontrado = null;
+        for(T aux : listaGenerica)
+        {
+            if(aux.equals(dato))
+            {
+                encontrado = aux;
+            }
+        }
+        return encontrado;
+    }
     public void agregar(T t)
     {
         listaGenerica.add(t);
