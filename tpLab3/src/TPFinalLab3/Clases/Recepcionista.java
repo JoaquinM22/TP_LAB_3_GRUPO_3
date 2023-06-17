@@ -120,7 +120,7 @@ public class Recepcionista extends Persona implements Serializable
             System.out.println("\nPor favor ingrese su DNI: ");
             dni = teclado.nextInt();
             if(dni < 1000000){
-                System.out.println("Los DNI tienen que tener como minimo 7 digitos");
+                System.out.println("Los DNI tienen que tener como minimo 7 digitosa");
             }
         }while(dni < 1000000);
         return dni;
