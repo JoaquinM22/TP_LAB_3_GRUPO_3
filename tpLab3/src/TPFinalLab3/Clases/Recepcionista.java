@@ -1,13 +1,13 @@
 package TPFinalLab3.Clases;
 import TPFinalLab3.Interfaces.FuncionesEmpleados;
+import TPFinalLab3.Interfaces.MetodosValidaciones;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Collection;
 import java.util.Scanner;
 
-public class Recepcionista extends Persona implements FuncionesEmpleados, Serializable
+public class Recepcionista extends Persona implements MetodosValidaciones, FuncionesEmpleados, Serializable
 {
     /** SERIAL VERSION UID **/
     private static final long serialVersionUID = -739450841937426159L;
@@ -17,11 +17,16 @@ public class Recepcionista extends Persona implements FuncionesEmpleados, Serial
     /** ATRIBUTOS **/
     private String password;
     private double sueldo;
+    private boolean tienePermiso = false;
     private final static Scanner teclado = new Scanner(System.in);
 
 
 
     /** CONSTRUCTOR **/
+    public Recepcionista()
+    {
+        super();
+    }
     public Recepcionista(String nombre, String direccion, int dni, String password, double sueldo)
     {
         super(nombre, direccion, dni);
@@ -40,8 +45,10 @@ public class Recepcionista extends Persona implements FuncionesEmpleados, Serial
     {
         this.sueldo = sueldo;
     }
-
-
+    public void setTienePermiso(boolean tienePermiso)
+    {
+        this.tienePermiso = tienePermiso;
+    }
 
     /** GETTERS **/
     public String getPassword()
@@ -52,8 +59,10 @@ public class Recepcionista extends Persona implements FuncionesEmpleados, Serial
     {
         return sueldo;
     }
-
-
+    public boolean isTienePermiso()
+    {
+        return tienePermiso;
+    }
 
     /** METODOS **/
     @Override
@@ -72,6 +81,14 @@ public class Recepcionista extends Persona implements FuncionesEmpleados, Serial
     public void consultarSueldo()
     {
         System.out.println("Hola Recepcionista" + this.getNombre() + ", tu sueldo es de $" + this.getSueldo() + " pesos por mes");
+    }
+    public void hacerBackUp(Hotel unHotel)
+    {
+        if(this.tienePermiso)
+        {
+            Administrador admin = unHotel.retornarAdministrador();
+            admin.hacerBackUp(unHotel);
+        }
     }
 
 
@@ -105,7 +122,7 @@ public class Recepcionista extends Persona implements FuncionesEmpleados, Serial
             System.out.println("\nIngrese su direccion: ");
             aux.setDireccion(teclado.nextLine());
 
-            aux.setSaldo(validarSaldo());
+            aux.setSaldo(validarImporte());
             teclado.nextLine();
 
             datos.listaClientes.agregar(aux);
@@ -113,7 +130,8 @@ public class Recepcionista extends Persona implements FuncionesEmpleados, Serial
 
         return aux;
     }
-    public double validarSaldo()
+    @Override
+    public double validarImporte()
     {
         double saldo = 0;
         do{
@@ -125,6 +143,7 @@ public class Recepcionista extends Persona implements FuncionesEmpleados, Serial
         }while(saldo < 5000);
         return saldo;
     }
+    @Override
     public int validarDNI()
     {
         int dni = 0;
