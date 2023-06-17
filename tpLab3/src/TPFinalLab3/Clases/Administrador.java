@@ -96,6 +96,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
     }
 
 
+
     public void hacerBackUp(Hotel dato) /** DESPUES HAY QUE CAMBIAR "STRING" POR LA CLASE "HOTEL" **/
     {
         try
@@ -113,6 +114,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
             e.printStackTrace();
         }
     }
+
 
 
     @Override

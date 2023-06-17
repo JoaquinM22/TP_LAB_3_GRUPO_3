@@ -135,9 +135,12 @@ public class Habitacion implements Serializable
         if(this.ocupante != null)
         {
             System.out.println(this.ocupante.toString());
+        }else
+        {
+            System.out.println("Ocupante: Ninguno");
         }
-        System.out.println("Precio: " + precio);
-        System.out.println("Estado: " + estado.getAbreviatura());
+        System.out.println("Precio: " + precio + "/dia");
+        System.out.println("Estado: " + estado);
         System.out.println("----------------------");
     }
 }

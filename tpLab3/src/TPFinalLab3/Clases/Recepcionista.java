@@ -1,4 +1,5 @@
 package TPFinalLab3.Clases;
+import TPFinalLab3.Interfaces.CargarDinero;
 import TPFinalLab3.Interfaces.FuncionesEmpleados;
 import TPFinalLab3.Interfaces.MetodosValidaciones;
 
@@ -7,7 +8,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
 
-public class Recepcionista extends Persona implements MetodosValidaciones, FuncionesEmpleados, Serializable
+public class Recepcionista extends Persona implements CargarDinero, MetodosValidaciones, FuncionesEmpleados, Serializable
 {
     /** SERIAL VERSION UID **/
     private static final long serialVersionUID = -739450841937426159L;
@@ -50,6 +51,8 @@ public class Recepcionista extends Persona implements MetodosValidaciones, Funci
         this.tienePermiso = tienePermiso;
     }
 
+
+
     /** GETTERS **/
     public String getPassword()
     {
@@ -63,6 +66,8 @@ public class Recepcionista extends Persona implements MetodosValidaciones, Funci
     {
         return tienePermiso;
     }
+
+
 
     /** METODOS **/
     @Override
@@ -90,6 +95,7 @@ public class Recepcionista extends Persona implements MetodosValidaciones, Funci
             admin.hacerBackUp(unHotel);
         }
     }
+
 
 
     public Cliente existeCliente(int dato, Hotel datos) /** Si no existe lanzar excepcion **/
@@ -158,6 +164,7 @@ public class Recepcionista extends Persona implements MetodosValidaciones, Funci
     }
 
 
+
     public void mostrarHabitacionesDisponibles(ColeccionGenerica<Habitacion> listaHabitaciones)
     {
         for(Habitacion aux : listaHabitaciones)
@@ -181,7 +188,8 @@ public class Recepcionista extends Persona implements MetodosValidaciones, Funci
         }
         return encontrado;
     }
-    private void cargarSaldo(Cliente aux, double precio)
+    @Override
+    public void cargarSaldo(Cliente aux, double precio)
     {
         if(aux.getSaldo() < precio)
         {
@@ -194,7 +202,7 @@ public class Recepcionista extends Persona implements MetodosValidaciones, Funci
             }while(aux.getSaldo() < precio);
         }
     }
-    public void checkIn(Hotel datos) /** Llama a "agregarCliente()" **/
+    public void checkIn(Hotel datos)
     {
         checkearReservas(datos);
         Cliente aux = agregarCliente(datos);
@@ -231,13 +239,14 @@ public class Recepcionista extends Persona implements MetodosValidaciones, Funci
         existeHab.datosHabitacion();
         System.out.println("\n\n");
     }
-    public void checkOut()
+    public void checkOut() /**AGREGAR ESTADO MANTENIMIENTO SI CONSUMIO**/
     {
         /**
          * LO HACE DE FORMA AUTOMATICA, CAMBIA EL ESTADO DE LA HABITACION
          * A DISPONIBLE O EN MANTENIMIENTO Y QUITA LA PERSONA DE ELLA
          **/
     }
+
 
 
     private void seniarHabitacion(Cliente aux, double precio)
@@ -284,6 +293,7 @@ public class Recepcionista extends Persona implements MetodosValidaciones, Funci
                 if(LocalDate.now().isEqual(aux.getFechaFinReserva()))
                 {
                     /** checkout **/
+                    /** SI CONSUMIO CAMBIAR A MANTENIMIEENTO **/
                     /** Registro **/
                 }else if(LocalDate.now().isAfter(aux.getFechaFinReserva()))
                 {
@@ -389,6 +399,7 @@ public class Recepcionista extends Persona implements MetodosValidaciones, Funci
 
         }
     }
+
 
 
     public void verHabitaciones(Hotel datos) /** MIRA TODAS LAS HABITACIONES JUNTO A SUS ESTADOS **/
