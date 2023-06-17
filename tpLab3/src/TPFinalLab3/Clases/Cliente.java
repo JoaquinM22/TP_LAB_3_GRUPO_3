@@ -63,6 +63,24 @@ public class Cliente extends Persona implements CargarDinero, Serializable
                 "\nDNI: " + super.getDni() +
                 "\n--------------------";
     }
+    public void consultarSaldo()
+    {
+        System.out.println("Su saldo actual es de $" + this.saldo + "pesos.");
+    }
+    public void cargarSaldoCliente()
+    {
+        double monto;
+        do
+        {
+            System.out.println("Cuanto dinero quiere cargar?");
+            System.out.print("\nIngrese un monto: ");
+            monto = teclado.nextDouble();
+            if(monto <=0)
+            {
+                System.out.println("El monto ingresado no puede ser 0 no un numer negativo. Intente de nuevo");
+            }
+        }while(monto <= 0);
+    }
     @Override
     public void cargarSaldo(Cliente aux, double precio)
     {

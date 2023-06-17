@@ -198,7 +198,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                 System.out.println("Usted no tiene el saldo suficiente para pagar la habitacion. Cargue saldo a su cuenta a continuacion: ");
                 System.out.println("Precio habitacion: $" + precio);
                 System.out.println("Ingrese la cantidad a cargar: ");
-                aux.setSaldo(aux.getSaldo() + teclado.nextInt());
+                aux.setSaldo(aux.getSaldo() + teclado.nextDouble());
             }while(aux.getSaldo() < precio);
         }
     }
@@ -260,7 +260,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                 System.out.println("Precio senia: $" + nuevoPrecio);
                 System.out.println("Saldo Actual: $" + aux.getSaldo());
                 System.out.println("Ingrese la cantidad a cargar: ");
-                aux.setSaldo(aux.getSaldo() + teclado.nextInt());
+                aux.setSaldo(aux.getSaldo() + teclado.nextDouble());
             }while(aux.getSaldo() < nuevoPrecio);
         }
     }

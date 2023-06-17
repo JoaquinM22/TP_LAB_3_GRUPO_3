@@ -105,7 +105,7 @@ public class Habitacion implements Serializable
                 "\nDATOS HABITACION" +
                 "\n--------------------" +
                 "\nNro Habitacion: " + id +
-                "\nPrecio: $" + precio + " /dia" +
+                "\nPrecio: $" + precio + "/dia" +
                 "\nEstado: " + estado +
                 "\n------------------------";
     }
