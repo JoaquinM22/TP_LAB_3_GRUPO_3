@@ -15,8 +15,7 @@ public class Recepcionista extends Persona implements Serializable
     /** ATRIBUTOS **/
     private String password;
     private double sueldo;
-    private static Scanner teclado = new Scanner(System.in);
-
+    private final static Scanner teclado = new Scanner(System.in);
 
 
     /** CONSTRUCTOR **/
@@ -76,9 +75,8 @@ public class Recepcionista extends Persona implements Serializable
     }
     public Cliente agregarCliente(Hotel datos)
     {
-        System.out.println("\nPor favor ingrese su DNI: ");
-        int dni = teclado.nextInt();
 
+        int dni = cargarDNI();
         Cliente aux = existeCliente(dni, datos);
 
         if(aux == null)
@@ -87,18 +85,45 @@ public class Recepcionista extends Persona implements Serializable
             aux.setDni(dni);
 
             System.out.println("\nPor favor ingrese su nombre: ");
-            aux.setNombre(teclado.next());
+            aux.setNombre(teclado.nextLine());
+            teclado.nextLine();
 
             System.out.println("\nIngrese su direccion: ");
-            aux.setDireccion(teclado.next());
+            aux.setDireccion(teclado.nextLine());
 
-            System.out.println("\nIngrese el saldo de su cuenta: ");
-            aux.setSaldo(teclado.nextInt());
+            aux.setSaldo(cargarSaldo());
+            teclado.nextLine();
 
             datos.listaClientes.agregar(aux);
         }
 
         return aux;
+    }
+
+    public double cargarSaldo()
+    {
+        double saldo = 0;
+        do{
+            System.out.println("\nIngrese el saldo de su cuenta: ");
+            saldo = teclado.nextDouble();
+            if(saldo < 5000){
+                System.out.println("El saldo minimo a cargar es de $5000");
+            }
+        }while(saldo < 5000);
+        return saldo;
+    }
+
+    public int cargarDNI()
+    {
+        int dni = 0;
+        do {
+            System.out.println("\nPor favor ingrese su DNI: ");
+            dni = teclado.nextInt();
+            if(dni < 1000000){
+                System.out.println("Los DNI tienen que tener como minimo 7 digitos");
+            }
+        }while(dni < 1000000);
+        return dni;
     }
 
     public void mostrarHabitacionesDisponibles(ColeccionGenerica<Habitacion> listaHabitaciones)
