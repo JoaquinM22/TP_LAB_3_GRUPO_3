@@ -1,13 +1,7 @@
-import TPFinalLab3.Clases.Administrador;
-import TPFinalLab3.Clases.Habitacion;
-import TPFinalLab3.Clases.Hotel;
-import TPFinalLab3.Clases.Recepcionista;
+import TPFinalLab3.Clases.*;
 import TPFinalLab3.Excepciones.ErrorEnArchivoException;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -175,7 +169,7 @@ public class Main
     {
         try
         {
-            FileInputStream fInput = new FileInputStream(new File("mi_archivo.txt"));
+            FileInputStream fInput = new FileInputStream(new File("archivo_hotel.txt"));
             ObjectInputStream objInput = new ObjectInputStream(fInput);
             System.out.println("Leyendo el Archivo...");
             Hotel unHotel = (Hotel) objInput.readObject();
@@ -191,5 +185,21 @@ public class Main
         }
 
         return null;
+    }
+
+    private static void guardarListaRegistros(ColeccionGenerica<Registro> lista) throws ErrorEnArchivoException
+    {
+        try
+        {
+            FileOutputStream fOutput = new FileOutputStream(new File("registros.txt"));
+            ObjectOutputStream objOutput = new ObjectOutputStream(fOutput);
+            System.out.println("Guardando Archivo...");
+            objOutput.writeObject(lista);
+            objOutput.close();
+            System.out.println(".... El Archivo se guardo correctamente ....");
+        }catch(IOException e)
+        {
+            throw new ErrorEnArchivoException(1);
+        }
     }
 }

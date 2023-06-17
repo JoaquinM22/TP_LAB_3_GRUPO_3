@@ -106,7 +106,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
     {
         try
         {
-            FileOutputStream fOutput = new FileOutputStream(new File("mi_archivo.txt"));
+            FileOutputStream fOutput = new FileOutputStream(new File("archivo_hotel.txt"));
             ObjectOutputStream objOutput = new ObjectOutputStream(fOutput);
             System.out.println("Guardando Archivo...");
             objOutput.writeObject(dato);
