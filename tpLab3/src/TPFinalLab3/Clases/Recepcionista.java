@@ -202,7 +202,6 @@ public class Recepcionista extends Persona implements Serializable
             Registro existeReg = datos.buscarRegistro(dniIngresado);
             existeReg.setFechaSalida(LocalDate.now());
 
-
         }
 
     }
