@@ -1,11 +1,13 @@
 package TPFinalLab3.Clases;
+import TPFinalLab3.Interfaces.FuncionesEmpleados;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Collection;
 import java.util.Scanner;
 
-public class Recepcionista extends Persona implements Serializable
+public class Recepcionista extends Persona implements FuncionesEmpleados, Serializable
 {
     /** SERIAL VERSION UID **/
     private static final long serialVersionUID = -739450841937426159L;
@@ -18,6 +20,7 @@ public class Recepcionista extends Persona implements Serializable
     private final static Scanner teclado = new Scanner(System.in);
 
 
+
     /** CONSTRUCTOR **/
     public Recepcionista(String nombre, String direccion, int dni, String password, double sueldo)
     {
@@ -25,6 +28,8 @@ public class Recepcionista extends Persona implements Serializable
         this.password = password;
         this.sueldo = sueldo;
     }
+
+
 
     /** SETTERS **/
     public void setPassword(String password)
@@ -37,6 +42,7 @@ public class Recepcionista extends Persona implements Serializable
     }
 
 
+
     /** GETTERS **/
     public String getPassword()
     {
@@ -46,6 +52,8 @@ public class Recepcionista extends Persona implements Serializable
     {
         return sueldo;
     }
+
+
 
     /** METODOS **/
     @Override
@@ -60,6 +68,12 @@ public class Recepcionista extends Persona implements Serializable
                 "\nSueldo: $" + sueldo +
                 "\n--------------------";
     }
+    @Override
+    public void consultarSueldo()
+    {
+        System.out.println("Hola Recepcionista" + this.getNombre() + ", tu sueldo es de $" + this.getSueldo() + " pesos por mes");
+    }
+
 
     public Cliente existeCliente(int dato, Hotel datos) /** Si no existe lanzar excepcion **/
     {
@@ -76,7 +90,7 @@ public class Recepcionista extends Persona implements Serializable
     public Cliente agregarCliente(Hotel datos)
     {
 
-        int dni = cargarDNI();
+        int dni = validarDNI();
         Cliente aux = existeCliente(dni, datos);
 
         if(aux == null)
@@ -91,7 +105,7 @@ public class Recepcionista extends Persona implements Serializable
             System.out.println("\nIngrese su direccion: ");
             aux.setDireccion(teclado.nextLine());
 
-            aux.setSaldo(cargarSaldo());
+            aux.setSaldo(validarSaldo());
             teclado.nextLine();
 
             datos.listaClientes.agregar(aux);
@@ -99,8 +113,7 @@ public class Recepcionista extends Persona implements Serializable
 
         return aux;
     }
-
-    public double cargarSaldo()
+    public double validarSaldo()
     {
         double saldo = 0;
         do{
@@ -112,8 +125,7 @@ public class Recepcionista extends Persona implements Serializable
         }while(saldo < 5000);
         return saldo;
     }
-
-    public int cargarDNI()
+    public int validarDNI()
     {
         int dni = 0;
         do {
@@ -126,6 +138,7 @@ public class Recepcionista extends Persona implements Serializable
         return dni;
     }
 
+
     public void mostrarHabitacionesDisponibles(ColeccionGenerica<Habitacion> listaHabitaciones)
     {
         for(Habitacion aux : listaHabitaciones)
@@ -136,7 +149,6 @@ public class Recepcionista extends Persona implements Serializable
             }
         }
     }
-
     private Habitacion buscarHabitacion(int id, ColeccionGenerica<Habitacion> listaHabitaciones)
     {
         Habitacion encontrado = null;
@@ -150,7 +162,6 @@ public class Recepcionista extends Persona implements Serializable
         }
         return encontrado;
     }
-
     private void cargarSaldo(Cliente aux, double precio)
     {
         if(aux.getSaldo() < precio)
@@ -164,7 +175,6 @@ public class Recepcionista extends Persona implements Serializable
             }while(aux.getSaldo() < precio);
         }
     }
-
     public void checkIn(Hotel datos) /** Llama a "agregarCliente()" **/
     {
         checkearReservas(datos);
@@ -202,8 +212,6 @@ public class Recepcionista extends Persona implements Serializable
         existeHab.datosHabitacion();
         System.out.println("\n\n");
     }
-    
-
     public void checkOut()
     {
         /**
@@ -212,29 +220,8 @@ public class Recepcionista extends Persona implements Serializable
          **/
     }
 
-//    public void verHabitacionesPorEstado(ColeccionGenerica<Habitacion> lista, String estado)
-//    {
-//        for(Habitacion aux : lista)
-//        {
-//            if(aux.getEstado() == Enum.valueOf(Habitacion.Estado.class, "O"))
-//            {
-//                System.out.println(aux.toString());
-//            }else if(aux.getEstado() == Enum.valueOf(Habitacion.Estado.class, "D"))
-//            {
-//                System.out.println(aux.toString());
-//            }else if(aux.getEstado() == Enum.valueOf(Habitacion.Estado.class, "R"))
-//            {
-//                System.out.println(aux.toString());
-//            }else if(aux.getEstado() == Enum.valueOf(Habitacion.Estado.class, "M"))
-//            {
-//                System.out.println(aux.toString());
-//            }
-//        }
-//    }
 
-
-
-    private void señarHabitacion(Cliente aux, double precio)
+    private void seniarHabitacion(Cliente aux, double precio)
     {
         double nuevoPrecio = precio*0.20;
         if(aux.getSaldo() < nuevoPrecio)
@@ -286,6 +273,18 @@ public class Recepcionista extends Persona implements Serializable
             }
         }
     }
+    public Habitacion buscarHabitacionesReservadas(Hotel unHotel, int dniIngresado)
+    {
+        Habitacion encontrado = null;
+        for(Habitacion auxHab : unHotel.listaHabitaciones)
+        {
+            if(auxHab.getEstado() == Habitacion.Estado.RESERVADO && auxHab.getOcupante().getDni() == dniIngresado)
+            {
+                encontrado = auxHab;
+            }
+        }
+        return encontrado;
+    }
     public void hacerReserva(Hotel unHotel)
     {
         Cliente aux = agregarCliente(unHotel);
@@ -322,7 +321,7 @@ public class Recepcionista extends Persona implements Serializable
         LocalDate finReserva = inicioReserva.plusDays(cantDias);
         double nuevoPrecio = existeHab.getPrecio()*cantDias;
 
-        señarHabitacion(aux, nuevoPrecio);
+        seniarHabitacion(aux, nuevoPrecio);
 
         double senia = nuevoPrecio*0.20;
         aux.setSaldo(aux.getSaldo() - senia);
@@ -334,18 +333,6 @@ public class Recepcionista extends Persona implements Serializable
         System.out.println("A continuacion se muestran los datos de la Reserva:");
         existeHab.datosReserva();
         /** FALTA METODO PARA CARGAR REGISTRO **/
-    }
-    public Habitacion buscarHabitacionesReservadas(Hotel unHotel, int dniIngresado)
-    {
-        Habitacion encontrado = null;
-        for(Habitacion auxHab : unHotel.listaHabitaciones)
-        {
-            if(auxHab.getEstado() == Habitacion.Estado.RESERVADO && auxHab.getOcupante().getDni() == dniIngresado)
-            {
-                encontrado = auxHab;
-            }
-        }
-        return encontrado;
     }
     public void cancelarReserva(Hotel unHotel)
     {
@@ -383,6 +370,7 @@ public class Recepcionista extends Persona implements Serializable
 
         }
     }
+
 
     public void verHabitaciones(Hotel datos) /** MIRA TODAS LAS HABITACIONES JUNTO A SUS ESTADOS **/
     {

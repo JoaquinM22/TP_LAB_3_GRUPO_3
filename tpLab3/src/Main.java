@@ -27,9 +27,9 @@ public class Main
         unHotel.agregarHabitacion(unaHab3);
         unHotel.datosHotel();
 
-//        unRecepcionista.hacerReserva(unHotel);
-//        unRecepcionista.cancelarReserva(unHotel);
-        unRecepcionista.checkIn(unHotel);
+        unRecepcionista.hacerReserva(unHotel);
+        unRecepcionista.cancelarReserva(unHotel);
+        //unRecepcionista.checkIn(unHotel);
         System.out.println("Lista Habitaciones");
         unHotel.mostrarHabitaciones();
 

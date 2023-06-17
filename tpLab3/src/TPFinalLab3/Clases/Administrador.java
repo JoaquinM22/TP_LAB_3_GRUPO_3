@@ -1,7 +1,9 @@
 package TPFinalLab3.Clases;
+import TPFinalLab3.Interfaces.FuncionesEmpleados;
+
 import java.io.*;
 
-public class Administrador extends Persona implements Serializable
+public class Administrador extends Persona implements FuncionesEmpleados, Serializable
 {
     /** SERIAL VERSION UID **/
     private static final long serialVersionUID = 352942585576717560L;
@@ -55,6 +57,12 @@ public class Administrador extends Persona implements Serializable
                 "\nSueldo: $" + sueldo +
                 "\n--------------------";
     }
+    @Override
+    public void consultarSueldo()
+    {
+        System.out.println("Hola Administrador" + this.getNombre() + ", tu sueldo es de $" + this.getSueldo() + " pesos por mes");
+    }
+
     public void hacerBackUp(String dato) /** DESPUES HAY QUE CAMBIAR "STRING" POR LA CLASE "HOTEL" **/
     {
         try
