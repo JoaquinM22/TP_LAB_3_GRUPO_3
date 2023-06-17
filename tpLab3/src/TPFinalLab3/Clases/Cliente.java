@@ -41,6 +41,8 @@ public class Cliente extends Persona implements CargarDinero, Serializable
         this.consumi = consumi;
     }
 
+
+
     /** GETTERS **/
     public double getSaldo()
     {
@@ -50,6 +52,8 @@ public class Cliente extends Persona implements CargarDinero, Serializable
     {
         return consumi;
     }
+
+
 
     /** METODOS **/
     @Override

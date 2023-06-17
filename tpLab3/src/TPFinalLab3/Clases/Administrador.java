@@ -20,6 +20,10 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
 
 
     /** CONSTRUCTOR **/
+    public Administrador()
+    {
+        super();
+    }
     public Administrador(String nombre, String direccion, int dni, String password, double sueldo)
     {
         super(nombre, direccion, dni);

@@ -7,8 +7,12 @@ public class ColeccionGenerica <T> implements Serializable, Iterable<T>
     /** SERIAL VERSION UID **/
     private static final long serialVersionUID = -502083389422603888L;
 
+
+
     /** ATRIBUTOS **/
     List<T> listaGenerica = new ArrayList<>();
+
+
 
     /** CONSTRUCTOR **/
     public ColeccionGenerica()
@@ -16,17 +20,23 @@ public class ColeccionGenerica <T> implements Serializable, Iterable<T>
 
     }
 
+
+
     /** SETTERS **/
     public void setListaGenerica(List<T> listaGenerica)
     {
         this.listaGenerica = listaGenerica;
     }
 
+
+
     /** GETTERS **/
     public List<T> getListaGenerica()
     {
         return listaGenerica;
     }
+
+
 
     /** METODOS **/
     public T obtener(int index)
@@ -46,20 +56,23 @@ public class ColeccionGenerica <T> implements Serializable, Iterable<T>
         }
         return encontrado;
     }
+
+
     public void agregar(T t)
     {
         listaGenerica.add(t);
     }
 
+
     public void eliminar(T t)
     {
         listaGenerica.remove(t);
     }
-
     public void eliminar(int index)
     {
         listaGenerica.remove(index);
     }
+
 
     public void listar()
     {
@@ -68,6 +81,7 @@ public class ColeccionGenerica <T> implements Serializable, Iterable<T>
             System.out.println(t.toString());
         }
     }
+
 
     public int tamanio()
     {

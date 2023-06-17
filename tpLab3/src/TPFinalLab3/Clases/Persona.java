@@ -6,10 +6,14 @@ public abstract class Persona implements Serializable
     /** SERIAL VERSION UID **/
     private static final long serialVersionUID = -6445231651267360642L;
 
+
+
     /** ATRIBUTOS **/
     private String nombre;
     private String direccion;
     private int dni;
+
+
 
     /** CONSTRUCTOR **/
     public Persona()
@@ -22,6 +26,8 @@ public abstract class Persona implements Serializable
         this.direccion = direccion;
         this.dni = dni;
     }
+
+
 
     /** SETTERS **/
     public void setNombre(String nombre)
@@ -37,6 +43,8 @@ public abstract class Persona implements Serializable
         this.dni = dni;
     }
 
+
+
     /** GETTERS **/
     public String getNombre()
     {
@@ -50,6 +58,8 @@ public abstract class Persona implements Serializable
     {
         return dni;
     }
+
+
 
     /** METODOS **/
     @Override

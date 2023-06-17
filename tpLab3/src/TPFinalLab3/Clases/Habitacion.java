@@ -39,7 +39,13 @@ public class Habitacion implements Serializable
         }
     }
 
+
+
     /** CONSTRUCTOR **/
+    public Habitacion()
+    {
+        super();
+    }
     public Habitacion(int id, double precio)
     {
         this.id = id;
