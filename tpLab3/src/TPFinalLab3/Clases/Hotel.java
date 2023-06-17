@@ -12,7 +12,7 @@ public class Hotel implements Serializable
     ColeccionGenerica<Habitacion> listaHabitaciones;
     ColeccionGenerica<Cliente> listaClientes;
     ColeccionGenerica<Persona> listaEmpleados;
-    //ColeccionGenerica<Registro> listaRegistro = new ColeccionGenerica<>();
+    ColeccionGenerica<Registro> listaRegistro = new ColeccionGenerica<>();
 
 
     /** CONSTRUCTOR **/
@@ -22,7 +22,7 @@ public class Hotel implements Serializable
         this.listaHabitaciones = new ColeccionGenerica<>();
         this.listaClientes = new ColeccionGenerica<>();
         this.listaEmpleados = new ColeccionGenerica<>();
-        //this.listaRegistro = new ColeccionGenerica<>();
+        this.listaRegistro = new ColeccionGenerica<>();
     }
     public Hotel(String nombreHotel)
     {
@@ -30,7 +30,7 @@ public class Hotel implements Serializable
         this.listaHabitaciones = new ColeccionGenerica<>();
         this.listaClientes = new ColeccionGenerica<>();
         this.listaEmpleados = new ColeccionGenerica<>();
-        //this.listaRegistro = new ColeccionGenerica<>();
+        this.listaRegistro = new ColeccionGenerica<>();
     }
 
 
@@ -52,10 +52,10 @@ public class Hotel implements Serializable
     {
         return listaEmpleados;
     }
-//    public ColeccionGenerica<Registro> getListaRegistro()
-//    {
-//        return listaRegistro;
-//    }
+    public ColeccionGenerica<Registro> getListaRegistro()
+    {
+        return listaRegistro;
+    }
 
 
 
@@ -76,10 +76,10 @@ public class Hotel implements Serializable
     {
         this.listaEmpleados = listaEmpleados;
     }
-//    public void setListaRegistro(ColeccionGenerica<Registro> listaRegistro)
-//    {
-//        this.listaRegistro = listaRegistro;
-//    }
+    public void setListaRegistro(ColeccionGenerica<Registro> listaRegistro)
+    {
+        this.listaRegistro = listaRegistro;
+    }
 
 
 
@@ -96,10 +96,10 @@ public class Hotel implements Serializable
     {
         listaHabitaciones.agregar(habitacion);
     }
-//    public void agregarRegistro(Registro registro)
-//    {
-//        listaRegistro.agregar(registro);
-//    }
+    public void agregarRegistro(Registro registro)
+    {
+        listaRegistro.agregar(registro);
+    }
 
 
 
@@ -113,17 +113,29 @@ public class Hotel implements Serializable
     }
     public void mostrarHabitaciones()
     {
-//        listaHabitaciones.listar();
         for(Habitacion aux : listaHabitaciones)
         {
             aux.datosHabitacion();
         }
     }
-//    public void mostrarRegistro()
-//    {
-//        listaRegistro.listar();
-//    }
+    public void mostrarRegistro()
+    {
+        listaRegistro.listar();
+    }
+    public Registro buscarRegistro(int dniBuscado)
+    {
+        Registro encontrado = null;
 
+        for(Registro aux: listaRegistro)
+        {
+            if(aux.getOcupante().getDni() == dniBuscado)
+            {
+                encontrado = aux;
+            }
+        }
+
+        return encontrado;
+    }
 
     public void datosHotel()
     {

@@ -195,7 +195,11 @@ public class Recepcionista extends Persona implements Serializable
 
         aux.setSaldo(aux.getSaldo() - (existeHab.getPrecio()*cantDias));
         existeHab.setEstado(Habitacion.Estado.OCUPADO);
-        /** FALTA METODO PARA CARGAR REGISTRO **/
+        /**  METODO PARA CARGAR REGISTRO **/
+
+        Registro reg = new Registro(fechaEntrada, null, existeHab, aux, existeHab.getPrecio()*cantDias);
+        datos.agregarRegistro(reg);
+
         /** FALTA CARGAR HABITACION ELEGIDA EN LISTAOCUPADAS DE CLIENTE **/
         System.out.println(".... El CheckIn se realizo exitosamene! ....");
         System.out.println("A continuacion se muestra los datos de la habitacion:");
@@ -204,12 +208,27 @@ public class Recepcionista extends Persona implements Serializable
     }
     
 
-    public void checkOut()
+    public void checkOut(Hotel datos)
     {
         /**
          * LO HACE DE FORMA AUTOMATICA, CAMBIA EL ESTADO DE LA HABITACION
          * A DISPONIBLE O EN MANTENIMIENTO Y QUITA LA PERSONA DE ELLA
          **/
+
+        System.out.println("Ingrese dni: ");
+        int dniIngresado = teclado.nextInt();
+        Habitacion existeHab = buscarHabitacionesOcupadas(datos, dniIngresado);
+
+        if(existeHab == null)
+        {
+            System.out.println("\nLa habitacion buscada no existe.");
+        }else
+        {
+            Registro existeReg = datos.buscarRegistro(dniIngresado);
+            existeReg.setFechaSalida(LocalDate.now());
+
+        }
+
     }
 
 //    public void verHabitacionesPorEstado(ColeccionGenerica<Habitacion> lista, String estado)
@@ -341,6 +360,19 @@ public class Recepcionista extends Persona implements Serializable
         for(Habitacion auxHab : unHotel.listaHabitaciones)
         {
             if(auxHab.getEstado() == Habitacion.Estado.RESERVADO && auxHab.getOcupante().getDni() == dniIngresado)
+            {
+                encontrado = auxHab;
+            }
+        }
+        return encontrado;
+    }
+
+    public Habitacion buscarHabitacionesOcupadas(Hotel unHotel, int dniIngresado)
+    {
+        Habitacion encontrado = null;
+        for(Habitacion auxHab : unHotel.listaHabitaciones)
+        {
+            if(auxHab.getEstado() == Habitacion.Estado.OCUPADO && auxHab.getOcupante().getDni() == dniIngresado)
             {
                 encontrado = auxHab;
             }
