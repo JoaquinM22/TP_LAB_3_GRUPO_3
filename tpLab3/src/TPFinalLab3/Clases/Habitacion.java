@@ -138,6 +138,9 @@ public class Habitacion implements Serializable
         System.out.println("DATOS HABITACION");
         System.out.println("----------------------");
         System.out.println("Num Habitacion: " + id);
+        System.out.println("Precio: " + precio + "/dia");
+        System.out.println("Estado: " + estado);
+        System.out.println("----------------------");
         if(this.ocupante != null)
         {
             System.out.println(this.ocupante.toString());
@@ -145,8 +148,6 @@ public class Habitacion implements Serializable
         {
             System.out.println("Ocupante: Ninguno");
         }
-        System.out.println("Precio: " + precio + "/dia");
-        System.out.println("Estado: " + estado);
-        System.out.println("----------------------");
+
     }
 }

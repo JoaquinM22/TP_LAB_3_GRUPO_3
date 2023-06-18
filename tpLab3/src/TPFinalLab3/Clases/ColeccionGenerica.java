@@ -73,7 +73,6 @@ public class ColeccionGenerica <T> implements Serializable, Iterable<T>
         listaGenerica.remove(index);
     }
 
-
     public void listar()
     {
         for(T t : listaGenerica)
