@@ -385,18 +385,6 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
         existeHab.datosReserva();
         /** FALTA METODO PARA CARGAR REGISTRO **/
     }
-    public Habitacion buscarHabitacionesReservadas(Hotel unHotel, int dniIngresado)
-    {
-        Habitacion encontrado = null;
-        for(Habitacion auxHab : unHotel.listaHabitaciones)
-        {
-            if(auxHab.getEstado() == Habitacion.Estado.RESERVADO && auxHab.getOcupante().getDni() == dniIngresado)
-            {
-                encontrado = auxHab;
-            }
-        }
-        return encontrado;
-    }
 
     public Habitacion buscarHabitacionesOcupadas(Hotel unHotel, int dniIngresado)
     {

@@ -133,6 +133,20 @@ public class Hotel implements Serializable
         listaRegistro.listar();
     }
 
+    public Registro buscarRegistro(int dniBuscado)
+    {
+        Registro encontrado = null;
+
+        for(Registro aux: listaRegistro)
+        {
+            if(aux.getOcupante().getDni() == dniBuscado)
+            {
+                encontrado = aux;
+            }
+        }
+        return encontrado;
+    }
+
 
     public void datosHotel()
     {
