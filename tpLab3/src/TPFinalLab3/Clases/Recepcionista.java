@@ -239,6 +239,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
         datos.agregarRegistro(reg);
 
         /** FALTA CARGAR HABITACION ELEGIDA EN LISTAOCUPADAS DE CLIENTE **/
+
         System.out.println(".... El CheckIn se realizo exitosamene! ....");
         System.out.println("A continuacion se muestra los datos de la habitacion:");
         existeHab.datosHabitacion();
@@ -249,7 +250,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
     public void checkOut(Hotel datos)
     {
         /**
-         * LO HACE DE FORMA AUTOMATICA, CAMBIA EL ESTADO DE LA HABITACION
+         * CAMBIA EL ESTADO DE LA HABITACION
          * A DISPONIBLE O EN MANTENIMIENTO Y QUITA LA PERSONA DE ELLA
          **/
 
@@ -263,7 +264,10 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
         }else
         {
             Registro existeReg = datos.buscarRegistro(dniIngresado);
+
             existeReg.setFechaSalida(LocalDate.now());
+            existeReg.setOcupante(null);
+            existeReg.getOcupada().setEstado(Habitacion.Estado.DISPONIBLE);
 
         }
 
@@ -305,8 +309,13 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                         clienteAux.setSaldo(clienteAux.getSaldo() - precioAPagar);
                     }
                     aux.setEstado(Habitacion.Estado.OCUPADO);
+
+                    /** METODO PARA CARGAR REGISTRO **/
+
+                    Registro reg = new Registro(aux.getFechaInicioReserva(), null, aux, clienteAux, precioAPagar);
+                    unHotel.agregarRegistro(reg);
                     aux.setFechaInicioReserva(null);
-                    /** FALTA METODO PARA CARGAR REGISTRO **/
+
                     /** FALTA CARGAR HABITACION ELEGIDA EN LISTAOCUPADAS DE CLIENTE **/
 
                 }
@@ -315,11 +324,14 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                 if(LocalDate.now().isEqual(aux.getFechaFinReserva()))
                 {
                     /** checkout **/
+                    checkOut(unHotel);
+
                     /** SI CONSUMIO CAMBIAR A MANTENIMIEENTO **/
                     /** Registro **/
                 }else if(LocalDate.now().isAfter(aux.getFechaFinReserva()))
                 {
                     /** CARGAR REGISTRO **/
+                    //Que tengo que cargar exactamente??
                 }
             }
         }
@@ -384,6 +396,10 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
         System.out.println("A continuacion se muestran los datos de la Reserva:");
         existeHab.datosReserva();
         /** FALTA METODO PARA CARGAR REGISTRO **/
+        //Ambas fechas en null porque no se realizo el checkIn
+        Registro reg = new Registro(null, null, existeHab, aux, senia);
+        unHotel.agregarRegistro(reg);
+
     }
 
     public Habitacion buscarHabitacionesOcupadas(Hotel unHotel, int dniIngresado)

@@ -44,6 +44,7 @@ public class Main
         int seleccion;
         char confirmacion;
         String pass;
+        String nombre;
         boolean valido;
 
         do
@@ -60,16 +61,25 @@ public class Main
             /*
             if(seleccion == 1 || seleccion == 2)
             {
-                System.out.println("\nIngrese su password por favor")
-                pass = teclado.next();
-
                 //Aca iria la funcion de busqueda de el personal/admin dentro del archivo
                 do
                 {
-                    Persona aux = //Lo que se carga del archivo
-                    if(aux.password == pass)
+                    System.out.println("\nIngrese su nombre:");
+                    nombre = teclado.next();
+                    teclado.nextLine();
+
+                    System.out.println("\nIngrese su password por favor");
+                    pass = teclado.next();
+                    teclado.nextLine();
+
+                    Persona aux = Funcion para buscar a una persona(Admin o Recepcionista) por nombre y password, de no encontrarlo retorna null
+                    if(aux != null)
                     {
+                        System.out.println("\nBienvenid@, " + aux.getNombre);
                         valido = true;
+                    }else
+                    {
+                        System.out.println("\nEl password ingresado no coincide con ningun miembro del personal.")
                     }
                 }while(valido == false)
             }
