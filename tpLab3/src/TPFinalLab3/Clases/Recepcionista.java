@@ -233,12 +233,14 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
 
         aux.setSaldo(aux.getSaldo() - (existeHab.getPrecio()*cantDias));
         existeHab.setEstado(Habitacion.Estado.OCUPADO);
-        /**  METODO PARA CARGAR REGISTRO **/
+        /** METODO PARA CARGAR REGISTRO **/
 
-        Registro reg = new Registro(fechaEntrada, null, existeHab, aux, existeHab.getPrecio()*cantDias);
+        Registro reg = new Registro(fechaEntrada,null, existeHab, aux, existeHab.getPrecio()*cantDias);
         datos.agregarRegistro(reg);
 
-        /** FALTA CARGAR HABITACION ELEGIDA EN LISTAOCUPADAS DE CLIENTE **/
+        /** CARGA HABITACION ELEGIDA EN LISTAOCUPADAS DE CLIENTE **/
+        aux.agregar(existeHab);
+
 
         System.out.println(".... El CheckIn se realizo exitosamene! ....");
         System.out.println("A continuacion se muestra los datos de la habitacion:");
@@ -254,8 +256,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
          * A DISPONIBLE O EN MANTENIMIENTO Y QUITA LA PERSONA DE ELLA
          **/
 
-        System.out.println("Ingrese dni: ");
-        int dniIngresado = teclado.nextInt();
+        int dniIngresado = validarDNI();
         Habitacion existeHab = buscarHabitacionesOcupadas(datos, dniIngresado);
 
         if(existeHab == null)
