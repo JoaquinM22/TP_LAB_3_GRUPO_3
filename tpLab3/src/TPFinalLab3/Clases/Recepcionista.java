@@ -257,24 +257,70 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
          **/
 
         int dniIngresado = validarDNI();
-        Habitacion existeHab = buscarHabitacionesOcupadas(datos, dniIngresado);
-
-        if(existeHab == null)
+        Cliente aux = existeCliente(dniIngresado,datos);
+        if(aux != null)
         {
-            System.out.println("\nLa habitacion buscada no existe.");
-        }else
-        {
-            Registro existeReg = datos.buscarRegistro(dniIngresado);
+            boolean tiene = validarOcupadas(aux);
+            if(tiene == true)
+            {
+                Habitacion existeHab = validarID(aux,datos);
 
-            existeReg.setFechaSalida(LocalDate.now());
-            existeReg.setOcupante(null);
-            existeReg.getOcupada().setEstado(Habitacion.Estado.DISPONIBLE);
+                Registro existeReg = datos.buscarRegistro(dniIngresado);
 
+                existeReg.setFechaSalida(LocalDate.now());
+                existeReg.setOcupante(null);
+                existeReg.getOcupada().setEstado(Habitacion.Estado.DISPONIBLE);
+                aux.eliminar(existeHab);
+                System.out.println("CheckOut realizado con exito");
+            }
+            else {
+                System.out.println("Usted no esta ocupando ninguna habitacion en este hotel");
+            }
         }
-
+        else{
+            System.out.println("El dni ingresado no corresponde a ningun cliente en nuestro sistema");
+        }
     }
 
+    private Habitacion validarID(Cliente aux, Hotel datos)
+    {
+        Habitacion existeHab = null;
+        int id = 0;
+        do{
+            System.out.println("Habitaciones que usted actualmente ocupa");
+            mostrarOcupadasCliente(aux, datos.listaHabitaciones);
+            System.out.println("Ingrese el ID de la habitacion que se retira");
+            int idRetirar = teclado.nextInt();
+            existeHab = buscarHabitacionOcupada(datos,aux,idRetirar);
+            if(existeHab == null)
+            {
+                System.out.println("\nLa habitacion buscada no existe.");
+            }
+        }while(existeHab == null);
 
+        return existeHab;
+    }
+
+    private boolean validarOcupadas(Cliente aux)
+    {
+        boolean resp = false;
+        if(aux.tamanio() > 0)
+        {
+            resp = true;
+        }
+        return resp;
+    }
+
+    public void mostrarOcupadasCliente(Cliente aux, ColeccionGenerica<Habitacion> listaHabitaciones)
+    {
+        for(Habitacion hab : listaHabitaciones)
+        {
+            if(aux.equals(hab.getOcupante()))
+            {
+                System.out.println(hab.toString());
+            }
+        }
+    }
 
     private void seniarHabitacion(Cliente aux, double precio)
     {
@@ -403,12 +449,12 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
 
     }
 
-    public Habitacion buscarHabitacionesOcupadas(Hotel unHotel, int dniIngresado)
+    public Habitacion buscarHabitacionOcupada(Hotel unHotel, Cliente cliente, int idHabitacion)
     {
         Habitacion encontrado = null;
         for(Habitacion auxHab : unHotel.listaHabitaciones)
         {
-            if(auxHab.getEstado() == Habitacion.Estado.OCUPADO && auxHab.getOcupante().getDni() == dniIngresado)
+            if(auxHab.getEstado() == Habitacion.Estado.OCUPADO && auxHab.getOcupante().equals(cliente) && idHabitacion == auxHab.getId())
             {
                 encontrado = auxHab;
             }
