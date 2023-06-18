@@ -12,13 +12,13 @@ public class Hotel implements Serializable
     ColeccionGenerica<Habitacion> listaHabitaciones;
     ColeccionGenerica<Cliente> listaClientes;
     ColeccionGenerica<Persona> listaEmpleados;
-    ColeccionGenerica<Registro> listaRegistro = new ColeccionGenerica<>();
+    ColeccionGenerica<Registro> listaRegistro;
 
 
     /** CONSTRUCTOR **/
     public Hotel()
     {
-        this.nombreHotel = nombreHotel;
+        this.nombreHotel = null;
         this.listaHabitaciones = new ColeccionGenerica<>();
         this.listaClientes = new ColeccionGenerica<>();
         this.listaEmpleados = new ColeccionGenerica<>();
@@ -107,6 +107,16 @@ public class Hotel implements Serializable
     {
         listaEmpleados.listar();
     }
+    public void mostrarRecepcionistas()
+    {
+        for(Persona aux : listaEmpleados)
+        {
+            if(aux instanceof Recepcionista)
+            {
+                System.out.println(aux.toString());
+            }
+        }
+    }
     public void mostrarClientes()
     {
         listaClientes.listar();
@@ -122,20 +132,7 @@ public class Hotel implements Serializable
     {
         listaRegistro.listar();
     }
-    public Registro buscarRegistro(int dniBuscado)
-    {
-        Registro encontrado = null;
 
-        for(Registro aux: listaRegistro)
-        {
-            if(aux.getOcupante().getDni() == dniBuscado)
-            {
-                encontrado = aux;
-            }
-        }
-
-        return encontrado;
-    }
 
     public void datosHotel()
     {
@@ -148,6 +145,18 @@ public class Hotel implements Serializable
         System.out.println("Lista Habitaciones: ");
         mostrarHabitaciones();
         System.out.println("-------------------------");
+    }
+    public Administrador retornarAdministrador()
+    {
+        Administrador admin = null;
+        for(Persona aux : listaEmpleados)
+        {
+            if(aux instanceof Administrador)
+            {
+                admin = (Administrador) aux;
+            }
+        }
+        return admin;
     }
 
 }

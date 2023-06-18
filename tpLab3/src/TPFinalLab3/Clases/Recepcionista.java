@@ -1,11 +1,15 @@
 package TPFinalLab3.Clases;
+import TPFinalLab3.Excepciones.ErrorEnArchivoException;
+import TPFinalLab3.Interfaces.CargarDinero;
+import TPFinalLab3.Interfaces.FuncionesEmpleados;
+import TPFinalLab3.Interfaces.MetodosValidaciones;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Collection;
 import java.util.Scanner;
 
-public class Recepcionista extends Persona implements Serializable
+public class Recepcionista extends Persona implements CargarDinero, MetodosValidaciones, FuncionesEmpleados, Serializable
 {
     /** SERIAL VERSION UID **/
     private static final long serialVersionUID = -739450841937426159L;
@@ -15,16 +19,24 @@ public class Recepcionista extends Persona implements Serializable
     /** ATRIBUTOS **/
     private String password;
     private double sueldo;
+    private boolean tienePermiso = false;
     private final static Scanner teclado = new Scanner(System.in);
 
 
+
     /** CONSTRUCTOR **/
+    public Recepcionista()
+    {
+        super();
+    }
     public Recepcionista(String nombre, String direccion, int dni, String password, double sueldo)
     {
         super(nombre, direccion, dni);
         this.password = password;
         this.sueldo = sueldo;
     }
+
+
 
     /** SETTERS **/
     public void setPassword(String password)
@@ -35,6 +47,11 @@ public class Recepcionista extends Persona implements Serializable
     {
         this.sueldo = sueldo;
     }
+    public void setTienePermiso(boolean tienePermiso)
+    {
+        this.tienePermiso = tienePermiso;
+    }
+
 
 
     /** GETTERS **/
@@ -46,6 +63,12 @@ public class Recepcionista extends Persona implements Serializable
     {
         return sueldo;
     }
+    public boolean isTienePermiso()
+    {
+        return tienePermiso;
+    }
+
+
 
     /** METODOS **/
     @Override
@@ -60,6 +83,21 @@ public class Recepcionista extends Persona implements Serializable
                 "\nSueldo: $" + sueldo +
                 "\n--------------------";
     }
+    @Override
+    public void consultarSueldo()
+    {
+        System.out.println("Hola Recepcionista" + this.getNombre() + ", tu sueldo es de $" + this.getSueldo() + " pesos por mes");
+    }
+    public void hacerBackUp(Hotel unHotel) throws ErrorEnArchivoException
+    {
+        if(this.tienePermiso)
+        {
+            Administrador admin = unHotel.retornarAdministrador();
+            admin.hacerBackUp(unHotel);
+        }
+    }
+
+
 
     public Cliente existeCliente(int dato, Hotel datos) /** Si no existe lanzar excepcion **/
     {
@@ -76,7 +114,7 @@ public class Recepcionista extends Persona implements Serializable
     public Cliente agregarCliente(Hotel datos)
     {
 
-        int dni = cargarDNI();
+        int dni = validarDNI();
         Cliente aux = existeCliente(dni, datos);
 
         if(aux == null)
@@ -91,7 +129,7 @@ public class Recepcionista extends Persona implements Serializable
             System.out.println("\nIngrese su direccion: ");
             aux.setDireccion(teclado.nextLine());
 
-            aux.setSaldo(cargarSaldo());
+            aux.setSaldo(validarImporte());
             teclado.nextLine();
 
             datos.listaClientes.agregar(aux);
@@ -99,8 +137,8 @@ public class Recepcionista extends Persona implements Serializable
 
         return aux;
     }
-
-    public double cargarSaldo()
+    @Override
+    public double validarImporte()
     {
         double saldo = 0;
         do{
@@ -112,8 +150,8 @@ public class Recepcionista extends Persona implements Serializable
         }while(saldo < 5000);
         return saldo;
     }
-
-    public int cargarDNI()
+    @Override
+    public int validarDNI()
     {
         int dni = 0;
         do {
@@ -126,6 +164,8 @@ public class Recepcionista extends Persona implements Serializable
         return dni;
     }
 
+
+
     public void mostrarHabitacionesDisponibles(ColeccionGenerica<Habitacion> listaHabitaciones)
     {
         for(Habitacion aux : listaHabitaciones)
@@ -136,7 +176,6 @@ public class Recepcionista extends Persona implements Serializable
             }
         }
     }
-
     private Habitacion buscarHabitacion(int id, ColeccionGenerica<Habitacion> listaHabitaciones)
     {
         Habitacion encontrado = null;
@@ -150,8 +189,8 @@ public class Recepcionista extends Persona implements Serializable
         }
         return encontrado;
     }
-
-    private void cargarSaldo(Cliente aux, double precio)
+    @Override
+    public void cargarSaldo(Cliente aux, double precio)
     {
         if(aux.getSaldo() < precio)
         {
@@ -160,12 +199,11 @@ public class Recepcionista extends Persona implements Serializable
                 System.out.println("Usted no tiene el saldo suficiente para pagar la habitacion. Cargue saldo a su cuenta a continuacion: ");
                 System.out.println("Precio habitacion: $" + precio);
                 System.out.println("Ingrese la cantidad a cargar: ");
-                aux.setSaldo(aux.getSaldo() + teclado.nextInt());
+                aux.setSaldo(aux.getSaldo() + teclado.nextDouble());
             }while(aux.getSaldo() < precio);
         }
     }
-
-    public void checkIn(Hotel datos) /** Llama a "agregarCliente()" **/
+    public void checkIn(Hotel datos)
     {
         checkearReservas(datos);
         Cliente aux = agregarCliente(datos);
@@ -231,29 +269,9 @@ public class Recepcionista extends Persona implements Serializable
 
     }
 
-//    public void verHabitacionesPorEstado(ColeccionGenerica<Habitacion> lista, String estado)
-//    {
-//        for(Habitacion aux : lista)
-//        {
-//            if(aux.getEstado() == Enum.valueOf(Habitacion.Estado.class, "O"))
-//            {
-//                System.out.println(aux.toString());
-//            }else if(aux.getEstado() == Enum.valueOf(Habitacion.Estado.class, "D"))
-//            {
-//                System.out.println(aux.toString());
-//            }else if(aux.getEstado() == Enum.valueOf(Habitacion.Estado.class, "R"))
-//            {
-//                System.out.println(aux.toString());
-//            }else if(aux.getEstado() == Enum.valueOf(Habitacion.Estado.class, "M"))
-//            {
-//                System.out.println(aux.toString());
-//            }
-//        }
-//    }
 
 
-
-    private void señarHabitacion(Cliente aux, double precio)
+    private void seniarHabitacion(Cliente aux, double precio)
     {
         double nuevoPrecio = precio*0.20;
         if(aux.getSaldo() < nuevoPrecio)
@@ -264,7 +282,7 @@ public class Recepcionista extends Persona implements Serializable
                 System.out.println("Precio senia: $" + nuevoPrecio);
                 System.out.println("Saldo Actual: $" + aux.getSaldo());
                 System.out.println("Ingrese la cantidad a cargar: ");
-                aux.setSaldo(aux.getSaldo() + teclado.nextInt());
+                aux.setSaldo(aux.getSaldo() + teclado.nextDouble());
             }while(aux.getSaldo() < nuevoPrecio);
         }
     }
@@ -297,6 +315,7 @@ public class Recepcionista extends Persona implements Serializable
                 if(LocalDate.now().isEqual(aux.getFechaFinReserva()))
                 {
                     /** checkout **/
+                    /** SI CONSUMIO CAMBIAR A MANTENIMIEENTO **/
                     /** Registro **/
                 }else if(LocalDate.now().isAfter(aux.getFechaFinReserva()))
                 {
@@ -304,6 +323,18 @@ public class Recepcionista extends Persona implements Serializable
                 }
             }
         }
+    }
+    public Habitacion buscarHabitacionesReservadas(Hotel unHotel, int dniIngresado)
+    {
+        Habitacion encontrado = null;
+        for(Habitacion auxHab : unHotel.listaHabitaciones)
+        {
+            if(auxHab.getEstado() == Habitacion.Estado.RESERVADO && auxHab.getOcupante().getDni() == dniIngresado)
+            {
+                encontrado = auxHab;
+            }
+        }
+        return encontrado;
     }
     public void hacerReserva(Hotel unHotel)
     {
@@ -341,7 +372,7 @@ public class Recepcionista extends Persona implements Serializable
         LocalDate finReserva = inicioReserva.plusDays(cantDias);
         double nuevoPrecio = existeHab.getPrecio()*cantDias;
 
-        señarHabitacion(aux, nuevoPrecio);
+        seniarHabitacion(aux, nuevoPrecio);
 
         double senia = nuevoPrecio*0.20;
         aux.setSaldo(aux.getSaldo() - senia);
@@ -415,6 +446,8 @@ public class Recepcionista extends Persona implements Serializable
 
         }
     }
+
+
 
     public void verHabitaciones(Hotel datos) /** MIRA TODAS LAS HABITACIONES JUNTO A SUS ESTADOS **/
     {

@@ -1,8 +1,7 @@
-import TPFinalLab3.Clases.Administrador;
-import TPFinalLab3.Clases.Habitacion;
-import TPFinalLab3.Clases.Hotel;
-import TPFinalLab3.Clases.Recepcionista;
+import TPFinalLab3.Clases.*;
+import TPFinalLab3.Excepciones.ErrorEnArchivoException;
 
+import java.io.*;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -27,9 +26,9 @@ public class Main
         unHotel.agregarHabitacion(unaHab3);
         unHotel.datosHotel();
 
-//        unRecepcionista.hacerReserva(unHotel);
-//        unRecepcionista.cancelarReserva(unHotel);
-        unRecepcionista.checkIn(unHotel);
+        unRecepcionista.hacerReserva(unHotel);
+        unRecepcionista.cancelarReserva(unHotel);
+        //unRecepcionista.checkIn(unHotel);
         System.out.println("Lista Habitaciones");
         unHotel.mostrarHabitaciones();
 
@@ -164,5 +163,43 @@ public class Main
 
         }while(seleccion != 0);
 
+    }
+
+    private static Hotel leerArchivo() throws ErrorEnArchivoException
+    {
+        try
+        {
+            FileInputStream fInput = new FileInputStream(new File("archivo_hotel.txt"));
+            ObjectInputStream objInput = new ObjectInputStream(fInput);
+            System.out.println("Leyendo el Archivo...");
+            Hotel unHotel = (Hotel) objInput.readObject();
+            System.out.println(".... El Archivo se leyo correctamente ....");
+            return unHotel;
+        }catch(ClassNotFoundException e)
+        {
+            System.out.println("Error al buscar la clase");
+            e.printStackTrace();
+        }catch(IOException e)
+        {
+            throw new ErrorEnArchivoException(2);
+        }
+
+        return null;
+    }
+
+    private static void guardarListaRegistros(ColeccionGenerica<Registro> lista) throws ErrorEnArchivoException
+    {
+        try
+        {
+            FileOutputStream fOutput = new FileOutputStream(new File("registros.txt"));
+            ObjectOutputStream objOutput = new ObjectOutputStream(fOutput);
+            System.out.println("Guardando Archivo...");
+            objOutput.writeObject(lista);
+            objOutput.close();
+            System.out.println(".... El Archivo se guardo correctamente ....");
+        }catch(IOException e)
+        {
+            throw new ErrorEnArchivoException(1);
+        }
     }
 }
