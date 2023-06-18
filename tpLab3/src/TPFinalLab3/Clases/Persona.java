@@ -1,5 +1,6 @@
 package TPFinalLab3.Clases;
 import java.io.Serializable;
+import java.util.Objects;
 
 public abstract class Persona implements Serializable
 {
@@ -60,6 +61,18 @@ public abstract class Persona implements Serializable
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Persona persona = (Persona) o;
+        return dni == persona.dni && Objects.equals(nombre, persona.nombre) && Objects.equals(direccion, persona.direccion);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nombre, direccion, dni);
+    }
 
     /** METODOS **/
     @Override
