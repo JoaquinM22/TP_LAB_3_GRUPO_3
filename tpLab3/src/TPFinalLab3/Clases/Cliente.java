@@ -15,6 +15,7 @@ public class Cliente extends Persona implements CargarDinero, Serializable
     private double saldo;
     private final static Scanner teclado = new Scanner(System.in);
     private boolean consumi = false;
+    private ColeccionGenerica<Habitacion> listaOcupadas = new ColeccionGenerica<>();
 
 
 
@@ -71,6 +72,11 @@ public class Cliente extends Persona implements CargarDinero, Serializable
     {
         System.out.println("Su saldo actual es de $" + this.saldo + "pesos.");
     }
+
+    public void agregar(Habitacion habitacion){
+        listaOcupadas.agregar(habitacion);
+    }
+
     public void cargarSaldoCliente()
     {
         double monto;
