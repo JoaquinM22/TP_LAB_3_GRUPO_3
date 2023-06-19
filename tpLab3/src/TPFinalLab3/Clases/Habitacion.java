@@ -130,6 +130,7 @@ public class Habitacion implements Serializable
                 "\n--------------------" +
                 "\nNro Habitacion: " + id +
                 "\nPrecio: $" + precio + "/dia" +
+                "\nDescripcion: " + descripcion +
                 "\nEstado: " + estado +
                 "\n------------------------";
     }
@@ -143,6 +144,7 @@ public class Habitacion implements Serializable
         cantDias = cantDias * (-1);
         double nuevoPrecio = cantDias*precio;
         System.out.println("Precio: " + nuevoPrecio);
+        System.out.println("Descripcion: " + descripcion);
         System.out.println(this.getOcupante().toString());
         System.out.println("Fecha inicio Reserva: " + fechaInicioReserva);
         System.out.println("Fecha Fin Reserva: " + fechaFinReserva);
@@ -156,7 +158,8 @@ public class Habitacion implements Serializable
         System.out.println("DATOS HABITACION");
         System.out.println("----------------------");
         System.out.println("Num Habitacion: " + id);
-        System.out.println("Precio: " + precio + "/dia");
+        System.out.println("Precio: $" + precio + "/dia");
+        System.out.println("Descripcion: " + descripcion);
         System.out.println("Estado: " + estado);
         System.out.println("----------------------");
         if(this.ocupante != null)

@@ -9,21 +9,56 @@ public class Main
 {
     public static void main(String[] args)
     {
-        Habitacion unaHab1 = new Habitacion(1, 50000000, "Habitacion con 2 camas y un baño");
-        Habitacion unaHab2 = new Habitacion(2, 80000000, "Habitacion con 3 camas y un baño");
-        Habitacion unaHab3 = new Habitacion(3, 30000000, "Habitacion con una cama y un baño");
+//        Habitacion unaHab1 = new Habitacion(1, 35000, "Habitacion con 2 camas y un baño");
+//        Habitacion unaHab2 = new Habitacion(2, 40000, "Habitacion con 3 camas y un baño");
+//        Habitacion unaHab3 = new Habitacion(3, 20000, "Habitacion con una cama y un baño");
+//        Habitacion unaHab4 = new Habitacion(4, 50000, "Habitacion con 3 cama, un baño y un jacuzzi");
+//        Habitacion unaHab5 = new Habitacion(5, 30000, "Habitacion con 1 cama matrimonial y un baño");
+//        Habitacion unaHab6 = new Habitacion(6, 40000, "Habitacion con 2 camas matrimoniales y un baño");
+//        Habitacion unaHab7 = new Habitacion(7, 55000, "Habitacion con 3 camas matrimoniales y un baño");
+//        Habitacion unaHab8 = new Habitacion(8, 55000, "Habitacion con 3 camas matrimoniales, un baño y un jacuzzi");
+//        Habitacion unaHab9 = new Habitacion(9, 60000, "Habitacion con 3 camas matrimoniales, una cama idividual, un baño y un jacuzzi");
+//        Habitacion unaHab10 = new Habitacion(10, 70000, "Habitacion con 3 camas matrimoniales, 2 camas idividuales, un baño y un jacuzzi");
+//
+//
+//        Recepcionista unRecepcionista = new Recepcionista("Mario Rodriguez", "Luro 1648", 22345164, "recepcionista123", 150000);
+//        Administrador unAdministrador = new Administrador("Maria Gutierrez", "Constitucion 5643", 21785124, "admin12345", 300000);
+//
+//
+//        Hotel unHotel = new Hotel("CostaGalana");
+//        unHotel.agregarEmpleado(unRecepcionista);
+//        unHotel.agregarEmpleado(unAdministrador);
+//
+//        unHotel.agregarHabitacion(unaHab1);
+//        unHotel.agregarHabitacion(unaHab2);
+//        unHotel.agregarHabitacion(unaHab3);
+//        unHotel.agregarHabitacion(unaHab4);
+//        unHotel.agregarHabitacion(unaHab5);
+//        unHotel.agregarHabitacion(unaHab6);
+//        unHotel.agregarHabitacion(unaHab7);
+//        unHotel.agregarHabitacion(unaHab8);
+//        unHotel.agregarHabitacion(unaHab9);
+//        unHotel.agregarHabitacion(unaHab10);
 
-        Recepcionista unRecepcionista = new Recepcionista("Pepe", "Luro 1212", 12345, "boca", 1200);
-        Administrador unAdministrador = new Administrador("Mario", "Colon 3434", 4567, "river", 5000);
+//        try
+//        {
+//            unAdministrador.hacerBackUp(unHotel);
+//        } catch (ErrorEnArchivoException e)
+//        {
+//            throw new RuntimeException(e);
+//        }
 
+        //unHotel.datosHotel();
 
-        Hotel unHotel = new Hotel("CostaGalana");
-        unHotel.agregarEmpleado(unRecepcionista);
-        unHotel.agregarEmpleado(unAdministrador);
+        try
+        {
+            Hotel unHotel = leerArchivo();
+            unHotel.datosHotel();
+        } catch (ErrorEnArchivoException e)
+        {
+            throw new RuntimeException(e);
+        }
 
-        unHotel.agregarHabitacion(unaHab1);
-        unHotel.agregarHabitacion(unaHab2);
-        unHotel.agregarHabitacion(unaHab3);
 //        unHotel.datosHotel();
 //
 //        unRecepcionista.hacerReserva(unHotel);
@@ -32,7 +67,7 @@ public class Main
 //        System.out.println("Lista Habitaciones");
 //        unHotel.mostrarHabitaciones();
 
-        menu(unHotel);
+        //menu(unHotel);
     }
 
 
