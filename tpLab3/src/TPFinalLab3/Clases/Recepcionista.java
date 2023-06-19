@@ -287,6 +287,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                 Habitacion existeHab = validarID(aux,datos);
                 //Cargar y restar saldo cliente
                 cargarSaldo(aux,existeHab.getPrecio()*cantDias);
+                aux.setSaldo(aux.getSaldo() - (existeHab.getPrecio()*cantDias));
                 LocalDate fechaSalida = LocalDate.now();
                 LocalDate fechaEntrada = fechaSalida.minusDays(cantDias);
                 Registro nuevoReg = new Registro(fechaEntrada,fechaSalida, existeHab, aux, existeHab.getPrecio()*cantDias, cantDias);
