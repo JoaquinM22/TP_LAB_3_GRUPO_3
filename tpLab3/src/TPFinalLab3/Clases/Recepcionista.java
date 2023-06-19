@@ -86,7 +86,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
     @Override
     public void consultarSueldo()
     {
-        System.out.println("Hola Recepcionista" + this.getNombre() + ", tu sueldo es de $" + this.getSueldo() + " pesos por mes");
+        System.out.println("Hola Recepcionista " + this.getNombre() + ", tu sueldo es de $" + this.getSueldo() + " pesos por mes");
     }
     public void hacerBackUp(Hotel unHotel) throws ErrorEnArchivoException
     {
@@ -516,6 +516,99 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
     public void verHabitaciones(Hotel datos) /** MIRA TODAS LAS HABITACIONES JUNTO A SUS ESTADOS **/
     {
         datos.mostrarHabitaciones();
+    }
+
+
+    public void accionesRecepcionista(Scanner teclado, int ref, Hotel datos)
+    {
+        try
+        {
+            int seleccion = ref;
+
+            switch(seleccion)
+            {
+                case 1 ->
+                {
+                    System.out.println("\n\nA continuacion se muestran todas las habitaciones: ");
+                    datos.mostrarHabitacionesOrdenado();
+                    System.out.println("\n0- Volver");
+                    do
+                    {
+                        System.out.println("Realice su eleccion: ");
+                        seleccion = teclado.nextInt();
+                        teclado.nextLine();
+                        if(seleccion != 0)
+                        {
+                            System.out.println("Opcion invalida. Intente de nuevo");
+                        }
+                    }while(seleccion != 0);
+                }
+                case 2 ->
+                {
+                    System.out.println("A continuacion se muestran todos los clientes: ");
+                    datos.mostrarClientes();
+                    System.out.println("\n0- Volver");
+                    do
+                    {
+                        System.out.println("Realice su eleccion: ");
+                        seleccion = teclado.nextInt();
+                        teclado.nextLine();
+                        if(seleccion != 0)
+                        {
+                            System.out.println("Opcion invalida. Intente de nuevo");
+                        }
+                    }while(seleccion != 0);
+                }
+                case 3 ->
+                {
+                    consultarSueldo();
+                    System.out.println("\n0- Volver");
+                    do
+                    {
+                        System.out.println("Realice su eleccion: ");
+                        seleccion = teclado.nextInt();
+                        teclado.nextLine();
+                        if(seleccion != 0)
+                        {
+                            System.out.println("Opcion invalida. Intente de nuevo");
+                        }
+                    }while(seleccion != 0);
+                }
+                case 4 ->
+                {
+                    if(this.tienePermiso)
+                    {
+                        hacerBackUp(datos);
+                        System.out.println("\n0- Volver");
+                        do
+                        {
+                            System.out.println("Realice su eleccion: ");
+                            seleccion = teclado.nextInt();
+                            teclado.nextLine();
+                            if(seleccion != 0)
+                            {
+                                System.out.println("Opcion invalida. Intente de nuevo");
+                            }
+                        }while(seleccion != 0);
+                    }else
+                    {
+                        System.out.println("No posee permisos de administrador");
+                    }
+                }
+                case 0 ->
+                {
+                    System.out.println("\nVolviendo al inicio...");
+                }
+                default ->
+                {
+                    System.out.println("Opcion invalida. Intente de nuevo");
+                    seleccion = -1;
+                }
+            }
+        }catch(ErrorEnArchivoException e)
+        {
+            throw new RuntimeException();
+        }
     }
 
 }

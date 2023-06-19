@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Main
 {
-    public static void main(String[] args) throws ErrorEnArchivoException
+    public static void main(String[] args)
     {
         Habitacion unaHab1 = new Habitacion(1, 50000000, "Habitacion con 2 camas y un baño");
         Habitacion unaHab2 = new Habitacion(2, 80000000, "Habitacion con 3 camas y un baño");
@@ -48,7 +48,7 @@ public class Main
 //        System.out.print("\r");
 //    }
     /** Funciones aparte del main **/
-    private static void menu(Hotel datos) throws ErrorEnArchivoException
+    private static void menu(Hotel datos)
     {
         Scanner teclado = new Scanner(System.in);
         int seleccion;
@@ -118,7 +118,7 @@ public class Main
         teclado.close();
     }
 
-    private static void menus_especificos(Scanner teclado, int ref, Hotel datos) throws ErrorEnArchivoException
+    private static void menus_especificos(Scanner teclado, int ref, Hotel datos)
     {
         int seleccion = ref;
 
@@ -187,31 +187,59 @@ public class Main
         {
             case 1 -> /** ADMINISTRADOR **/
             {
-                System.out.println("1- Realizar backUp");
-                System.out.println("2- Agregar Recepcionsta");
-                System.out.println("3- Modificar datos Recepcionista");
-                System.out.println("4- Ver Habitaciones");
-                System.out.println("5- Ver Clientes");
-                System.out.println("6- Ver Recepcionistas");
-                System.out.println("7- Consultar Sueldo");
-                System.out.println("\n0- Volver");
+                Persona empleado = ingresarComoAdminOEmpleado(teclado, datos);
+                if(empleado == null)
+                {
+                    System.out.println("La contrasenia es incorrecta");
+                }else
+                {
+                    if(empleado instanceof Administrador)
+                    {
+                        System.out.println("\nBienvenido al Sistema Administrador " + empleado.getNombre() + "!\n\n");
+                        System.out.println("1- Realizar backUp");
+                        System.out.println("2- Agregar Recepcionsta");
+                        System.out.println("3- Modificar datos Recepcionista");
+                        System.out.println("4- Ver Habitaciones");
+                        System.out.println("5- Ver Clientes");
+                        System.out.println("6- Ver Recepcionistas");
+                        System.out.println("7- Consultar Sueldo");
+                        System.out.println("\n0- Volver");
 
-                System.out.println("\nRealice su eleccion: ");
-                seleccion = teclado.nextInt();
-                Administrador unAdmin = datos.retornarAdministrador();
-                unAdmin.accionesAdmin(teclado, seleccion, datos);
+                        System.out.println("\nRealice su eleccion: ");
+                        seleccion = teclado.nextInt();
+                        ((Administrador) empleado).accionesAdmin(teclado, seleccion, datos);
+                    }else
+                    {
+                        System.out.println("La contrasenia es incorrecta");
+                    }
+                }
 
             }
             case 2 ->/** RECEPCIONISTA **/
             {
-                System.out.println("1- Ver Habitaciones");
-                System.out.println("2- Ver Clientes");
-                System.out.println("3- Consultar Sueldo");
-                System.out.println("4- Hacer backUp");
-                System.out.println("\n0- Volver");
+                Persona empleado = ingresarComoAdminOEmpleado(teclado, datos);
+                if(empleado == null)
+                {
+                    System.out.println("La contrasenia es incorrecta");
+                }else
+                {
+                    if(empleado instanceof Recepcionista)
+                    {
+                        System.out.println("\nBienvenido al Sistema Recepcionista " + empleado.getNombre() + "!\n\n");
+                        System.out.println("1- Ver Habitaciones");
+                        System.out.println("2- Ver Clientes");
+                        System.out.println("3- Consultar Sueldo");
+                        System.out.println("4- Hacer backUp");
+                        System.out.println("\n0- Volver");
 
-                System.out.println("\nRealice su eleccion: ");
-                seleccion = teclado.nextInt();
+                        System.out.println("\nRealice su eleccion: ");
+                        seleccion = teclado.nextInt();
+                        ((Recepcionista) empleado).accionesRecepcionista(teclado, seleccion, datos);
+                    }else
+                    {
+                        System.out.println("La contrasenia es incorrecta");
+                    }
+                }
             }
             case 3 ->/** CLIENTE **/
             {
@@ -290,4 +318,40 @@ public class Main
             e.printStackTrace();
         }
     }
+
+    public static Persona ingresarComoAdminOEmpleado(Scanner teclado, Hotel datos)
+    {
+        Persona esCorrecta = null;
+        String password;
+        System.out.print("\nIngrese su contrasenia: ");
+        password = teclado.nextLine();
+        teclado.nextLine();
+        esCorrecta = validarPassword(password, datos);
+        return esCorrecta;
+    }
+    public static Persona validarPassword(String contrasenia, Hotel datos)
+    {
+        Persona esCorrecta = null;
+        for(Persona auxPersona : datos.getListaEmpleados())
+        {
+            if(auxPersona instanceof Recepcionista || auxPersona instanceof Administrador)
+            {
+                if(auxPersona instanceof Recepcionista)
+                {
+                    if(((Recepcionista) auxPersona).getPassword() == contrasenia)
+                    {
+                        esCorrecta = auxPersona;
+                    }
+                }else
+                {
+                    if(((Administrador) auxPersona).getPassword() == contrasenia)
+                    {
+                        esCorrecta = auxPersona;
+                    }
+                }
+            }
+        }
+        return esCorrecta;
+    }
+
 }

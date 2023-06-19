@@ -210,5 +210,17 @@ public class Hotel implements Serializable
         }
         return admin;
     }
+    public Recepcionista retornarRecepcionista()
+    {
+        Recepcionista empleado = null;
+        for(Persona aux : listaEmpleados)
+        {
+            if(aux instanceof Recepcionista)
+            {
+                empleado = (Recepcionista) aux;
+            }
+        }
+        return empleado;
+    }
 
 }
