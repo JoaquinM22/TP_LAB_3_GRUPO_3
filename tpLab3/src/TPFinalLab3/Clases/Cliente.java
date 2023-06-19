@@ -1,5 +1,4 @@
 package TPFinalLab3.Clases;
-import TPFinalLab3.Excepciones.ErrorEnArchivoException;
 import TPFinalLab3.Interfaces.CargarDinero;
 
 import java.io.Serializable;
