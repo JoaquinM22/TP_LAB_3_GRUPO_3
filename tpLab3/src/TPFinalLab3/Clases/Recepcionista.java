@@ -98,7 +98,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
     }
 
 
-
+    /** METODO BUSQUEDA Y CARGA DE NUEVO CLIENTE **/
     public Cliente existeCliente(int dato, Hotel datos) /** Si no existe lanzar excepcion **/
     {
         Cliente encontrado = null;
@@ -138,6 +138,165 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
         return aux;
     }
     @Override
+    public void cargarSaldo(Cliente aux, double precio)
+    {
+        if(aux.getSaldo() < precio)
+        {
+            do
+            {
+                System.out.println("Usted no tiene el saldo suficiente para pagar la habitacion. Cargue saldo a su cuenta a continuacion: ");
+                System.out.println("Precio habitacion: $" + precio);
+                System.out.println("Su saldo: $" + aux.getSaldo());
+                System.out.println("Ingrese la cantidad a cargar: ");
+                aux.setSaldo(aux.getSaldo() + teclado.nextDouble());
+            }while(aux.getSaldo() < precio);
+        }
+    }
+
+//    public void cargarSaldoCliente(Cliente aux)
+//    {
+//        double monto;
+//        do
+//        {
+//            System.out.println("Cuanto dinero quiere cargar?");
+//            System.out.print("\nIngrese un monto: ");
+//            monto = teclado.nextDouble();
+//            if(monto <=0)
+//            {
+//                System.out.println("El monto ingresado no puede ser 0 no un numer negativo. Intente de nuevo");
+//            }
+//        }while(monto <= 0);
+//        aux.setSaldo(aux.getSaldo() + monto);
+//    }
+
+    /** CHECK IN Y CHECK OUT **/
+    public void checkIn(Hotel datos)
+    {
+        //checkearReservas(datos);
+        /** RETORNA UN CLIENTE SI EXISTE SINO CREA UNO NUEVO **/
+        Cliente auxCliente = agregarCliente(datos);
+
+        /** MUESTRA LAS HABITACIONES DISPONIBLES **/
+        System.out.println("A continuacion le mostramos las habitaciones disponibles:");
+        mostrarHabitacionesDisponibles(datos.listaHabitaciones);
+
+        /** SE QUEDA EN EL BUCLE HASTA QUE RETORNA UNA HABITACION VALIDA **/
+        Habitacion existeHab;
+        do
+        {
+            System.out.println("Ingrese el id de la habitacion que desea: ");
+            existeHab = buscarHabitacion(teclado.nextInt(), datos.listaHabitaciones);
+            if(existeHab == null)
+            {
+                System.out.println("El id ingresado no le corresponde a ninguna habitacion. Intente de nuevo");
+            }
+        }while(existeHab == null);
+
+        System.out.println("Realizando CheckIn ...");
+
+        /** LE CARGA EL CLIENTE A LA HABITACION **/
+        existeHab.setOcupante(auxCliente);
+
+        /** LE CARGA LA HABITACION A LA LISTA DEL CLIENTE **/
+        auxCliente.agregar(existeHab);
+
+        /** LE CAMBIA EL ESTADO A "OCUPADO" **/
+        existeHab.setEstado(Habitacion.Estado.OCUPADO);
+
+        System.out.println("...");
+        pausa(1000);
+        System.out.println("...");
+        pausa(1000);
+        System.out.println("...");
+        pausa(1000);
+        System.out.println(".... El CheckIn se realizo exitosamene! ....");
+
+        /** MUESTRO LOS DATOS ACTUALIZADOS DE LA HABITACION **/
+        System.out.println("A continuacion se muestra los datos de la habitacion:");
+        existeHab.datosHabitacion();
+        System.out.println("\n\n");
+    }
+    public void checkOut(Hotel datos)
+    {
+        /** VALIDA QUE SE INGRESE UN DNI **/
+        int dniIngresado = validarDNI();
+
+        /** BUSCA AL CLIENTE POR EL DNI EN EL SISTEMA **/
+        Cliente auxCliente = existeCliente(dniIngresado, datos);
+        if(auxCliente != null)
+        {
+            /** VERIFICA QUE TENGA HABITACIONES OCUPADAS Y NO RESERVADAS **/
+            boolean tiene = validarOcupadas(auxCliente);
+            if(tiene)
+            {
+                System.out.println("Haciendo ChekOut ...");
+
+                /** ELIGE LA HABITACION A LA QUE QUIERE HACER UN CHECKOUT **/
+                Habitacion existeHab = validarID(auxCliente, datos);
+
+                /** CON UN RANDOM INGRESA CUANTOS DIAS SE HOSPEDO **/
+                int cantDias = (int)(Math.random() * 20 + 1);
+                cargarSaldo(auxCliente,existeHab.getPrecio()*cantDias);
+                auxCliente.setSaldo(auxCliente.getSaldo() - (existeHab.getPrecio()*cantDias));
+                LocalDate fechaSalida = LocalDate.now();
+                LocalDate fechaEntrada = fechaSalida.minusDays(cantDias);
+
+                /** CREA UN NUEVO REGISTRO **/
+                Registro nuevoReg = new Registro(fechaEntrada,fechaSalida, existeHab, auxCliente, existeHab.getPrecio()*cantDias, cantDias);
+                datos.agregarRegistro(nuevoReg);
+
+                /** ELIMINA EL CLIENTE DE LA HABITACION Y VICEVERSA **/
+                auxCliente.eliminar(existeHab);
+                existeHab.setOcupante(null);
+
+                /** CAMBIA EL ESTADO A DISPONIBLE **/
+                existeHab.setEstado(Habitacion.Estado.DISPONIBLE);
+
+                System.out.println("...");
+                pausa(1000);
+                System.out.println("...");
+                pausa(1000);
+                System.out.println("...");
+                pausa(1000);
+                System.out.println("... El CheckOut se realizo con exito! ...");
+            }else
+            {
+                System.out.println("Usted no esta ocupando ninguna habitacion en este hotel");
+            }
+        }else
+        {
+            System.out.println("El dni ingresado no corresponde a ningun cliente en nuestro sistema");
+        }
+    }
+
+
+
+
+    /** METODOS DE VALIDACION **/
+    private Habitacion validarID(Cliente aux, Hotel datos)
+    {
+        Habitacion existeHab;
+        int id = 0;
+        do
+        {
+            System.out.println("Habitaciones que usted actualmente ocupa");
+            aux.mostrarMisHabitaciones();
+            System.out.println("Ingrese el ID de la habitacion que se retira");
+            int idRetirar = teclado.nextInt();
+            existeHab = buscarHabitacionOcupada(datos, aux, idRetirar);
+            if(existeHab == null)
+            {
+                System.out.println("\nLa habitacion buscada no existe. Intente de nuevo");
+            }
+        }while(existeHab == null);
+
+        return existeHab;
+    }
+    private boolean validarOcupadas(Cliente aux)
+    {
+        return aux.tamanio() > 0;
+    }
+    @Override
     public double validarImporte()
     {
         double saldo;
@@ -170,255 +329,15 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
 
 
 
-    public void mostrarHabitacionesDisponibles(ColeccionGenerica<Habitacion> listaHabitaciones)
-    {
-        for(Habitacion aux : listaHabitaciones)
-        {
-            if(aux.getEstado() == Habitacion.Estado.DISPONIBLE)
-            {
-                System.out.println(aux);
-            }
-        }
-    }
-    private Habitacion buscarHabitacion(int id, ColeccionGenerica<Habitacion> listaHabitaciones)
-    {
-        Habitacion encontrado = null;
 
-        for(Habitacion aux : listaHabitaciones)
-        {
-            if(aux.getId() == id)
-            {
-                encontrado = aux;
-            }
-        }
-        return encontrado;
-    }
-    @Override
-    public void cargarSaldo(Cliente aux, double precio)
-    {
-        if(aux.getSaldo() < precio)
-        {
-            do
-            {
-                System.out.println("Usted no tiene el saldo suficiente para pagar la habitacion. Cargue saldo a su cuenta a continuacion: ");
-                System.out.println("Precio habitacion: $" + precio);
-                System.out.println("Ingrese la cantidad a cargar: ");
-                aux.setSaldo(aux.getSaldo() + teclado.nextDouble());
-            }while(aux.getSaldo() < precio);
-        }
-    }
-//    public void cargarSaldoCliente(Cliente aux)
-//    {
-//        double monto;
-//        do
-//        {
-//            System.out.println("Cuanto dinero quiere cargar?");
-//            System.out.print("\nIngrese un monto: ");
-//            monto = teclado.nextDouble();
-//            if(monto <=0)
-//            {
-//                System.out.println("El monto ingresado no puede ser 0 no un numer negativo. Intente de nuevo");
-//            }
-//        }while(monto <= 0);
-//        aux.setSaldo(aux.getSaldo() + monto);
-//    }
-    public void checkIn(Hotel datos)
-    {
-        checkearReservas(datos);
-        Cliente aux = agregarCliente(datos);
-        System.out.println("A continuacion le mostramos las habitaciones disponibles:");
-        mostrarHabitacionesDisponibles(datos.listaHabitaciones);
-        Habitacion existeHab;
-        do
-        {
-            System.out.println("Ingrese el id de la habitacion que desea: ");
-            existeHab = buscarHabitacion(teclado.nextInt(), datos.listaHabitaciones);
-            if(existeHab == null)
-            {
-                System.out.println("El id ingresado no le corresponde a ninguna habitacion. Intente de nuevo");
-            }
-
-        }while(existeHab == null);
-
-        existeHab.setOcupante(aux);
-
-//        System.out.println("Cuantos dias va a hospedarse? ");
-//        int cantDias = teclado.nextInt();
-
-//        LocalDate fechaEntrada = LocalDate.now(); /** SE UTILIZAN PARA EL REGISTRO **/
-//        LocalDate fechaSalida = fechaEntrada.plusDays(cantDias); /** SE UTILIZAN PARA EL REGISTRO **/
-
-//        cargarSaldo(aux, (existeHab.getPrecio()*cantDias));
-//
-//        aux.setSaldo(aux.getSaldo() - (existeHab.getPrecio()*cantDias));
-        existeHab.setEstado(Habitacion.Estado.OCUPADO);
-        /** METODO PARA CARGAR REGISTRO **/
-
-//        Registro nuevoReg = new Registro(fechaEntrada,fechaSalida, existeHab, aux, existeHab.getPrecio()*cantDias, cantDias);
-//        datos.agregarRegistro(nuevoReg);
-
-        /** CARGA HABITACION ELEGIDA EN LISTAOCUPADAS DE CLIENTE **/
-        aux.agregar(existeHab);
-
-
-        System.out.println(".... El CheckIn se realizo exitosamene! ....");
-        System.out.println("A continuacion se muestra los datos de la habitacion:");
-        existeHab.datosHabitacion();
-        System.out.println("\n\n");
-    }
-
-
-
-    public void checkOut(Hotel datos)
-    {
-        /**
-         * CAMBIA EL ESTADO DE LA HABITACION
-         * A DISPONIBLE O EN MANTENIMIENTO Y QUITA LA PERSONA DE ELLA
-         **/
-
-        int dniIngresado = validarDNI();
-        Cliente aux = existeCliente(dniIngresado, datos);
-        if(aux != null)
-        {
-            boolean tiene = validarOcupadas(aux);
-            if(tiene)
-            {
-                int cantDias = (int)(Math.random() * 20 + 1);
-                Habitacion existeHab = validarID(aux,datos);
-                //Cargar y restar saldo cliente
-                cargarSaldo(aux,existeHab.getPrecio()*cantDias);
-                aux.setSaldo(aux.getSaldo() - (existeHab.getPrecio()*cantDias));
-                LocalDate fechaSalida = LocalDate.now();
-                LocalDate fechaEntrada = fechaSalida.minusDays(cantDias);
-                Registro nuevoReg = new Registro(fechaEntrada,fechaSalida, existeHab, aux, existeHab.getPrecio()*cantDias, cantDias);
-                datos.agregarRegistro(nuevoReg);
-//                Registro existeReg = datos.buscarRegistro(dniIngresado);
-//                existeReg.setFechaSalida(existeReg.getFechaEntrada().plusDays(existeReg.getCantDias()));
-
-//                existeReg.setOcupante(null);
-//                existeReg.getOcupada().setEstado(Habitacion.Estado.DISPONIBLE);
-                existeHab.setOcupante(null);
-                if(aux.isConsumi())
-                {
-                    existeHab.setEstado(Habitacion.Estado.MANTENIMIENTO);
-                }else
-                {
-                    existeHab.setEstado(Habitacion.Estado.DISPONIBLE);
-                }
-                aux.eliminar(existeHab);
-                System.out.println("... CheckOut realizado con exito ...");
-            }else
-            {
-                System.out.println("Usted no esta ocupando ninguna habitacion en este hotel");
-            }
-        }else
-        {
-            System.out.println("El dni ingresado no corresponde a ningun cliente en nuestro sistema");
-        }
-    }
-    private Habitacion validarID(Cliente aux, Hotel datos)
-    {
-        Habitacion existeHab;
-        int id = 0;
-        do
-        {
-            System.out.println("Habitaciones que usted actualmente ocupa");
-            //mostrarOcupadasCliente(aux, datos.listaHabitaciones);
-            aux.mostrarMisHabitaciones();
-            System.out.println("Ingrese el ID de la habitacion que se retira");
-            int idRetirar = teclado.nextInt();
-            existeHab = buscarHabitacionOcupada(datos, aux, idRetirar);
-            if(existeHab == null)
-            {
-                System.out.println("\nLa habitacion buscada no existe. Intente de nuevo");
-            }
-        }while(existeHab == null);
-
-        return existeHab;
-    }
-    private boolean validarOcupadas(Cliente aux)
-    {
-        return aux.tamanio() > 0;
-    }
-
-    private void seniarHabitacion(Cliente aux, double precio)
-    {
-        double nuevoPrecio = precio*0.20;
-        if(aux.getSaldo() < nuevoPrecio)
-        {
-            do
-            {
-                System.out.println("Usted no tiene el saldo suficiente para pagar la habitacion. Cargue saldo a su cuenta a continuacion: ");
-                System.out.println("Precio senia: $" + nuevoPrecio);
-                System.out.println("Saldo Actual: $" + aux.getSaldo());
-                System.out.println("Ingrese la cantidad a cargar: ");
-                aux.setSaldo(aux.getSaldo() + teclado.nextDouble());
-            }while(aux.getSaldo() < nuevoPrecio);
-        }
-    }
-    public void checkearReservas(Hotel unHotel)
-    {
-        for(Habitacion aux : unHotel.listaHabitaciones)
-        {
-            if(aux.getEstado() == Habitacion.Estado.RESERVADO)
-            {
-                if(LocalDate.now().isEqual(aux.getFechaInicioReserva()) || (LocalDate.now().isAfter(aux.getFechaInicioReserva()) && LocalDate.now().isBefore(aux.getFechaFinReserva())))
-                {
-                    Cliente clienteAux = aux.getOcupante();
-                    int cantDias = (int) ChronoUnit.DAYS.between(aux.getFechaFinReserva(), aux.getFechaInicioReserva());
-                    cantDias = cantDias * (-1);
-                    double precioAPagar = (aux.getPrecio()*cantDias) - (aux.getPrecio()*0.20);
-
-                    if(clienteAux.getSaldo() < precioAPagar)
-                    {
-                        clienteAux.setSaldo(clienteAux.getSaldo() + precioAPagar);
-                        clienteAux.setSaldo(clienteAux.getSaldo() - precioAPagar);
-                    }
-                    aux.setEstado(Habitacion.Estado.OCUPADO);
-                    aux.setFechaInicioReserva(null);
-                    /** FALTA CARGAR HABITACION ELEGIDA EN LISTAOCUPADAS DE CLIENTE **/
-
-                }
-            }else if(aux.getFechaFinReserva() != null && aux.getFechaInicioReserva() == null)
-            {
-                if(LocalDate.now().isEqual(aux.getFechaFinReserva()) || LocalDate.now().isAfter(aux.getFechaFinReserva()))
-                {
-                    /** checkout **/
-                    Registro reg = unHotel.buscarRegistro(aux.getOcupante().getDni());
-                    reg.setFechaSalida(aux.getFechaFinReserva());
-
-                    if(aux.getOcupante().isConsumi())
-                    {
-                        aux.setEstado(Habitacion.Estado.MANTENIMIENTO);
-                    }else
-                    {
-                        aux.setEstado(Habitacion.Estado.DISPONIBLE);
-                    }
-                    aux.setOcupante(null);
-
-                }
-            }
-        }
-    }
-    public Habitacion buscarHabitacionesReservadas(Hotel unHotel, int dniIngresado)
-    {
-        Habitacion encontrado = null;
-        for(Habitacion auxHab : unHotel.listaHabitaciones)
-        {
-            if(auxHab.getEstado() == Habitacion.Estado.RESERVADO && auxHab.getOcupante().getDni() == dniIngresado)
-            {
-                encontrado = auxHab;
-            }
-        }
-        return encontrado;
-    }
+    /** METODOS HACER RESERVA Y CANCELAR RESERVA **/
     public void hacerReserva(Hotel unHotel)
     {
         Cliente aux = agregarCliente(unHotel);
 
         System.out.println("Que habitacion desea reservar?");
-        System.out.println("Para la reserva debe abonar el 20% del total del precio, y el resto al momento del CheckIn");
-        System.out.println("Si cancela la reserva se le devolvera el dinero");
+        System.out.println("Para la reserva debe abonar el 20% del total del precio, y el resto al momento del CheckOut");
+        System.out.println("Si cancela la reserva se le devolvera el dinero de la senia");
         mostrarHabitacionesDisponibles(unHotel.listaHabitaciones);
         Habitacion existeHab;
         do
@@ -459,35 +378,6 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
         System.out.println(".... La Reserva se realizo exitosamene! ....");
         System.out.println("A continuacion se muestran los datos de la Reserva:");
         existeHab.datosReserva();
-        //Ambas fechas en null porque no se realizo el checkIn
-        Registro reg = new Registro(null, null, existeHab, aux, senia, cantDias);
-        unHotel.agregarRegistro(reg);
-
-    }
-    public void mostrarHabitacionesReservadasMismaPersona(Hotel unHotel, int dniIngresado)
-    {
-        for(Habitacion auxHab : unHotel.listaHabitaciones)
-        {
-            if(auxHab.getEstado() == Habitacion.Estado.RESERVADO && auxHab.getOcupante().getDni() == dniIngresado)
-            {
-                System.out.println(auxHab);
-            }
-        }
-    }
-
-
-
-    public Habitacion buscarHabitacionOcupada(Hotel unHotel, Cliente cliente, int idHabitacion)
-    {
-        Habitacion encontrado = null;
-        for(Habitacion auxHab : unHotel.listaHabitaciones)
-        {
-            if(auxHab.getEstado() == Habitacion.Estado.OCUPADO && auxHab.getOcupante().equals(cliente) && idHabitacion == auxHab.getId())
-            {
-                encontrado = auxHab;
-            }
-        }
-        return encontrado;
     }
     public void cancelarReserva(Hotel unHotel)
     {
@@ -522,18 +412,151 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                 System.out.println(existeHab.getOcupante().toString());
                 System.out.println("Saldo Ocupante Hab: " + existeHab.getOcupante().getSaldo());
             }
+        }
+    }
 
+    /** SENIA LA HABITACION A RESERVAR **/
+    private void seniarHabitacion(Cliente aux, double precio)
+    {
+        double nuevoPrecio = precio*0.20;
+        if(aux.getSaldo() < nuevoPrecio)
+        {
+            do
+            {
+                System.out.println("Usted no tiene el saldo suficiente para pagar la habitacion. Cargue saldo a su cuenta a continuacion: ");
+                System.out.println("Precio senia: $" + nuevoPrecio);
+                System.out.println("Saldo Actual: $" + aux.getSaldo());
+                System.out.println("Ingrese la cantidad a cargar: ");
+                aux.setSaldo(aux.getSaldo() + teclado.nextDouble());
+            }while(aux.getSaldo() < nuevoPrecio);
+        }
+    }
+
+    /** VERIFICA SI HAY HABITACIONES RESERVADAS PARA PONER EN OCUPADAS O DISPONIBLES
+     * TAMBIEN REALIZA EL CHECKOUT DE MANERA INTERNA Y AUTOMATICA **/
+    public void checkearReservas(Hotel unHotel)
+    {
+        for(Habitacion auxHab : unHotel.listaHabitaciones)
+        {
+            if(auxHab.getEstado() == Habitacion.Estado.RESERVADO)
+            {
+                if(LocalDate.now().isEqual(auxHab.getFechaInicioReserva()) || (LocalDate.now().isAfter(auxHab.getFechaInicioReserva()) && LocalDate.now().isBefore(auxHab.getFechaFinReserva())))
+                {
+                    auxHab.setEstado(Habitacion.Estado.OCUPADO); /** CAMBIO EL ESTADO DE "RESERVADO" A "OCUPADO" **/
+                    auxHab.getOcupante().agregar(auxHab); /** AGREGO LA HABITACION A LA LISTA DE HABITACIONES **/
+                }
+            }else if(auxHab.getFechaFinReserva() != null && auxHab.getFechaInicioReserva() == null)
+            {
+                if(LocalDate.now().isEqual(auxHab.getFechaFinReserva()) || LocalDate.now().isAfter(auxHab.getFechaFinReserva()))
+                {
+                    /** SE HACE EL CHEKOUT DE FORMA AUTOMATICA **/
+                    int cantDias = (int) ChronoUnit.DAYS.between(auxHab.getFechaFinReserva(), auxHab.getFechaInicioReserva());
+                    cantDias = cantDias * (-1);
+
+                    double precioAPagar = (auxHab.getPrecio()*cantDias) - (auxHab.getPrecio()*0.20);
+                    auxHab.getOcupante().setSaldo(auxHab.getOcupante().getSaldo() + precioAPagar);
+                    auxHab.getOcupante().setSaldo(auxHab.getOcupante().getSaldo() - precioAPagar);
+
+                    /** CARGO UN NUEVO REGISTRO **/
+                    Registro nuevoRegistro = new Registro(auxHab.getFechaInicioReserva(), auxHab.getFechaFinReserva(), auxHab, auxHab.getOcupante(), precioAPagar, cantDias);
+                    unHotel.agregarRegistro(nuevoRegistro);
+
+                    auxHab.getOcupante().listaOcupadas.eliminar(auxHab);
+                    auxHab.setOcupante(null);
+                    auxHab.setEstado(Habitacion.Estado.DISPONIBLE);
+                    auxHab.setFechaInicioReserva(null);
+                    auxHab.setFechaFinReserva(null);
+                }
+            }
         }
     }
 
 
 
-    public void verHabitaciones(Hotel datos) /** MIRA TODAS LAS HABITACIONES JUNTO A SUS ESTADOS **/
+
+    /** METODOS DE BUSQUEDA DE HABITACIONES **/
+    private Habitacion buscarHabitacion(int id, ColeccionGenerica<Habitacion> listaHabitaciones) /** POR ID **/
     {
-        datos.mostrarHabitaciones();
+        Habitacion encontrado = null;
+
+        for(Habitacion aux : listaHabitaciones)
+        {
+            if(aux.getId() == id)
+            {
+                encontrado = aux;
+            }
+        }
+        return encontrado;
+    }
+    public Habitacion buscarHabitacionesReservadas(Hotel unHotel, int dniIngresado) /** POR ID HABITACIONES RESERVADAS **/
+    {
+        Habitacion encontrado = null;
+        for(Habitacion auxHab : unHotel.listaHabitaciones)
+        {
+            if(auxHab.getEstado() == Habitacion.Estado.RESERVADO && auxHab.getOcupante().getDni() == dniIngresado)
+            {
+                encontrado = auxHab;
+            }
+        }
+        return encontrado;
+    }
+    public Habitacion buscarHabitacionOcupada(Hotel unHotel, Cliente cliente, int idHabitacion) /** POR ID HABITACIONES OCUPADAS **/
+    {
+        Habitacion encontrado = null;
+        for(Habitacion auxHab : unHotel.listaHabitaciones)
+        {
+            if(auxHab.getEstado() == Habitacion.Estado.OCUPADO && auxHab.getOcupante().equals(cliente) && idHabitacion == auxHab.getId())
+            {
+                encontrado = auxHab;
+            }
+        }
+        return encontrado;
     }
 
 
+
+
+    /** MOSTRAR HABITACIONES DISPONIBLES Y RESERVADAS **/
+    public void mostrarHabitacionesReservadasMismaPersona(Hotel unHotel, int dniIngresado)
+    {
+        for(Habitacion auxHab : unHotel.listaHabitaciones)
+        {
+            if(auxHab.getEstado() == Habitacion.Estado.RESERVADO && auxHab.getOcupante().getDni() == dniIngresado)
+            {
+                System.out.println(auxHab);
+            }
+        }
+    }
+    public void mostrarHabitacionesDisponibles(ColeccionGenerica<Habitacion> listaHabitaciones)
+    {
+        for(Habitacion aux : listaHabitaciones)
+        {
+            if(aux.getEstado() == Habitacion.Estado.DISPONIBLE)
+            {
+                System.out.println(aux);
+            }
+        }
+    }
+
+
+
+
+    /** METODOD PAUSA **/
+    public static void pausa(int miliseg)
+    {
+        try
+        {
+            Thread.sleep(miliseg);
+        }catch(InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+    /** MENU RECEPCIONISTA **/
     public void accionesRecepcionista(Scanner teclado, int ref, Hotel datos)
     {
         try
@@ -542,7 +565,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
 
             switch(seleccion)
             {
-                case 1 ->
+                case 1 -> /** MUESTRA TODAS LAS HABITACIONES DE MANERA SEPARADA POR ESTADO **/
                 {
                     System.out.println("\n\nA continuacion se muestran todas las habitaciones: ");
                     datos.mostrarHabitacionesOrdenado();
@@ -558,7 +581,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                         }
                     }while(seleccion != 0);
                 }
-                case 2 ->
+                case 2 -> /** MUESTRA TODOS LOS CLIENTES QUE ESTAN EN EL SISTEMA **/
                 {
                     System.out.println("A continuacion se muestran todos los clientes: ");
                     datos.mostrarClientes();
@@ -574,7 +597,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                         }
                     }while(seleccion != 0);
                 }
-                case 3 ->
+                case 3 -> /** CONSULTA EL SUELDO DEL RECEPCIONISTA **/
                 {
                     consultarSueldo();
                     System.out.println("\n0- Volver");
@@ -589,7 +612,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                         }
                     }while(seleccion != 0);
                 }
-                case 4 ->
+                case 4 -> /** REALIZA UN BACKUP DE LOS REGISTROS, SOLO SI TIENE PERMISOS DE ADMINISTRADOR **/
                 {
                     if(this.tienePermiso)
                     {
@@ -622,5 +645,4 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
             throw new RuntimeException();
         }
     }
-
 }

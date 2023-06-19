@@ -22,7 +22,7 @@ public class Main
 
 
         Recepcionista unRecepcionista = new Recepcionista("Mario Rodriguez", "Luro 1648", 22345164, "recepcionista123", 150000);
-        Administrador unAdministrador = new Administrador("Maria Gutierrez", "Constitucion 5643", 21785124, "admin12345", 300000);
+        Administrador unAdministrador = new Administrador("Maria Gutierrez", "Constitucion 5643", 21785124, "admin123", 300000);
 
 
         Hotel unHotel = new Hotel("CostaGalana");
@@ -48,8 +48,7 @@ public class Main
 //        {
 //            throw new RuntimeException(e);
 //        }
-//
-//        unHotel.datosHotel();
+
 
         /** LEER ARCHIVO HOTEL **/
 //        try
@@ -65,7 +64,6 @@ public class Main
 //        }
 
 //        unHotel.datosHotel();
-//
 //        unRecepcionista.hacerReserva(unHotel);
 //        unRecepcionista.cancelarReserva(unHotel);
 //        //unRecepcionista.checkIn(unHotel);
@@ -108,7 +106,19 @@ public class Main
                 }
             }else
             {
-                System.out.println("\nLa opcion ingresada es invalida.");
+                System.out.println("\nOpcion invalida. Intente de nuevo.");
+                System.out.println("\n0- Volver");
+                do
+                {
+                    System.out.println("Realice su eleccion: ");
+                    seleccion = teclado.nextInt();
+                    teclado.nextLine();
+                    if(seleccion != 0)
+                    {
+                        System.out.println("Opcion invalida. Intente de nuevo");
+                    }
+                }while(seleccion != 0);
+                seleccion = -1;
             }
         }while(seleccion != 0);
         teclado.close();
@@ -213,6 +223,7 @@ public class Main
                 if(seleccionado > 7 || seleccionado < 0)
                 {
                     System.out.println("\nOpcion invalida. Intente de nuevo");
+
                 }else
                 {
                     empleado.accionesAdmin(teclado, seleccionado, datos);
@@ -250,6 +261,7 @@ public class Main
                 if(seleccionado > 9 || seleccionado < 0)
                 {
                     System.out.println("\nOpcion invalida. Intente de nuevo");
+
                 }else
                 {
                     unCliente.accionesCliente(teclado, seleccionado, datos);
@@ -271,6 +283,12 @@ public class Main
             FileOutputStream fOutput = new FileOutputStream("archivo_hotel.txt");
             ObjectOutputStream objOutput = new ObjectOutputStream(fOutput);
             System.out.println("Guardando Archivo...");
+            System.out.println("...");
+            pausa(1000);
+            System.out.println("...");
+            pausa(1000);
+            System.out.println("...");
+            pausa(1000);
             objOutput.writeObject(datos);
             objOutput.close();
             System.out.println(".... El Archivo se guardo correctamente ....");

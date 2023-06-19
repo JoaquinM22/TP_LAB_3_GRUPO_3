@@ -86,16 +86,18 @@ public class Cliente extends Persona implements CargarDinero, Serializable
         listaOcupadas.eliminar(habitacion);
     }
 
-    public int tamanio(){return listaOcupadas.tamanio();}
-    public void mostrarMisHabitaciones()
+    public int tamanio()
+    {
+        return listaOcupadas.tamanio();
+    } /**  **/
+    public void mostrarMisHabitaciones() /** MUESTRA TODAS LAS HABITACIONES A MI NOMBRE **/
     {
         for(Habitacion hab : this.listaOcupadas)
         {
             System.out.println(hab.toString());
         }
     }
-
-    public void cargarSaldoCliente()
+    public void cargarSaldoCliente() /** CARGA SALDO A MI CUENTA **/
     {
         double monto;
         do
@@ -111,7 +113,7 @@ public class Cliente extends Persona implements CargarDinero, Serializable
         this.saldo += monto;
     }
     @Override
-    public void cargarSaldo(Cliente aux, double precio)
+    public void cargarSaldo(Cliente aux, double precio) /** ME PIDE CARGAR PARA PODER PAGAR **/
     {
         if(aux.getSaldo() < precio)
         {
@@ -169,6 +171,7 @@ public class Cliente extends Persona implements CargarDinero, Serializable
     }
 
 
+    /** MENU CLIENTE **/
     public void accionesCliente(Scanner teclado, int ref, Hotel datos)
     {
         int seleccion = ref;
