@@ -2,7 +2,6 @@ package TPFinalLab3.Clases;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Registro implements Serializable
 {

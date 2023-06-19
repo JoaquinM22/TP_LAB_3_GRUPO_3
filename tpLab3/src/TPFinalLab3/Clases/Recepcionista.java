@@ -140,7 +140,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
     @Override
     public double validarImporte()
     {
-        double saldo = 0;
+        double saldo;
         do{
             System.out.println("\nIngrese el saldo de su cuenta: ");
             saldo = teclado.nextDouble();
@@ -153,14 +153,17 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
     @Override
     public int validarDNI()
     {
-        int dni = 0;
+        int dni;
         do {
             System.out.println("\nPor favor ingrese su DNI: ");
             dni = teclado.nextInt();
             teclado.nextLine();
-            if(dni < 1000000){
+
+            if(dni < 1000000)
+            {
                 System.out.println("Los DNI tienen que tener como minimo 7 digitos");
             }
+
         }while(dni < 1000000);
         return dni;
     }
@@ -173,7 +176,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
         {
             if(aux.getEstado() == Habitacion.Estado.DISPONIBLE)
             {
-                System.out.println(aux.toString());
+                System.out.println(aux);
             }
         }
     }
@@ -308,7 +311,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
     }
     private Habitacion validarID(Cliente aux, Hotel datos)
     {
-        Habitacion existeHab = null;
+        Habitacion existeHab;
         int id = 0;
         do
         {
@@ -328,26 +331,8 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
     }
     private boolean validarOcupadas(Cliente aux)
     {
-        boolean resp = false;
-        if(aux.tamanio() > 0)
-        {
-            resp = true;
-        }
-        return resp;
+        return aux.tamanio() > 0;
     }
-
-//    public void mostrarOcupadasCliente(Cliente aux, ColeccionGenerica<Habitacion> listaHabitaciones)
-//    {
-//        for(Habitacion hab : listaHabitaciones)
-//        {
-//            if(aux.equals(hab.getOcupante()))
-//            {
-//                System.out.println(hab.toString());
-//            }
-//        }
-//    }
-
-
 
     private void seniarHabitacion(Cliente aux, double precio)
     {
@@ -383,29 +368,27 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                         clienteAux.setSaldo(clienteAux.getSaldo() - precioAPagar);
                     }
                     aux.setEstado(Habitacion.Estado.OCUPADO);
-
-                    /** METODO PARA CARGAR REGISTRO **/
-
-                    Registro nuevoReg = new Registro(aux.getFechaInicioReserva(), null, aux, clienteAux, precioAPagar, cantDias);
-                    unHotel.agregarRegistro(nuevoReg);
                     aux.setFechaInicioReserva(null);
-
                     /** FALTA CARGAR HABITACION ELEGIDA EN LISTAOCUPADAS DE CLIENTE **/
 
                 }
-            }else if(aux.getFechaFinReserva() != null)
+            }else if(aux.getFechaFinReserva() != null && aux.getFechaInicioReserva() == null)
             {
-                if(LocalDate.now().isEqual(aux.getFechaFinReserva()))
+                if(LocalDate.now().isEqual(aux.getFechaFinReserva()) || LocalDate.now().isAfter(aux.getFechaFinReserva()))
                 {
                     /** checkout **/
-                    checkOut(unHotel);
+                    Registro reg = unHotel.buscarRegistro(aux.getOcupante().getDni());
+                    reg.setFechaSalida(aux.getFechaFinReserva());
 
-                    /** SI CONSUMIO CAMBIAR A MANTENIMIEENTO **/
-                    /** Registro **/
-                }else if(LocalDate.now().isAfter(aux.getFechaFinReserva()))
-                {
-                    /** CARGAR REGISTRO **/
-                    //Que tengo que cargar exactamente??
+                    if(aux.getOcupante().isConsumi())
+                    {
+                        aux.setEstado(Habitacion.Estado.MANTENIMIENTO);
+                    }else
+                    {
+                        aux.setEstado(Habitacion.Estado.DISPONIBLE);
+                    }
+                    aux.setOcupante(null);
+
                 }
             }
         }
@@ -469,7 +452,6 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
         System.out.println(".... La Reserva se realizo exitosamene! ....");
         System.out.println("A continuacion se muestran los datos de la Reserva:");
         existeHab.datosReserva();
-        /** FALTA METODO PARA CARGAR REGISTRO **/
         //Ambas fechas en null porque no se realizo el checkIn
         Registro reg = new Registro(null, null, existeHab, aux, senia, cantDias);
         unHotel.agregarRegistro(reg);
@@ -481,7 +463,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
         {
             if(auxHab.getEstado() == Habitacion.Estado.RESERVADO && auxHab.getOcupante().getDni() == dniIngresado)
             {
-                System.out.println(auxHab.toString());
+                System.out.println(auxHab);
             }
         }
     }
@@ -523,7 +505,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
             existeHab.setFechaInicioReserva(null);
             existeHab.setFechaFinReserva(null);
             System.out.println(".... La cancelacion de la reserva se hizo exitosamente! ....");
-            System.out.println(existeHab.toString());
+            System.out.println(existeHab);
             System.out.println("Estado Hab: " + existeHab.getEstado());
             if(existeHab.getOcupante() == null)
             {
@@ -621,10 +603,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                         System.out.println("No posee permisos de administrador");
                     }
                 }
-                case 0 ->
-                {
-                    System.out.println("\nVolviendo al inicio...");
-                }
+                case 0 -> System.out.println("\nVolviendo al inicio...");
                 default ->
                 {
                     System.out.println("Opcion invalida. Intente de nuevo");

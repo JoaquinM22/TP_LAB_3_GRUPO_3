@@ -9,36 +9,36 @@ public class Main
 {
     public static void main(String[] args)
     {
-//        Habitacion unaHab1 = new Habitacion(1, 35000, "Habitacion con 2 camas y un baño");
-//        Habitacion unaHab2 = new Habitacion(2, 40000, "Habitacion con 3 camas y un baño");
-//        Habitacion unaHab3 = new Habitacion(3, 20000, "Habitacion con una cama y un baño");
-//        Habitacion unaHab4 = new Habitacion(4, 50000, "Habitacion con 3 cama, un baño y un jacuzzi");
-//        Habitacion unaHab5 = new Habitacion(5, 30000, "Habitacion con 1 cama matrimonial y un baño");
-//        Habitacion unaHab6 = new Habitacion(6, 40000, "Habitacion con 2 camas matrimoniales y un baño");
-//        Habitacion unaHab7 = new Habitacion(7, 55000, "Habitacion con 3 camas matrimoniales y un baño");
-//        Habitacion unaHab8 = new Habitacion(8, 55000, "Habitacion con 3 camas matrimoniales, un baño y un jacuzzi");
-//        Habitacion unaHab9 = new Habitacion(9, 60000, "Habitacion con 3 camas matrimoniales, una cama idividual, un baño y un jacuzzi");
-//        Habitacion unaHab10 = new Habitacion(10, 70000, "Habitacion con 3 camas matrimoniales, 2 camas idividuales, un baño y un jacuzzi");
-//
-//
-//        Recepcionista unRecepcionista = new Recepcionista("Mario Rodriguez", "Luro 1648", 22345164, "recepcionista123", 150000);
-//        Administrador unAdministrador = new Administrador("Maria Gutierrez", "Constitucion 5643", 21785124, "admin12345", 300000);
-//
-//
-//        Hotel unHotel = new Hotel("CostaGalana");
-//        unHotel.agregarEmpleado(unRecepcionista);
-//        unHotel.agregarEmpleado(unAdministrador);
-//
-//        unHotel.agregarHabitacion(unaHab1);
-//        unHotel.agregarHabitacion(unaHab2);
-//        unHotel.agregarHabitacion(unaHab3);
-//        unHotel.agregarHabitacion(unaHab4);
-//        unHotel.agregarHabitacion(unaHab5);
-//        unHotel.agregarHabitacion(unaHab6);
-//        unHotel.agregarHabitacion(unaHab7);
-//        unHotel.agregarHabitacion(unaHab8);
-//        unHotel.agregarHabitacion(unaHab9);
-//        unHotel.agregarHabitacion(unaHab10);
+        Habitacion unaHab1 = new Habitacion(1, 35000, "Habitacion con 2 camas y un baño");
+        Habitacion unaHab2 = new Habitacion(2, 40000, "Habitacion con 3 camas y un baño");
+        Habitacion unaHab3 = new Habitacion(3, 20000, "Habitacion con una cama y un baño");
+        Habitacion unaHab4 = new Habitacion(4, 50000, "Habitacion con 3 cama, un baño y un jacuzzi");
+        Habitacion unaHab5 = new Habitacion(5, 30000, "Habitacion con 1 cama matrimonial y un baño");
+        Habitacion unaHab6 = new Habitacion(6, 40000, "Habitacion con 2 camas matrimoniales y un baño");
+        Habitacion unaHab7 = new Habitacion(7, 55000, "Habitacion con 3 camas matrimoniales y un baño");
+        Habitacion unaHab8 = new Habitacion(8, 55000, "Habitacion con 3 camas matrimoniales, un baño y un jacuzzi");
+        Habitacion unaHab9 = new Habitacion(9, 60000, "Habitacion con 3 camas matrimoniales, una cama idividual, un baño y un jacuzzi");
+        Habitacion unaHab10 = new Habitacion(10, 70000, "Habitacion con 3 camas matrimoniales, 2 camas idividuales, un baño y un jacuzzi");
+
+
+        Recepcionista unRecepcionista = new Recepcionista("Mario Rodriguez", "Luro 1648", 22345164, "recepcionista123", 150000);
+        Administrador unAdministrador = new Administrador("Maria Gutierrez", "Constitucion 5643", 21785124, "admin12345", 300000);
+
+
+        Hotel unHotel = new Hotel("CostaGalana");
+        unHotel.agregarEmpleado(unRecepcionista);
+        unHotel.agregarEmpleado(unAdministrador);
+
+        unHotel.agregarHabitacion(unaHab1);
+        unHotel.agregarHabitacion(unaHab2);
+        unHotel.agregarHabitacion(unaHab3);
+        unHotel.agregarHabitacion(unaHab4);
+        unHotel.agregarHabitacion(unaHab5);
+        unHotel.agregarHabitacion(unaHab6);
+        unHotel.agregarHabitacion(unaHab7);
+        unHotel.agregarHabitacion(unaHab8);
+        unHotel.agregarHabitacion(unaHab9);
+        unHotel.agregarHabitacion(unaHab10);
 
 //        try
 //        {
@@ -47,17 +47,20 @@ public class Main
 //        {
 //            throw new RuntimeException(e);
 //        }
+//
+//        unHotel.datosHotel();
 
-        //unHotel.datosHotel();
-
-        try
-        {
-            Hotel unHotel = leerArchivo();
-            unHotel.datosHotel();
-        } catch (ErrorEnArchivoException e)
-        {
-            throw new RuntimeException(e);
-        }
+//        try
+//        {
+//            Hotel unHotel = leerArchivo();
+//            if(unHotel != null)
+//            {
+//                unHotel.datosHotel();
+//            }
+//        } catch (ErrorEnArchivoException e)
+//        {
+//            throw new RuntimeException(e);
+//        }
 
 //        unHotel.datosHotel();
 //
@@ -67,21 +70,10 @@ public class Main
 //        System.out.println("Lista Habitaciones");
 //        unHotel.mostrarHabitaciones();
 
-        //menu(unHotel);
+        menu(unHotel);
     }
 
 
-
-//    public static void limpiarPantalla()
-//    {
-//        System.out.print("\r");
-//        for(int i=0; i<200; i++)
-//        {
-//            System.out.println(" ");
-//        }
-//        System.out.print("\r");
-//        System.out.print("\r");
-//    }
     /** Funciones aparte del main **/
     private static void menu(Hotel datos)
     {
@@ -102,34 +94,6 @@ public class Main
 
             System.out.println("\nRealice su eleccion: ");
             seleccion = teclado.nextInt();
-
-            /*
-            if(seleccion == 1 || seleccion == 2)
-            {
-                //Aca iria la funcion de busqueda de el personal/admin dentro del archivo
-                do
-                {
-                    System.out.println("\nIngrese su nombre:");
-                    nombre = teclado.next();
-                    teclado.nextLine();
-
-                    System.out.println("\nIngrese su password por favor");
-                    pass = teclado.next();
-                    teclado.nextLine();
-
-                    Persona aux = Funcion para buscar a una persona(Admin o Recepcionista) por nombre y password, de no encontrarlo retorna null
-                    if(aux != null)
-                    {
-                        System.out.println("\nBienvenid@, " + aux.getNombre);
-                        valido = true;
-                    }else
-                    {
-                        System.out.println("\nEl password ingresado no coincide con ningun miembro del personal.")
-                    }
-                }while(valido == false)
-            }
-             */
-
 
             if(seleccion <= 3 && seleccion > 0)
             {
@@ -156,67 +120,6 @@ public class Main
     private static void menus_especificos(Scanner teclado, int ref, Hotel datos)
     {
         int seleccion = ref;
-
-//        do
-//        {
-//            if(ref != 0)
-//            {
-//                System.out.println("\n--------------------Menu--------------------");
-//                System.out.println("\n1- Opcion 1 (Placeholder)");
-//                System.out.println("\n2- Opcion 2 (Placeholder)");
-//                System.out.println("\n3- Opcion 3 (Placeholder)");
-//                System.out.println("\n4- Opcion 4 (Placeholder)");
-//            }
-//
-//            //Restricciones de menu segun el tipo de usuario
-//            if(ref == 1 || ref == 2)
-//            {
-//                System.out.println("\n5- Opcion 5 de Personal(Placeholder)");
-//                System.out.println("\n6- Opcion 6 de Personal (Placeholder)");
-//
-//                if(ref == 1)
-//                {
-//                    System.out.println("\nOpcion 7 ADMIN (Placeholder)");
-//                }
-//            }
-//
-//            System.out.println("\n\n\n");
-//            System.out.println("\n0- Atras");
-//            System.out.println("\nSeleccione la opcion deseada: ");
-//            seleccion = teclado.nextInt();
-//
-//            switch (seleccion)
-//            {
-//                case 1 -> System.out.println("\nSe ejecuta la opcion 1");
-//                case 2 -> System.out.println("\nSe ejecuta la opcion 2");
-//                case 3 -> System.out.println("\nSe ejecuta la opcion 3");
-//                case 4 -> System.out.println("\nSe ejecuta la opcion 4");
-//                case 5, 6 ->
-//                {
-//                    if(ref != 1 && ref != 2)
-//                    {
-//                        System.out.println("\nNo tiene permiso para realizar esta accion.");
-//                    }else
-//                    {
-//                        System.out.println("\nSe ejecuta la opcion 5 o 6");
-//                    }
-//                }
-//                case 7 ->
-//                {
-//                    if(ref != 1)
-//                    {
-//                        System.out.println("\nNo tiene permiso para realizar esta accion.");
-//                    }else
-//                    {
-//                        System.out.println("\nSe ejecuta la opcion 7");
-//                    }
-//                }
-//                case 0 -> System.out.println("\nVolviendo al inicio...");
-//                default -> System.out.println("\nPor favor seleccione una opcion valida.");
-//            }
-//
-//
-//        }while(seleccion != 0);
 
         switch(seleccion)
         {
@@ -260,16 +163,7 @@ public class Main
                 {
                     if(empleado instanceof Recepcionista)
                     {
-                        System.out.println("\nBienvenido al Sistema Recepcionista " + empleado.getNombre() + "!\n\n");
-                        System.out.println("1- Ver Habitaciones");
-                        System.out.println("2- Ver Clientes");
-                        System.out.println("3- Consultar Sueldo");
-                        System.out.println("4- Hacer backUp");
-                        System.out.println("\n0- Volver");
-
-                        System.out.println("\nRealice su eleccion: ");
-                        seleccion = teclado.nextInt();
-                        ((Recepcionista) empleado).accionesRecepcionista(teclado, seleccion, datos);
+                        seleccion = menuRecepcionista(teclado, (Recepcionista) empleado, datos);
                     }else
                     {
                         System.out.println("La contrasenia es incorrecta");
@@ -295,10 +189,7 @@ public class Main
                 Cliente auxCliente = new Cliente();
                 auxCliente.accionesCliente(teclado, seleccion, datos);
             }
-            case 0 ->
-            {
-                System.out.println("\nVolviendo al inicio...");
-            }
+            case 0 -> System.out.println("\nVolviendo al inicio...");
             default ->
             {
                 System.out.println("Opcion invalida. Intente de nuevo");
@@ -309,11 +200,46 @@ public class Main
 
     }
 
+    private static int menuRecepcionista(Scanner teclado, Recepcionista empleado, Hotel datos)
+    {
+        int seleccionado;
+
+        System.out.println("\nBienvenido al Sistema Recepcionista " + empleado.getNombre() + "!\n\n");
+
+        do
+        {
+            do
+            {
+                System.out.println("1- Ver Habitaciones");
+                System.out.println("2- Ver Clientes");
+                System.out.println("3- Consultar Sueldo");
+                System.out.println("4- Hacer backUp");
+                System.out.println("\n0- Volver");
+
+                System.out.println("\nRealice su eleccion: ");
+                seleccionado = teclado.nextInt();
+                teclado.nextLine();
+
+                if(seleccionado > 4 || seleccionado < 0)
+                {
+                    System.out.println("\nIngrese una opcion valida.");
+                }else
+                {
+                    empleado.accionesRecepcionista(teclado, seleccionado, datos);
+                }
+
+            }while(seleccionado > 4 || seleccionado < 0);
+
+        }while (seleccionado != 0);
+
+        return seleccionado;
+    }
+
     private static Hotel leerArchivo() throws ErrorEnArchivoException
     {
         try
         {
-            FileInputStream fInput = new FileInputStream(new File("archivo_hotel.txt"));
+            FileInputStream fInput = new FileInputStream("archivo_hotel.txt");
             ObjectInputStream objInput = new ObjectInputStream(fInput);
             System.out.println("Leyendo el Archivo...");
             Hotel unHotel = (Hotel) objInput.readObject();
@@ -331,14 +257,14 @@ public class Main
         return null;
     }
 
-    private static void guardarListaRegistros(ColeccionGenerica<Registro> lista) throws ErrorEnArchivoException
+    private static void guardarHotel(Hotel datos) throws ErrorEnArchivoException
     {
         try
         {
-            FileOutputStream fOutput = new FileOutputStream(new File("registros.txt"));
+            FileOutputStream fOutput = new FileOutputStream("archivo_hotel.txt");
             ObjectOutputStream objOutput = new ObjectOutputStream(fOutput);
             System.out.println("Guardando Archivo...");
-            objOutput.writeObject(lista);
+            objOutput.writeObject(datos);
             objOutput.close();
             System.out.println(".... El Archivo se guardo correctamente ....");
         }catch(IOException e)
@@ -359,11 +285,11 @@ public class Main
 
     public static Persona ingresarComoAdminOEmpleado(Scanner teclado, Hotel datos)
     {
-        Persona esCorrecta = null;
+        Persona esCorrecta;
         String password;
         System.out.print("\nIngrese su contrasenia: ");
-        password = teclado.nextLine();
         teclado.nextLine();
+        password = teclado.nextLine();
         esCorrecta = validarPassword(password, datos);
         return esCorrecta;
     }
@@ -376,13 +302,13 @@ public class Main
             {
                 if(auxPersona instanceof Recepcionista)
                 {
-                    if(((Recepcionista) auxPersona).getPassword() == contrasenia)
+                    if(((Recepcionista) auxPersona).getPassword().equals(contrasenia))
                     {
                         esCorrecta = auxPersona;
                     }
                 }else
                 {
-                    if(((Administrador) auxPersona).getPassword() == contrasenia)
+                    if(((Administrador) auxPersona).getPassword().equals(contrasenia))
                     {
                         esCorrecta = auxPersona;
                     }

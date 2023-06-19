@@ -106,10 +106,10 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
     {
         try
         {
-            FileOutputStream fOutput = new FileOutputStream(new File("archivo_hotel.txt"));
+            FileOutputStream fOutput = new FileOutputStream("registro_hotel.txt");
             ObjectOutputStream objOutput = new ObjectOutputStream(fOutput);
             System.out.println("Realizando backUp...");
-            objOutput.writeObject(dato);
+            objOutput.writeObject(dato.listaRegistro);
             objOutput.close();
             pausa(1000);
             System.out.println("....");
@@ -130,7 +130,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
     @Override
     public double validarImporte()
     {
-        double nuevoSueldo = 0;
+        double nuevoSueldo;
         do
         {
             System.out.print("\nIngrese el nuevo sueldo: ");
@@ -145,7 +145,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
     @Override
     public int validarDNI()
     {
-        int dni = 0;
+        int dni;
         do
         {
             System.out.print("\nPor favor ingrese el DNI del Recepcionista: ");
@@ -230,7 +230,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
         if(aux != null)
         {
             System.out.println("A continuacion se muestran los datos del Recepcionista: \n");
-            System.out.println(aux.toString());
+            System.out.println(aux);
             System.out.println("Borrando Recepcionista ...");
             pausa(1000);
             System.out.println("....");
@@ -363,10 +363,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                         }
                     }while(seleccion != 0);
                 }
-                case 0 ->
-                {
-                    System.out.println("\nVolviendo al inicio...");
-                }
+                case 0 -> System.out.println("\nVolviendo al inicio...");
                 default ->
                 {
                     System.out.println("Opcion invalida. Intente de nuevo");
