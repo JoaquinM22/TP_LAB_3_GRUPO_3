@@ -102,6 +102,8 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
 
 
 
+    /** REALIZA UN BACKUP DE LA LISTA DE REGISTROS, QUE CONTIENE
+     * LOS DATOS DE TODAS LAS PERSONAS QUE SE HOSPEDARON **/
     public void hacerBackUp(Hotel dato) throws ErrorEnArchivoException
     {
         try
@@ -124,6 +126,28 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
             throw new ErrorEnArchivoException(1);
         }
     }
+    private static ColeccionGenerica<Registro> leerArchivoRegistros() throws ErrorEnArchivoException
+    {
+        ColeccionGenerica<Registro> listaRegistros = null;
+        try
+        {
+            FileInputStream fInput = new FileInputStream("registro_hotel.txt");
+            ObjectInputStream objInput = new ObjectInputStream(fInput);
+            System.out.println("Leyendo el Archivo...");
+            listaRegistros = (ColeccionGenerica<Registro>) objInput.readObject();
+            System.out.println(".... El Archivo se leyo correctamente ....");
+        }catch(ClassNotFoundException e)
+        {
+            System.out.println("Error al buscar la clase");
+            e.printStackTrace();
+        }catch(IOException e)
+        {
+            throw new ErrorEnArchivoException(2);
+        }
+
+        return listaRegistros;
+    }
+
 
 
 
@@ -157,7 +181,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
         }while(dni < 1000000);
         return dni;
     }
-    public Recepcionista existeRecepcionista(int dato, Hotel datos) /** Si no existe lanzar excepcion **/
+    public Recepcionista existeRecepcionista(int dato, Hotel datos)
     {
         Recepcionista encontrado = null;
         for(Persona aux : datos.listaEmpleados)
@@ -246,6 +270,23 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
         }
     }
 
+
+
+    /** METODO PAUSA **/
+    public static void pausa(int miliseg)
+    {
+        try
+        {
+            Thread.sleep(miliseg);
+        }catch(InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    /** MENU ADMINISTRADOR **/
     public void accionesAdmin(Scanner teclado, int ref, Hotel datos)
     {
         try
@@ -373,16 +414,6 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
         }catch(ErrorEnArchivoException e)
         {
             throw new RuntimeException();
-        }
-    }
-    public static void pausa(int miliseg)
-    {
-        try
-        {
-            Thread.sleep(miliseg);
-        }catch(InterruptedException e)
-        {
-            e.printStackTrace();
         }
     }
 }
