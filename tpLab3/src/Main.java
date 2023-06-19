@@ -40,24 +40,26 @@ public class Main
         unHotel.agregarHabitacion(unaHab9);
         unHotel.agregarHabitacion(unaHab10);
 
+        /** ESCRIBIR ARCHIVO HOTEL **/
 //        try
 //        {
-//            unAdministrador.hacerBackUp(unHotel);
-//        } catch (ErrorEnArchivoException e)
+//            guardarArchivoHotel(unHotel);
+//        }catch(ErrorEnArchivoException e)
 //        {
 //            throw new RuntimeException(e);
 //        }
 //
 //        unHotel.datosHotel();
 
+        /** LEER ARCHIVO HOTEL **/
 //        try
 //        {
-//            Hotel unHotel = leerArchivo();
+//            Hotel unHotel = leerArchivoHotel();
 //            if(unHotel != null)
 //            {
 //                unHotel.datosHotel();
 //            }
-//        } catch (ErrorEnArchivoException e)
+//        }catch(ErrorEnArchivoException e)
 //        {
 //            throw new RuntimeException(e);
 //        }
@@ -74,15 +76,12 @@ public class Main
     }
 
 
-    /** Funciones aparte del main **/
+    /** MENU MODULARIZADO **/
     private static void menu(Hotel datos)
     {
         Scanner teclado = new Scanner(System.in);
         int seleccion;
         char confirmacion;
-        String pass;
-        String nombre;
-        boolean valido;
 
         do
         {
@@ -111,12 +110,9 @@ public class Main
             {
                 System.out.println("\nLa opcion ingresada es invalida.");
             }
-
-
         }while(seleccion != 0);
         teclado.close();
     }
-
     private static void menus_especificos(Scanner teclado, int ref, Hotel datos)
     {
         int seleccion = ref;
@@ -125,52 +121,116 @@ public class Main
         {
             case 1 -> /** ADMINISTRADOR **/
             {
-                Persona empleado = ingresarComoAdminOEmpleado(teclado, datos);
+                Persona empleado = ingresarComoAdminOEmpleado(teclado, datos, 1);
                 if(empleado == null)
                 {
                     System.out.println("La contrasenia es incorrecta");
                 }else
                 {
-                    if(empleado instanceof Administrador)
-                    {
-                        System.out.println("\nBienvenido al Sistema Administrador " + empleado.getNombre() + "!\n\n");
-                        System.out.println("1- Realizar backUp");
-                        System.out.println("2- Agregar Recepcionsta");
-                        System.out.println("3- Modificar datos Recepcionista");
-                        System.out.println("4- Ver Habitaciones");
-                        System.out.println("5- Ver Clientes");
-                        System.out.println("6- Ver Recepcionistas");
-                        System.out.println("7- Consultar Sueldo");
-                        System.out.println("\n0- Volver");
-
-                        System.out.println("\nRealice su eleccion: ");
-                        seleccion = teclado.nextInt();
-                        ((Administrador) empleado).accionesAdmin(teclado, seleccion, datos);
-                    }else
-                    {
-                        System.out.println("La contrasenia es incorrecta");
-                    }
+                    seleccion = menuAdministrador(teclado, (Administrador) empleado, datos);
                 }
 
             }
             case 2 ->/** RECEPCIONISTA **/
             {
-                Persona empleado = ingresarComoAdminOEmpleado(teclado, datos);
+                Persona empleado = ingresarComoAdminOEmpleado(teclado, datos, 2);
                 if(empleado == null)
                 {
                     System.out.println("La contrasenia es incorrecta");
                 }else
                 {
-                    if(empleado instanceof Recepcionista)
-                    {
-                        seleccion = menuRecepcionista(teclado, (Recepcionista) empleado, datos);
-                    }else
-                    {
-                        System.out.println("La contrasenia es incorrecta");
-                    }
+                    seleccion = menuRecepcionista(teclado, (Recepcionista) empleado, datos);
                 }
             }
             case 3 ->/** CLIENTE **/
+            {
+                Cliente auxCliente = new Cliente();
+                menuCliente(teclado, auxCliente, datos);
+            }
+            case 0 -> System.out.println("\nVolviendo al inicio...");
+            default ->
+            {
+                System.out.println("Opcion invalida. Intente de nuevo");
+                seleccion = -1;
+            }
+        }
+    }
+    private static int menuRecepcionista(Scanner teclado, Recepcionista empleado, Hotel datos)
+    {
+        int seleccionado;
+
+        do
+        {
+            do
+            {
+                System.out.println("\nBienvenido al Sistema Recepcionista " + empleado.getNombre() + "!\n\n");
+                System.out.println("1- Ver Habitaciones");
+                System.out.println("2- Ver Clientes");
+                System.out.println("3- Consultar Sueldo");
+                System.out.println("4- Hacer backUp");
+                System.out.println("\n0- Volver");
+
+                System.out.println("\nRealice su eleccion: ");
+                seleccionado = teclado.nextInt();
+                teclado.nextLine();
+
+                if(seleccionado > 4 || seleccionado < 0)
+                {
+                    System.out.println("\nOpcion invalida. Intente de nuevo");
+                }else
+                {
+                    empleado.accionesRecepcionista(teclado, seleccionado, datos);
+                }
+
+            }while(seleccionado > 4 || seleccionado < 0);
+
+        }while (seleccionado != 0);
+
+        return seleccionado;
+    }
+    private static int menuAdministrador(Scanner teclado, Administrador empleado, Hotel datos)
+    {
+        int seleccionado;
+
+        do
+        {
+            do
+            {
+                System.out.println("\nBienvenido al Sistema Administrador " + empleado.getNombre() + "!\n\n");
+                System.out.println("1- Realizar backUp");
+                System.out.println("2- Agregar Recepcionsta");
+                System.out.println("3- Modificar datos Recepcionista");
+                System.out.println("4- Ver Habitaciones");
+                System.out.println("5- Ver Clientes");
+                System.out.println("6- Ver Recepcionistas");
+                System.out.println("7- Consultar Sueldo");
+                System.out.println("\n0- Volver");
+
+                System.out.println("\nRealice su eleccion: ");
+                seleccionado = teclado.nextInt();
+                teclado.nextLine();
+
+                if(seleccionado > 7 || seleccionado < 0)
+                {
+                    System.out.println("\nOpcion invalida. Intente de nuevo");
+                }else
+                {
+                    empleado.accionesAdmin(teclado, seleccionado, datos);
+                }
+
+            }while(seleccionado > 7 || seleccionado < 0);
+
+        }while (seleccionado != 0);
+
+        return seleccionado;
+    }
+    private static int menuCliente(Scanner teclado, Cliente unCliente, Hotel datos)
+    {
+        int seleccionado;
+
+        do
+        {
+            do
             {
                 System.out.println("1- Hacer ChekIn");
                 System.out.println("2- Hacer Reserva");
@@ -184,80 +244,27 @@ public class Main
                 System.out.println("\n0- Volver");
 
                 System.out.println("\nRealice su eleccion: ");
-                seleccion = teclado.nextInt();
-
-                Cliente auxCliente = new Cliente();
-                auxCliente.accionesCliente(teclado, seleccion, datos);
-            }
-            case 0 -> System.out.println("\nVolviendo al inicio...");
-            default ->
-            {
-                System.out.println("Opcion invalida. Intente de nuevo");
-                seleccion = -1;
-            }
-        }
-
-
-    }
-
-    private static int menuRecepcionista(Scanner teclado, Recepcionista empleado, Hotel datos)
-    {
-        int seleccionado;
-
-        System.out.println("\nBienvenido al Sistema Recepcionista " + empleado.getNombre() + "!\n\n");
-
-        do
-        {
-            do
-            {
-                System.out.println("1- Ver Habitaciones");
-                System.out.println("2- Ver Clientes");
-                System.out.println("3- Consultar Sueldo");
-                System.out.println("4- Hacer backUp");
-                System.out.println("\n0- Volver");
-
-                System.out.println("\nRealice su eleccion: ");
                 seleccionado = teclado.nextInt();
                 teclado.nextLine();
 
-                if(seleccionado > 4 || seleccionado < 0)
+                if(seleccionado > 9 || seleccionado < 0)
                 {
-                    System.out.println("\nIngrese una opcion valida.");
+                    System.out.println("\nOpcion invalida. Intente de nuevo");
                 }else
                 {
-                    empleado.accionesRecepcionista(teclado, seleccionado, datos);
+                    unCliente.accionesCliente(teclado, seleccionado, datos);
                 }
 
-            }while(seleccionado > 4 || seleccionado < 0);
+            }while(seleccionado > 9 || seleccionado < 0);
 
         }while (seleccionado != 0);
 
         return seleccionado;
     }
 
-    private static Hotel leerArchivo() throws ErrorEnArchivoException
-    {
-        try
-        {
-            FileInputStream fInput = new FileInputStream("archivo_hotel.txt");
-            ObjectInputStream objInput = new ObjectInputStream(fInput);
-            System.out.println("Leyendo el Archivo...");
-            Hotel unHotel = (Hotel) objInput.readObject();
-            System.out.println(".... El Archivo se leyo correctamente ....");
-            return unHotel;
-        }catch(ClassNotFoundException e)
-        {
-            System.out.println("Error al buscar la clase");
-            e.printStackTrace();
-        }catch(IOException e)
-        {
-            throw new ErrorEnArchivoException(2);
-        }
 
-        return null;
-    }
-
-    private static void guardarHotel(Hotel datos) throws ErrorEnArchivoException
+    /** ESCRIBIR Y LEER ARCHIVO HOTEL**/
+    private static void guardarArchivoHotel(Hotel datos) throws ErrorEnArchivoException
     {
         try
         {
@@ -272,6 +279,30 @@ public class Main
             throw new ErrorEnArchivoException(1);
         }
     }
+    private static Hotel leerArchivoHotel() throws ErrorEnArchivoException
+    {
+        Hotel unHotel = null;
+        try
+        {
+            FileInputStream fInput = new FileInputStream("archivo_hotel.txt");
+            ObjectInputStream objInput = new ObjectInputStream(fInput);
+            System.out.println("Leyendo el Archivo...");
+            unHotel = (Hotel) objInput.readObject();
+            System.out.println(".... El Archivo se leyo correctamente ....");
+        }catch(ClassNotFoundException e)
+        {
+            System.out.println("Error al buscar la clase");
+            e.printStackTrace();
+        }catch(IOException e)
+        {
+            throw new ErrorEnArchivoException(2);
+        }
+
+        return unHotel;
+    }
+
+
+    /** METODO PAUSA **/
     public static void pausa(int miliseg)
     {
         try
@@ -283,35 +314,49 @@ public class Main
         }
     }
 
-    public static Persona ingresarComoAdminOEmpleado(Scanner teclado, Hotel datos)
+
+    /** VALIDAR PASSWORD **/
+    public static Persona ingresarComoAdminOEmpleado(Scanner teclado, Hotel datos, int num)
     {
         Persona esCorrecta;
         String password;
         System.out.print("\nIngrese su contrasenia: ");
         teclado.nextLine();
         password = teclado.nextLine();
-        esCorrecta = validarPassword(password, datos);
+        if(num == 1)
+        {
+            esCorrecta = validarPasswordAdministrador(password, datos);
+        }else
+        {
+            esCorrecta = validarPasswordRecepcionista(password, datos);
+        }
         return esCorrecta;
     }
-    public static Persona validarPassword(String contrasenia, Hotel datos)
+    public static Persona validarPasswordAdministrador(String contrasenia, Hotel datos)
     {
         Persona esCorrecta = null;
         for(Persona auxPersona : datos.getListaEmpleados())
         {
-            if(auxPersona instanceof Recepcionista || auxPersona instanceof Administrador)
+            if(auxPersona instanceof Administrador)
             {
-                if(auxPersona instanceof Recepcionista)
+                if(((Administrador) auxPersona).getPassword().equals(contrasenia))
                 {
-                    if(((Recepcionista) auxPersona).getPassword().equals(contrasenia))
-                    {
-                        esCorrecta = auxPersona;
-                    }
-                }else
+                    esCorrecta = auxPersona;
+                }
+            }
+        }
+        return esCorrecta;
+    }
+    public static Persona validarPasswordRecepcionista(String contrasenia, Hotel datos)
+    {
+        Persona esCorrecta = null;
+        for(Persona auxPersona : datos.getListaEmpleados())
+        {
+            if(auxPersona instanceof Recepcionista)
+            {
+                if(((Recepcionista) auxPersona).getPassword().equals(contrasenia))
                 {
-                    if(((Administrador) auxPersona).getPassword().equals(contrasenia))
-                    {
-                        esCorrecta = auxPersona;
-                    }
+                    esCorrecta = auxPersona;
                 }
             }
         }
