@@ -122,15 +122,15 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
             aux = new Cliente();
             aux.setDni(dni);
 
+            teclado.nextLine();
             System.out.println("\nPor favor ingrese su nombre: ");
             aux.setNombre(teclado.nextLine());
-            teclado.nextLine();
+
 
             System.out.println("\nIngrese su direccion: ");
             aux.setDireccion(teclado.nextLine());
 
             aux.setSaldo(validarImporte());
-            teclado.nextLine();
 
             datos.listaClientes.agregar(aux);
         }
@@ -157,7 +157,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
         do {
             System.out.println("\nPor favor ingrese su DNI: ");
             dni = teclado.nextInt();
-            teclado.nextLine();
+
 
             if(dni < 1000000)
             {
@@ -242,20 +242,20 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
 
         existeHab.setOcupante(aux);
 
-        System.out.println("Cuantos dias va a hospedarse? ");
-        int cantDias = teclado.nextInt();
+//        System.out.println("Cuantos dias va a hospedarse? ");
+//        int cantDias = teclado.nextInt();
 
-        LocalDate fechaEntrada = LocalDate.now(); /** SE UTILIZAN PARA EL REGISTRO **/
-        LocalDate fechaSalida = fechaEntrada.plusDays(cantDias); /** SE UTILIZAN PARA EL REGISTRO **/
+//        LocalDate fechaEntrada = LocalDate.now(); /** SE UTILIZAN PARA EL REGISTRO **/
+//        LocalDate fechaSalida = fechaEntrada.plusDays(cantDias); /** SE UTILIZAN PARA EL REGISTRO **/
 
-        cargarSaldo(aux, (existeHab.getPrecio()*cantDias));
-
-        aux.setSaldo(aux.getSaldo() - (existeHab.getPrecio()*cantDias));
+//        cargarSaldo(aux, (existeHab.getPrecio()*cantDias));
+//
+//        aux.setSaldo(aux.getSaldo() - (existeHab.getPrecio()*cantDias));
         existeHab.setEstado(Habitacion.Estado.OCUPADO);
         /** METODO PARA CARGAR REGISTRO **/
 
-        Registro nuevoReg = new Registro(fechaEntrada,fechaSalida, existeHab, aux, existeHab.getPrecio()*cantDias, cantDias);
-        datos.agregarRegistro(nuevoReg);
+//        Registro nuevoReg = new Registro(fechaEntrada,fechaSalida, existeHab, aux, existeHab.getPrecio()*cantDias, cantDias);
+//        datos.agregarRegistro(nuevoReg);
 
         /** CARGA HABITACION ELEGIDA EN LISTAOCUPADAS DE CLIENTE **/
         aux.agregar(existeHab);
@@ -283,13 +283,20 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
             boolean tiene = validarOcupadas(aux);
             if(tiene)
             {
+                int cantDias = (int)(Math.random() * 20 + 1);
                 Habitacion existeHab = validarID(aux,datos);
+                //Cargar y restar saldo cliente
+                cargarSaldo(aux,existeHab.getPrecio()*cantDias);
+                aux.setSaldo(aux.getSaldo() - (existeHab.getPrecio()*cantDias));
+                LocalDate fechaSalida = LocalDate.now();
+                LocalDate fechaEntrada = fechaSalida.minusDays(cantDias);
+                Registro nuevoReg = new Registro(fechaEntrada,fechaSalida, existeHab, aux, existeHab.getPrecio()*cantDias, cantDias);
+                datos.agregarRegistro(nuevoReg);
+//                Registro existeReg = datos.buscarRegistro(dniIngresado);
+//                existeReg.setFechaSalida(existeReg.getFechaEntrada().plusDays(existeReg.getCantDias()));
 
-                Registro existeReg = datos.buscarRegistro(dniIngresado);
-
-                existeReg.setFechaSalida(existeReg.getFechaEntrada().plusDays(existeReg.getCantDias()));
-                //existeReg.setOcupante(null);
-                //existeReg.getOcupada().setEstado(Habitacion.Estado.DISPONIBLE);
+//                existeReg.setOcupante(null);
+//                existeReg.getOcupada().setEstado(Habitacion.Estado.DISPONIBLE);
                 existeHab.setOcupante(null);
                 if(aux.isConsumi())
                 {
