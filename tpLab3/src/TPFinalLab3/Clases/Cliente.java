@@ -1,4 +1,5 @@
 package TPFinalLab3.Clases;
+import TPFinalLab3.Excepciones.ErrorEnArchivoException;
 import TPFinalLab3.Interfaces.CargarDinero;
 
 import java.io.Serializable;
@@ -108,6 +109,7 @@ public class Cliente extends Persona implements CargarDinero, Serializable
                 System.out.println("El monto ingresado no puede ser 0 no un numer negativo. Intente de nuevo");
             }
         }while(monto <= 0);
+        this.saldo += monto;
     }
     @Override
     public void cargarSaldo(Cliente aux, double precio)
@@ -165,5 +167,209 @@ public class Cliente extends Persona implements CargarDinero, Serializable
             this.setConsumi(true);
         }
 
+    }
+
+
+    public void accionesCliente(Scanner teclado, int ref, Hotel datos)
+    {
+        int seleccion = ref;
+        switch(seleccion)
+        {
+            case 1 -> /** Hacer CheckIn **/
+            {
+                System.out.println("1");
+                Recepcionista unRecepcionista = datos.retornarRecepcionista();
+                unRecepcionista.checkIn(datos);
+                System.out.println("\n0- Volver");
+                do
+                {
+                    System.out.println("Realice su eleccion: ");
+                    seleccion = teclado.nextInt();
+                    teclado.nextLine();
+                    if(seleccion != 0)
+                    {
+                        System.out.println("Opcion invalida. Intente de nuevo");
+                    }
+                }while(seleccion != 0);
+            }
+            case 2 -> /** Hacer Reserva **/
+            {
+                Recepcionista unRecepcionista = datos.retornarRecepcionista();
+                unRecepcionista.hacerReserva(datos);
+                System.out.println("\n0- Volver");
+                do
+                {
+                    System.out.println("Realice su eleccion: ");
+                    seleccion = teclado.nextInt();
+                    teclado.nextLine();
+                    if(seleccion != 0)
+                    {
+                        System.out.println("Opcion invalida. Intente de nuevo");
+                    }
+                }while(seleccion != 0);
+            }
+            case 3 -> /** Cancelar Reserva **/
+            {
+                Recepcionista unRecepcionista = datos.retornarRecepcionista();
+                unRecepcionista.cancelarReserva(datos);
+                System.out.println("\n0- Volver");
+                do
+                {
+                    System.out.println("Realice su eleccion: ");
+                    seleccion = teclado.nextInt();
+                    teclado.nextLine();
+                    if(seleccion != 0)
+                    {
+                        System.out.println("Opcion invalida. Intente de nuevo");
+                    }
+                }while(seleccion != 0);
+            }
+            case 4 -> /** Ver mis Reservas **/
+            {
+                Recepcionista unRecepcionista = datos.retornarRecepcionista();
+                int dniIngresado = unRecepcionista.validarDNI();
+                Cliente aux = unRecepcionista.existeCliente(dniIngresado, datos);
+                if(aux == null)
+                {
+                    System.out.println("El dni ingresado no corresponde a ningun cliente");
+                }else
+                {
+                    unRecepcionista.mostrarHabitacionesReservadasMismaPersona(datos, dniIngresado);
+                    System.out.println("\n0- Volver");
+                    do
+                    {
+                        System.out.println("Realice su eleccion: ");
+                        seleccion = teclado.nextInt();
+                        teclado.nextLine();
+                        if(seleccion != 0)
+                        {
+                            System.out.println("Opcion invalida. Intente de nuevo");
+                        }
+                    }while(seleccion != 0);
+                }
+            }
+            case 5 -> /** Ver Habitaciones Disponibles **/
+            {
+                Recepcionista unRecepcionista = datos.retornarRecepcionista();
+                unRecepcionista.mostrarHabitacionesDisponibles(datos.listaHabitaciones);
+                System.out.println("\n0- Volver");
+                do
+                {
+                    System.out.println("Realice su eleccion: ");
+                    seleccion = teclado.nextInt();
+                    teclado.nextLine();
+                    if(seleccion != 0)
+                    {
+                        System.out.println("Opcion invalida. Intente de nuevo");
+                    }
+                }while(seleccion != 0);
+            }
+            case 6 -> /** Ver Mis Habitaciones Ocupadas **/
+            {
+                Recepcionista unRecepcionista = datos.retornarRecepcionista();
+                int dniIngresado = unRecepcionista.validarDNI();
+                Cliente aux = unRecepcionista.existeCliente(dniIngresado, datos);
+                if(aux == null)
+                {
+                    System.out.println("El dni ingresado no corresponde a ningun cliente");
+                }else
+                {
+                    aux.mostrarMisHabitaciones();
+                    System.out.println("\n0- Volver");
+                    do
+                    {
+                        System.out.println("Realice su eleccion: ");
+                        seleccion = teclado.nextInt();
+                        teclado.nextLine();
+                        if(seleccion != 0)
+                        {
+                            System.out.println("Opcion invalida. Intente de nuevo");
+                        }
+                    }while(seleccion != 0);
+                }
+            }
+            case 7 -> /** Consultar Saldo **/
+            {
+                Recepcionista unRecepcionista = datos.retornarRecepcionista();
+                int dniIngresado = unRecepcionista.validarDNI();
+                Cliente aux = unRecepcionista.existeCliente(dniIngresado, datos);
+                if(aux == null)
+                {
+                    System.out.println("El dni ingresado no corresponde a ningun cliente");
+                }else
+                {
+                    aux.consultarSaldo();
+                    System.out.println("\n0- Volver");
+                    do
+                    {
+                        System.out.println("Realice su eleccion: ");
+                        seleccion = teclado.nextInt();
+                        teclado.nextLine();
+                        if(seleccion != 0)
+                        {
+                            System.out.println("Opcion invalida. Intente de nuevo");
+                        }
+                    }while(seleccion != 0);
+                }
+            }
+            case 8 -> /** Cargar Saldo **/
+            {
+                Recepcionista unRecepcionista = datos.retornarRecepcionista();
+                int dniIngresado = unRecepcionista.validarDNI();
+                Cliente aux = unRecepcionista.existeCliente(dniIngresado, datos);
+                if(aux == null)
+                {
+                    System.out.println("El dni ingresado no corresponde a ningun cliente");
+                }else
+                {
+                    //unRecepcionista.cargarSaldoCliente(aux);
+                    aux.cargarSaldoCliente();
+                    System.out.println("\n0- Volver");
+                    do
+                    {
+                        System.out.println("Realice su eleccion: ");
+                        seleccion = teclado.nextInt();
+                        teclado.nextLine();
+                        if(seleccion != 0)
+                        {
+                            System.out.println("Opcion invalida. Intente de nuevo");
+                        }
+                    }while(seleccion != 0);
+                }
+            }
+            case 9 -> /** Hacer Consumo **/
+            {
+                Recepcionista unRecepcionista = datos.retornarRecepcionista();
+                int dniIngresado = unRecepcionista.validarDNI();
+                Cliente aux = unRecepcionista.existeCliente(dniIngresado, datos);
+                if(aux == null)
+                {
+                    System.out.println("El dni ingresado no corresponde a ningun cliente");
+                }else
+                {
+                    aux.realizarConsumo();
+                    System.out.println("\n0- Volver");
+                    do
+                    {
+                        System.out.println("Realice su eleccion: ");
+                        seleccion = teclado.nextInt();
+                        teclado.nextLine();
+                        if(seleccion != 0)
+                        {
+                            System.out.println("Opcion invalida. Intente de nuevo");
+                        }
+                    }while(seleccion != 0);
+                }
+            }
+            case 0 ->
+            {
+                System.out.println("\nVolviendo al inicio...");
+            }
+            default ->
+            {
+                System.out.println("Opcion invalida. Intente de nuevo");
+                seleccion = -1;
+            }
+        }
     }
 }

@@ -249,13 +249,16 @@ public class Main
                 System.out.println("4- Ver mis Reservas");
                 System.out.println("5- Ver habitaciones");
                 System.out.println("6- Ver mis habitaciones");
-                System.out.println("7- Ver Saldo");
+                System.out.println("7- Consultar Saldo");
                 System.out.println("8- Cargar Saldo");
                 System.out.println("9- Hacer Consumo");
                 System.out.println("\n0- Volver");
 
                 System.out.println("\nRealice su eleccion: ");
                 seleccion = teclado.nextInt();
+
+                Cliente auxCliente = new Cliente();
+                auxCliente.accionesCliente(teclado, seleccion, datos);
             }
             case 0 ->
             {

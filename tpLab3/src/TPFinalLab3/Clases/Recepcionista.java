@@ -157,6 +157,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
         do {
             System.out.println("\nPor favor ingrese su DNI: ");
             dni = teclado.nextInt();
+            teclado.nextLine();
             if(dni < 1000000){
                 System.out.println("Los DNI tienen que tener como minimo 7 digitos");
             }
@@ -203,6 +204,21 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
             }while(aux.getSaldo() < precio);
         }
     }
+//    public void cargarSaldoCliente(Cliente aux)
+//    {
+//        double monto;
+//        do
+//        {
+//            System.out.println("Cuanto dinero quiere cargar?");
+//            System.out.print("\nIngrese un monto: ");
+//            monto = teclado.nextDouble();
+//            if(monto <=0)
+//            {
+//                System.out.println("El monto ingresado no puede ser 0 no un numer negativo. Intente de nuevo");
+//            }
+//        }while(monto <= 0);
+//        aux.setSaldo(aux.getSaldo() + monto);
+//    }
     public void checkIn(Hotel datos)
     {
         checkearReservas(datos);
@@ -458,6 +474,16 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
         Registro reg = new Registro(null, null, existeHab, aux, senia, cantDias);
         unHotel.agregarRegistro(reg);
 
+    }
+    public void mostrarHabitacionesReservadasMismaPersona(Hotel unHotel, int dniIngresado)
+    {
+        for(Habitacion auxHab : unHotel.listaHabitaciones)
+        {
+            if(auxHab.getEstado() == Habitacion.Estado.RESERVADO && auxHab.getOcupante().getDni() == dniIngresado)
+            {
+                System.out.println(auxHab.toString());
+            }
+        }
     }
 
 
