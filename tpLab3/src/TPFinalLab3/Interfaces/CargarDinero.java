@@ -5,5 +5,5 @@ import TPFinalLab3.Clases.Cliente;
 public interface CargarDinero
 {
     /** METODOS **/
-    public abstract void cargarSaldo(Cliente aux, double precio);
+    public abstract cargarSaldo(Cliente aux, double precio);void
 }
