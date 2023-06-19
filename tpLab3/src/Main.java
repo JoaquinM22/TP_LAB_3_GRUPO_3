@@ -9,9 +9,9 @@ public class Main
 {
     public static void main(String[] args)
     {
-        Habitacion unaHab1 = new Habitacion(1, 5000);
-        Habitacion unaHab2 = new Habitacion(2, 8000);
-        Habitacion unaHab3 = new Habitacion(3, 3000);
+        Habitacion unaHab1 = new Habitacion(1, 5000, "Habitacion con 2 camas y un baño");
+        Habitacion unaHab2 = new Habitacion(2, 8000, "Habitacion con 3 camas y un baño");
+        Habitacion unaHab3 = new Habitacion(3, 3000, "Habitacion con una cama y un baño");
 
         Recepcionista unRecepcionista = new Recepcionista("Pepe", "Luro 1212", 12345, "boca", 1200);
         Administrador unAdministrador = new Administrador("Mario", "Colon 3434", 4567, "river", 5000);

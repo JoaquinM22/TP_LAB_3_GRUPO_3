@@ -15,7 +15,7 @@ public class Cliente extends Persona implements CargarDinero, Serializable
     private double saldo;
     private final static Scanner teclado = new Scanner(System.in);
     private boolean consumi = false;
-    ColeccionGenerica<Habitacion> listaOcupadas = new ColeccionGenerica<>();
+    ColeccionGenerica<Habitacion> listaOcupadas;
 
 
 
@@ -23,11 +23,13 @@ public class Cliente extends Persona implements CargarDinero, Serializable
     public Cliente()
     {
         super();
+        this.listaOcupadas = new ColeccionGenerica<>();
     }
     public Cliente(String nombre, String direccion, int dni, double saldo)
     {
         super(nombre, direccion, dni);
         this.saldo = saldo;
+        this.listaOcupadas = new ColeccionGenerica<>();
     }
 
 
@@ -41,8 +43,10 @@ public class Cliente extends Persona implements CargarDinero, Serializable
     {
         this.consumi = consumi;
     }
-
-
+    public void setListaOcupadas(ColeccionGenerica<Habitacion> listaOcupadas)
+    {
+        this.listaOcupadas = listaOcupadas;
+    }
 
     /** GETTERS **/
     public double getSaldo()
@@ -53,8 +57,10 @@ public class Cliente extends Persona implements CargarDinero, Serializable
     {
         return consumi;
     }
-
-
+    public ColeccionGenerica<Habitacion> getListaOcupadas()
+    {
+        return listaOcupadas;
+    }
 
     /** METODOS **/
     @Override
@@ -75,9 +81,19 @@ public class Cliente extends Persona implements CargarDinero, Serializable
 
     public void agregar(Habitacion habitacion) {listaOcupadas.agregar(habitacion);}
 
-    public void eliminar(Habitacion habitacion) {listaOcupadas.eliminar(habitacion);}
+    public void eliminar(Habitacion habitacion)
+    {
+        listaOcupadas.eliminar(habitacion);
+    }
 
     public int tamanio(){return listaOcupadas.tamanio();}
+    public void mostrarMisHabitaciones()
+    {
+        for(Habitacion hab : this.listaOcupadas)
+        {
+            System.out.println(hab.toString());
+        }
+    }
 
     public void cargarSaldoCliente()
     {

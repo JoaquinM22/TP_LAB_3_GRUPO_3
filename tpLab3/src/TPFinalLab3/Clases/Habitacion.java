@@ -8,11 +8,14 @@ public class Habitacion implements Serializable
     /** SERIAL VERSION UID **/
     private static final long serialVersionUID = -2367655082727167829L;
 
+
+
     /** ATRIBUTOS **/
     private int id;
-    private Cliente ocupante;
     private double precio;
     private Estado estado;
+    private String descripcion;
+    private Cliente ocupante;
     private LocalDate fechaInicioReserva = null;
     private LocalDate fechaFinReserva = null;
 
@@ -46,13 +49,16 @@ public class Habitacion implements Serializable
     {
         super();
     }
-    public Habitacion(int id, double precio)
+    public Habitacion(int id, double precio, String descripcion)
     {
         this.id = id;
         this.ocupante = null;
         this.precio = precio;
         this.estado = Estado.DISPONIBLE;
+        this.descripcion = descripcion;
     }
+
+
 
     /** SETTERS **/
     public void setId(int id)
@@ -76,6 +82,12 @@ public class Habitacion implements Serializable
     {
         this.fechaFinReserva = fechaFinReserva;
     }
+    public void setDescripcion(String descripcion)
+    {
+        this.descripcion = descripcion;
+    }
+
+
 
     /** GETTERS **/
     public int getId()
@@ -102,6 +114,12 @@ public class Habitacion implements Serializable
     {
         return fechaFinReserva;
     }
+    public String getDescripcion()
+    {
+        return descripcion;
+    }
+
+
 
     /** METODOS **/
     @Override
