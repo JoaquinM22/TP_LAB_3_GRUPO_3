@@ -7,11 +7,11 @@ import java.util.Scanner;
 
 public class Main
 {
-    public static void main(String[] args)
+    public static void main(String[] args) throws ErrorEnArchivoException
     {
-        Habitacion unaHab1 = new Habitacion(1, 5000, "Habitacion con 2 camas y un baño");
-        Habitacion unaHab2 = new Habitacion(2, 8000, "Habitacion con 3 camas y un baño");
-        Habitacion unaHab3 = new Habitacion(3, 3000, "Habitacion con una cama y un baño");
+        Habitacion unaHab1 = new Habitacion(1, 50000000, "Habitacion con 2 camas y un baño");
+        Habitacion unaHab2 = new Habitacion(2, 80000000, "Habitacion con 3 camas y un baño");
+        Habitacion unaHab3 = new Habitacion(3, 30000000, "Habitacion con una cama y un baño");
 
         Recepcionista unRecepcionista = new Recepcionista("Pepe", "Luro 1212", 12345, "boca", 1200);
         Administrador unAdministrador = new Administrador("Mario", "Colon 3434", 4567, "river", 5000);
@@ -24,21 +24,31 @@ public class Main
         unHotel.agregarHabitacion(unaHab1);
         unHotel.agregarHabitacion(unaHab2);
         unHotel.agregarHabitacion(unaHab3);
-        unHotel.datosHotel();
+//        unHotel.datosHotel();
+//
+//        unRecepcionista.hacerReserva(unHotel);
+//        unRecepcionista.cancelarReserva(unHotel);
+//        //unRecepcionista.checkIn(unHotel);
+//        System.out.println("Lista Habitaciones");
+//        unHotel.mostrarHabitaciones();
 
-        unRecepcionista.hacerReserva(unHotel);
-        unRecepcionista.cancelarReserva(unHotel);
-        //unRecepcionista.checkIn(unHotel);
-        System.out.println("Lista Habitaciones");
-        unHotel.mostrarHabitaciones();
-
-        //menu();
+        menu(unHotel);
     }
 
 
 
+//    public static void limpiarPantalla()
+//    {
+//        System.out.print("\r");
+//        for(int i=0; i<200; i++)
+//        {
+//            System.out.println(" ");
+//        }
+//        System.out.print("\r");
+//        System.out.print("\r");
+//    }
     /** Funciones aparte del main **/
-    private static void menu()
+    private static void menu(Hotel datos) throws ErrorEnArchivoException
     {
         Scanner teclado = new Scanner(System.in);
         int seleccion;
@@ -88,7 +98,7 @@ public class Main
 
             if(seleccion <= 3 && seleccion > 0)
             {
-                menus_especificos(teclado, seleccion);
+                menus_especificos(teclado, seleccion, datos);
             }else if(seleccion == 0)
             {
                 System.out.println("\nSeguro que desea salir? s/n");
@@ -108,70 +118,128 @@ public class Main
         teclado.close();
     }
 
-    private static void menus_especificos(Scanner teclado, int ref)
+    private static void menus_especificos(Scanner teclado, int ref, Hotel datos) throws ErrorEnArchivoException
     {
-        int seleccion;
+        int seleccion = ref;
 
-        do
+//        do
+//        {
+//            if(ref != 0)
+//            {
+//                System.out.println("\n--------------------Menu--------------------");
+//                System.out.println("\n1- Opcion 1 (Placeholder)");
+//                System.out.println("\n2- Opcion 2 (Placeholder)");
+//                System.out.println("\n3- Opcion 3 (Placeholder)");
+//                System.out.println("\n4- Opcion 4 (Placeholder)");
+//            }
+//
+//            //Restricciones de menu segun el tipo de usuario
+//            if(ref == 1 || ref == 2)
+//            {
+//                System.out.println("\n5- Opcion 5 de Personal(Placeholder)");
+//                System.out.println("\n6- Opcion 6 de Personal (Placeholder)");
+//
+//                if(ref == 1)
+//                {
+//                    System.out.println("\nOpcion 7 ADMIN (Placeholder)");
+//                }
+//            }
+//
+//            System.out.println("\n\n\n");
+//            System.out.println("\n0- Atras");
+//            System.out.println("\nSeleccione la opcion deseada: ");
+//            seleccion = teclado.nextInt();
+//
+//            switch (seleccion)
+//            {
+//                case 1 -> System.out.println("\nSe ejecuta la opcion 1");
+//                case 2 -> System.out.println("\nSe ejecuta la opcion 2");
+//                case 3 -> System.out.println("\nSe ejecuta la opcion 3");
+//                case 4 -> System.out.println("\nSe ejecuta la opcion 4");
+//                case 5, 6 ->
+//                {
+//                    if(ref != 1 && ref != 2)
+//                    {
+//                        System.out.println("\nNo tiene permiso para realizar esta accion.");
+//                    }else
+//                    {
+//                        System.out.println("\nSe ejecuta la opcion 5 o 6");
+//                    }
+//                }
+//                case 7 ->
+//                {
+//                    if(ref != 1)
+//                    {
+//                        System.out.println("\nNo tiene permiso para realizar esta accion.");
+//                    }else
+//                    {
+//                        System.out.println("\nSe ejecuta la opcion 7");
+//                    }
+//                }
+//                case 0 -> System.out.println("\nVolviendo al inicio...");
+//                default -> System.out.println("\nPor favor seleccione una opcion valida.");
+//            }
+//
+//
+//        }while(seleccion != 0);
+
+        switch(seleccion)
         {
-            if(ref != 0)
+            case 1 -> /** ADMINISTRADOR **/
             {
-                System.out.println("\n--------------------Menu--------------------");
-                System.out.println("\n1- Opcion 1 (Placeholder)");
-                System.out.println("\n2- Opcion 2 (Placeholder)");
-                System.out.println("\n3- Opcion 3 (Placeholder)");
-                System.out.println("\n4- Opcion 4 (Placeholder)");
-            }
+                System.out.println("1- Realizar backUp");
+                System.out.println("2- Agregar Recepcionsta");
+                System.out.println("3- Modificar datos Recepcionista");
+                System.out.println("4- Ver Habitaciones");
+                System.out.println("5- Ver Clientes");
+                System.out.println("6- Ver Recepcionistas");
+                System.out.println("7- Consultar Sueldo");
+                System.out.println("\n0- Volver");
 
-            //Restricciones de menu segun el tipo de usuario
-            if(ref == 1 || ref == 2)
+                System.out.println("\nRealice su eleccion: ");
+                seleccion = teclado.nextInt();
+                Administrador unAdmin = datos.retornarAdministrador();
+                unAdmin.accionesAdmin(teclado, seleccion, datos);
+
+            }
+            case 2 ->/** RECEPCIONISTA **/
             {
-                System.out.println("\n5- Opcion 5 de Personal(Placeholder)");
-                System.out.println("\n6- Opcion 6 de Personal (Placeholder)");
+                System.out.println("1- Ver Habitaciones");
+                System.out.println("2- Ver Clientes");
+                System.out.println("3- Consultar Sueldo");
+                System.out.println("4- Hacer backUp");
+                System.out.println("\n0- Volver");
 
-                if(ref == 1)
-                {
-                    System.out.println("\nOpcion 7 ADMIN (Placeholder)");
-                }
+                System.out.println("\nRealice su eleccion: ");
+                seleccion = teclado.nextInt();
             }
-
-            System.out.println("\n\n\n");
-            System.out.println("\n0- Atras");
-            System.out.println("\nSeleccione la opcion deseada: ");
-            seleccion = teclado.nextInt();
-
-            switch (seleccion)
+            case 3 ->/** CLIENTE **/
             {
-                case 1 -> System.out.println("\nSe ejecuta la opcion 1");
-                case 2 -> System.out.println("\nSe ejecuta la opcion 2");
-                case 3 -> System.out.println("\nSe ejecuta la opcion 3");
-                case 4 -> System.out.println("\nSe ejecuta la opcion 4");
-                case 5, 6 ->
-                {
-                    if(ref != 1 && ref != 2)
-                    {
-                        System.out.println("\nNo tiene permiso para realizar esta accion.");
-                    }else
-                    {
-                        System.out.println("\nSe ejecuta la opcion 5 o 6");
-                    }
-                }
-                case 7 ->
-                {
-                    if(ref != 1)
-                    {
-                        System.out.println("\nNo tiene permiso para realizar esta accion.");
-                    }else
-                    {
-                        System.out.println("\nSe ejecuta la opcion 7");
-                    }
-                }
-                case 0 -> System.out.println("\nVolviendo al inicio...");
-                default -> System.out.println("\nPor favor seleccione una opcion valida.");
+                System.out.println("1- Hacer ChekIn");
+                System.out.println("2- Hacer Reserva");
+                System.out.println("3- Cancelar Reserva");
+                System.out.println("4- Ver mis Reservas");
+                System.out.println("5- Ver habitaciones");
+                System.out.println("6- Ver mis habitaciones");
+                System.out.println("7- Ver Saldo");
+                System.out.println("8- Cargar Saldo");
+                System.out.println("9- Hacer Consumo");
+                System.out.println("\n0- Volver");
+
+                System.out.println("\nRealice su eleccion: ");
+                seleccion = teclado.nextInt();
             }
+            case 0 ->
+            {
+                System.out.println("\nVolviendo al inicio...");
+            }
+            default ->
+            {
+                System.out.println("Opcion invalida. Intente de nuevo");
+                seleccion = -1;
+            }
+        }
 
-
-        }while(seleccion != 0);
 
     }
 
@@ -210,6 +278,16 @@ public class Main
         }catch(IOException e)
         {
             throw new ErrorEnArchivoException(1);
+        }
+    }
+    public static void pausa(int miliseg)
+    {
+        try
+        {
+            Thread.sleep(miliseg);
+        }catch(InterruptedException e)
+        {
+            e.printStackTrace();
         }
     }
 }

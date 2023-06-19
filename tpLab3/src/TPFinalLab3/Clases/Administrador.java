@@ -74,7 +74,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
     @Override
     public void consultarSueldo()
     {
-        System.out.println("Hola Administrador" + this.getNombre() + ", tu sueldo es de $" + this.getSueldo() + " pesos por mes");
+        System.out.println("Hola Administrador" + this.getNombre() + ", su sueldo es de $" + this.getSueldo() + " pesos por mes");
     }
     public void concederPermisos(Hotel unHotel)
     {
@@ -102,16 +102,23 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
 
 
 
-    public void hacerBackUp(Hotel dato) throws ErrorEnArchivoException /** DESPUES HAY QUE CAMBIAR "STRING" POR LA CLASE "HOTEL" **/
+    public void hacerBackUp(Hotel dato) throws ErrorEnArchivoException
     {
         try
         {
             FileOutputStream fOutput = new FileOutputStream(new File("archivo_hotel.txt"));
             ObjectOutputStream objOutput = new ObjectOutputStream(fOutput);
-            System.out.println("Guardando Archivo...");
+            System.out.println("Realizando backUp...");
             objOutput.writeObject(dato);
             objOutput.close();
-            System.out.println(".... El Archivo se guardo correctamente ....");
+            pausa(1000);
+            System.out.println("....");
+            pausa(1000);
+            System.out.println("....");
+            pausa(1000);
+            System.out.println("....");
+            pausa(1000);
+            System.out.println("... backUp realizado correctamente! ...");
         }catch(IOException e)
         {
             throw new ErrorEnArchivoException(1);
@@ -130,7 +137,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
             nuevoSueldo = teclado.nextDouble();
             if(nuevoSueldo <= 0)
             {
-                System.out.println("El sueldo no puede ser un numero negativo. Intente de nuevo");
+                System.out.println("El sueldo no puede ser 0 ni un numero negativo. Intente de nuevo");
             }
         }while(nuevoSueldo <= 0);
         return nuevoSueldo;
@@ -191,6 +198,188 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
         {
             System.out.println("El Recepcionista que quiso agregar, ya existe.");
         }
+    }
+    public void modificarRecepcionista(Hotel datos)
+    {
+        int dni = validarDNI();
+        Recepcionista aux = existeRecepcionista(dni, datos);
 
+        if(aux != null)
+        {
+            System.out.print("\nIngrese nuevo nombre del Recepcionista: ");
+            aux.setNombre(teclado.nextLine());
+            teclado.nextLine();
+
+            System.out.println("\nIngrese nueva direccion del Recepcionista: ");
+            aux.setDireccion(teclado.nextLine());
+
+            aux.setSueldo(validarImporte());
+            teclado.nextLine();
+
+            System.out.println("... Los datos se han actualizado correctamente ...");
+        }else
+        {
+            System.out.println("El Recepcionista no existe.");
+        }
+    }
+    public void eliminarRecepcionista(Hotel datos)
+    {
+        int dni = validarDNI();
+        Recepcionista aux = existeRecepcionista(dni, datos);
+
+        if(aux != null)
+        {
+            System.out.println("A continuacion se muestran los datos del Recepcionista: \n");
+            System.out.println(aux.toString());
+            System.out.println("Borrando Recepcionista ...");
+            pausa(1000);
+            System.out.println("....");
+            pausa(1000);
+            System.out.println("....");
+            pausa(1000);
+            System.out.println("....");
+            pausa(1000);
+            System.out.println("... El Recepcionista a sido borrado correctamente ...");
+        }else
+        {
+            System.out.println("El Recepcionista no existe.");
+        }
+    }
+
+    public void accionesAdmin(Scanner teclado, int ref, Hotel datos) throws ErrorEnArchivoException
+    {
+        int seleccion = ref;
+
+        switch(seleccion)
+        {
+            case 1 ->
+            {
+                System.out.println("Realizando backUp...");
+                hacerBackUp(datos);
+                System.out.println("\n0- Volver");
+                do
+                {
+                    System.out.println("Realice su eleccion: ");
+                    seleccion = teclado.nextInt();
+                    teclado.nextLine();
+                    if(seleccion != 0)
+                    {
+                        System.out.println("Opcion invalida. Intente de nuevo");
+                    }
+                }while(seleccion != 0);
+            }
+            case 2 ->
+            {
+                agregarRecepcionista(datos);
+                System.out.println("\n0- Volver");
+                do
+                {
+                    System.out.println("Realice su eleccion: ");
+                    seleccion = teclado.nextInt();
+                    teclado.nextLine();
+                    if(seleccion != 0)
+                    {
+                        System.out.println("Opcion invalida. Intente de nuevo");
+                    }
+                }while(seleccion != 0);
+            }
+            case 3 ->
+            {
+                modificarRecepcionista(datos);
+                System.out.println("\n0- Volver");
+                do
+                {
+                    System.out.println("Realice su eleccion: ");
+                    seleccion = teclado.nextInt();
+                    teclado.nextLine();
+                    if(seleccion != 0)
+                    {
+                        System.out.println("Opcion invalida. Intente de nuevo");
+                    }
+                }while(seleccion != 0);
+            }
+            case 4 ->
+            {
+                System.out.println("A continuacion se muestran todas las habitaciones: ");
+                datos.mostrarHabitacionesOrdenado();
+                System.out.println("\n0- Volver");
+                do
+                {
+                    System.out.println("Realice su eleccion: ");
+                    seleccion = teclado.nextInt();
+                    teclado.nextLine();
+                    if(seleccion != 0)
+                    {
+                        System.out.println("Opcion invalida. Intente de nuevo");
+                    }
+                }while(seleccion != 0);
+            }
+            case 5 ->
+            {
+                System.out.println("A continuacion se muestran todos los clientes: ");
+                datos.mostrarClientes();
+                System.out.println("\n0- Volver");
+                do
+                {
+                    System.out.println("Realice su eleccion: ");
+                    seleccion = teclado.nextInt();
+                    teclado.nextLine();
+                    if(seleccion != 0)
+                    {
+                        System.out.println("Opcion invalida. Intente de nuevo");
+                    }
+                }while(seleccion != 0);
+            }
+            case 6 ->
+            {
+                System.out.println("A continuacion se muestran todos los Recepcionsitas: ");
+                datos.mostrarRecepcionistas();
+                System.out.println("\n0- Volver");
+                do
+                {
+                    System.out.println("Realice su eleccion: ");
+                    seleccion = teclado.nextInt();
+                    teclado.nextLine();
+                    if(seleccion != 0)
+                    {
+                        System.out.println("Opcion invalida. Intente de nuevo");
+                    }
+                }while(seleccion != 0);
+            }
+            case 7 ->
+            {
+                consultarSueldo();
+                System.out.println("\n0- Volver");
+                do
+                {
+                    System.out.println("Realice su eleccion: ");
+                    seleccion = teclado.nextInt();
+                    teclado.nextLine();
+                    if(seleccion != 0)
+                    {
+                        System.out.println("Opcion invalida. Intente de nuevo");
+                    }
+                }while(seleccion != 0);
+            }
+            case 0 ->
+            {
+                System.out.println("\nVolviendo al inicio...");
+            }
+            default ->
+            {
+                System.out.println("Opcion invalida. Intente de nuevo");
+                seleccion = -1;
+            }
+        }
+    }
+    public static void pausa(int miliseg)
+    {
+        try
+        {
+            Thread.sleep(miliseg);
+        }catch(InterruptedException e)
+        {
+            e.printStackTrace();
+        }
     }
 }

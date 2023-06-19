@@ -128,6 +128,44 @@ public class Hotel implements Serializable
             aux.datosHabitacion();
         }
     }
+    public void mostrarHabitacionesOrdenado()
+    {
+        System.out.println("HABITACIONES DISPONIBLES:");
+        for(Habitacion aux : listaHabitaciones)
+        {
+            if(aux.getEstado() == Habitacion.Estado.DISPONIBLE)
+            {
+                aux.datosHabitacion();
+            }
+        }
+
+        System.out.println("\n\nHABITACIONES OCUPADAS:");
+        for(Habitacion aux : listaHabitaciones)
+        {
+            if(aux.getEstado() == Habitacion.Estado.OCUPADO)
+            {
+                aux.datosHabitacion();
+            }
+        }
+
+        System.out.println("\n\nHABITACIONES RESERVADAS:");
+        for(Habitacion aux : listaHabitaciones)
+        {
+            if(aux.getEstado() == Habitacion.Estado.RESERVADO)
+            {
+                aux.datosHabitacion();
+            }
+        }
+
+        System.out.println("\n\nHABITACIONES EN MANTENIMIENTO:");
+        for(Habitacion aux : listaHabitaciones)
+        {
+            if(aux.getEstado() == Habitacion.Estado.MANTENIMIENTO)
+            {
+                aux.datosHabitacion();
+            }
+        }
+    }
     public void mostrarRegistro()
     {
         listaRegistro.listar();
