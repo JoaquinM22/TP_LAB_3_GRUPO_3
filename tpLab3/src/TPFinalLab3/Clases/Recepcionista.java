@@ -634,11 +634,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                     }
                 }
                 case 0 -> System.out.println("\nVolviendo al inicio...");
-                default ->
-                {
-                    System.out.println("Opcion invalida. Intente de nuevo");
-                    seleccion = -1;
-                }
+                default -> System.out.println("Opcion invalida. Intente de nuevo");
             }
         }catch(ErrorEnArchivoException e)
         {

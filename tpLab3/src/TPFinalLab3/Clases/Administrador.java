@@ -263,6 +263,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
             pausa(1000);
             System.out.println("....");
             pausa(1000);
+            //Falta borrar el recepcionista de la lista
             System.out.println("... El Recepcionista a sido borrado correctamente ...");
         }else
         {
@@ -307,7 +308,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                         teclado.nextLine();
                         if(seleccion != 0)
                         {
-                            System.out.println("Opcion invalida. Intente de nuevo");
+                            System.out.println("Opcion invalida.");
                         }
                     }while(seleccion != 0);
                 }
@@ -322,7 +323,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                         teclado.nextLine();
                         if(seleccion != 0)
                         {
-                            System.out.println("Opcion invalida. Intente de nuevo");
+                            System.out.println("Opcion invalida.");
                         }
                     }while(seleccion != 0);
                 }
@@ -337,7 +338,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                         teclado.nextLine();
                         if(seleccion != 0)
                         {
-                            System.out.println("Opcion invalida. Intente de nuevo");
+                            System.out.println("Opcion invalida.");
                         }
                     }while(seleccion != 0);
                 }
@@ -353,7 +354,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                         teclado.nextLine();
                         if(seleccion != 0)
                         {
-                            System.out.println("Opcion invalida. Intente de nuevo");
+                            System.out.println("Opcion invalida.");
                         }
                     }while(seleccion != 0);
                 }
@@ -369,7 +370,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                         teclado.nextLine();
                         if(seleccion != 0)
                         {
-                            System.out.println("Opcion invalida. Intente de nuevo");
+                            System.out.println("Opcion invalida. ");
                         }
                     }while(seleccion != 0);
                 }
@@ -385,7 +386,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                         teclado.nextLine();
                         if(seleccion != 0)
                         {
-                            System.out.println("Opcion invalida. Intente de nuevo");
+                            System.out.println("Opcion invalida.");
                         }
                     }while(seleccion != 0);
                 }
@@ -400,16 +401,12 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                         teclado.nextLine();
                         if(seleccion != 0)
                         {
-                            System.out.println("Opcion invalida. Intente de nuevo");
+                            System.out.println("Opcion invalida.");
                         }
                     }while(seleccion != 0);
                 }
                 case 0 -> System.out.println("\nVolviendo al inicio...");
-                default ->
-                {
-                    System.out.println("Opcion invalida. Intente de nuevo");
-                    seleccion = -1;
-                }
+                default -> System.out.println("Opcion invalida.");
             }
         }catch(ErrorEnArchivoException e)
         {

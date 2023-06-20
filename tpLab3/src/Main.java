@@ -2,7 +2,6 @@ import TPFinalLab3.Clases.*;
 import TPFinalLab3.Excepciones.ErrorEnArchivoException;
 
 import java.io.*;
-import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Main
@@ -158,11 +157,7 @@ public class Main
                 menuCliente(teclado, auxCliente, datos);
             }
             case 0 -> System.out.println("\nVolviendo al inicio...");
-            default ->
-            {
-                System.out.println("Opcion invalida. Intente de nuevo");
-                seleccion = -1;
-            }
+            default -> System.out.println("Opcion invalida. Intente de nuevo");
         }
     }
     private static int menuRecepcionista(Scanner teclado, Recepcionista empleado, Hotel datos)

@@ -137,7 +137,7 @@ public class Cliente extends Persona implements CargarDinero, Serializable
         System.out.println("2- Comprar comida: $1200");
         System.out.println("3- Comprar comida y Bebida: $1800");
         System.out.println("\n0- Cancelar");
-        int seleccion = -1;
+        int seleccion;
         do
         {
             System.out.print("\nIngrese el numero referente a la accion:");
@@ -157,16 +157,13 @@ public class Cliente extends Persona implements CargarDinero, Serializable
         {
             cargarSaldo(this, 1200);
             this.setSaldo(this.getSaldo() - 1200);
-        }else if(seleccion == 3)
+        }else
         {
             cargarSaldo(this, 1800);
             this.setSaldo(this.getSaldo() - 1800);
         }
 
-        if(seleccion >= 1 || seleccion <= 3)
-        {
-            this.setConsumi(true);
-        }
+        this.setConsumi(true);
 
     }
 
@@ -363,15 +360,8 @@ public class Cliente extends Persona implements CargarDinero, Serializable
                     }while(seleccion != 0);
                 }
             }
-            case 0 ->
-            {
-                System.out.println("\nVolviendo al inicio...");
-            }
-            default ->
-            {
-                System.out.println("Opcion invalida. Intente de nuevo");
-                seleccion = -1;
-            }
+            case 0 -> System.out.println("\nVolviendo al inicio...");
+            default -> System.out.println("Opcion invalida. Intente de nuevo");
         }
     }
 }
