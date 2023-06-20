@@ -113,7 +113,7 @@ public class Hotel implements Serializable
         {
             if(aux instanceof Recepcionista)
             {
-                System.out.println(aux.toString());
+                System.out.println(aux);
             }
         }
     }

@@ -41,8 +41,7 @@ public class ColeccionGenerica <T> implements Serializable, Iterable<T>
     /** METODOS **/
     public T obtener(int index)
     {
-        T aux = listaGenerica.get(index);
-        return aux;
+        return listaGenerica.get(index);
     }
     public T obtener(T dato)
     {
