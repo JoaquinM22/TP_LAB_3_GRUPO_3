@@ -251,10 +251,9 @@ public class Cliente extends Persona implements CargarDinero, Serializable
             {
                 Recepcionista unRecepcionista = datos.retornarRecepcionista();
                 unRecepcionista.checkIn(datos);
-                System.out.println("\n0- Volver");
                 do
                 {
-                    System.out.print("\nRealice su eleccion: ");
+                    System.out.print("\nOprima 0 para volver: ");
                     seleccion = teclado.nextInt();
                     teclado.nextLine();
                     if(seleccion != 0)
@@ -267,10 +266,9 @@ public class Cliente extends Persona implements CargarDinero, Serializable
             {
                 Recepcionista unRecepcionista = datos.retornarRecepcionista();
                 unRecepcionista.hacerReserva(datos);
-                System.out.println("\n0- Volver");
                 do
                 {
-                    System.out.print("\nRealice su eleccion: ");
+                    System.out.print("\nOprima 0 para volver: ");
                     seleccion = teclado.nextInt();
                     teclado.nextLine();
                     if(seleccion != 0)
@@ -283,10 +281,9 @@ public class Cliente extends Persona implements CargarDinero, Serializable
             {
                 Recepcionista unRecepcionista = datos.retornarRecepcionista();
                 unRecepcionista.cancelarReserva(datos);
-                System.out.println("\n0- Volver");
                 do
                 {
-                    System.out.print("\nRealice su eleccion: ");
+                    System.out.print("\nOprima 0 para volver: ");
                     seleccion = teclado.nextInt();
                     teclado.nextLine();
                     if(seleccion != 0)
@@ -308,10 +305,9 @@ public class Cliente extends Persona implements CargarDinero, Serializable
                     System.out.println("Reservas del cliente " + auxCliente.getNombre() + " con DNI: " + auxCliente.getDni());
                     unRecepcionista.mostrarHabitacionesReservadasMismaPersona(datos, dniIngresado);
                 }
-                System.out.println("\n0- Volver");
                 do
                 {
-                    System.out.print("\nRealice su eleccion: ");
+                    System.out.print("\nOprima 0 para volver: ");
                     seleccion = teclado.nextInt();
                     teclado.nextLine();
                     if(seleccion != 0)
@@ -324,10 +320,9 @@ public class Cliente extends Persona implements CargarDinero, Serializable
             {
                 Recepcionista unRecepcionista = datos.retornarRecepcionista();
                 unRecepcionista.mostrarHabitacionesDisponibles(datos.listaHabitaciones);
-                System.out.println("\n0- Volver");
                 do
                 {
-                    System.out.print("\nRealice su eleccion: ");
+                    System.out.print("\nOprima 0 para volver: ");
                     seleccion = teclado.nextInt();
                     teclado.nextLine();
                     if(seleccion != 0)
@@ -349,10 +344,9 @@ public class Cliente extends Persona implements CargarDinero, Serializable
                     System.out.println("Habitaciones Ocupadas del cliente " + auxCliente.getNombre() + " con DNI: " + auxCliente.getDni());
                     auxCliente.mostrarMisHabitaciones();
                 }
-                System.out.println("\n0- Volver");
                 do
                 {
-                    System.out.print("\nRealice su eleccion: ");
+                    System.out.print("\nOprima 0 para volver: ");
                     seleccion = teclado.nextInt();
                     teclado.nextLine();
                     if(seleccion != 0)
@@ -373,10 +367,9 @@ public class Cliente extends Persona implements CargarDinero, Serializable
                 {
                     auxCliente.consultarSaldo();
                 }
-                System.out.println("\n0- Volver");
                 do
                 {
-                    System.out.print("\nRealice su eleccion: ");
+                    System.out.print("\nOprima 0 para volver: ");
                     seleccion = teclado.nextInt();
                     teclado.nextLine();
                     if(seleccion != 0)
@@ -397,10 +390,9 @@ public class Cliente extends Persona implements CargarDinero, Serializable
                 {
                     auxCliente.cargarSaldoCliente();
                 }
-                System.out.println("\n0- Volver");
                 do
                 {
-                    System.out.print("\nRealice su eleccion: ");
+                    System.out.print("\nOprima 0 para volver: ");
                     seleccion = teclado.nextInt();
                     teclado.nextLine();
                     if(seleccion != 0)
@@ -420,11 +412,10 @@ public class Cliente extends Persona implements CargarDinero, Serializable
                 }else
                 {
                     auxCliente.realizarConsumo();
-                    System.out.println("\n0- Volver");
                 }
                 do
                 {
-                    System.out.print("\nRealice su eleccion: ");
+                    System.out.print("\nOprima 0 para volver: ");
                     seleccion = teclado.nextInt();
                     teclado.nextLine();
                     if(seleccion != 0)
@@ -437,10 +428,9 @@ public class Cliente extends Persona implements CargarDinero, Serializable
             {
                 Recepcionista unRecepcionista = datos.retornarRecepcionista();
                 unRecepcionista.checkOut(datos);
-                System.out.println("\n0- Volver");
                 do
                 {
-                    System.out.print("\nRealice su eleccion: ");
+                    System.out.print("\nOprima 0 para volver: ");
                     seleccion = teclado.nextInt();
                     teclado.nextLine();
                     if(seleccion != 0)

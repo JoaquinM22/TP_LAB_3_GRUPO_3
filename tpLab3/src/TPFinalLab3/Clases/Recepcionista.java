@@ -619,10 +619,9 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                 {
                     System.out.println("\n\nA continuacion se muestran todas las habitaciones: ");
                     datos.mostrarHabitacionesOrdenado();
-                    System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.print("\nRealice su eleccion: ");
+                        System.out.print("\nOprima 0 para volver: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)
@@ -635,10 +634,9 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                 {
                     System.out.println("A continuacion se muestran todos los clientes: ");
                     datos.mostrarClientes();
-                    System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.print("\nRealice su eleccion: ");
+                        System.out.print("\nOprima 0 para volver: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)
@@ -650,10 +648,9 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                 case 3 -> /** CONSULTA EL SUELDO DEL RECEPCIONISTA **/
                 {
                     consultarSueldo();
-                    System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.print("\nRealice su eleccion: ");
+                        System.out.print("\nOprima 0 para volver: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)
@@ -671,10 +668,9 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                     {
                         System.out.println("No posee permisos de administrador");
                     }
-                    System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.print("\nRealice su eleccion: ");
+                        System.out.print("\nOprima 0 para volver: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)

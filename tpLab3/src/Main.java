@@ -79,9 +79,9 @@ public class Main
             System.out.println("*********************************************************************************");
             System.out.println("*  |||||||||||||||||||  Bienvenido al Sistema del Hotel!!  |||||||||||||||||||  *");
             System.out.println("*********************************************************************************");
-            System.out.println("\n¿Como desea ingresar al sistema?");
+            System.out.println("                          ¿Como desea ingresar al sistema?");
             System.out.println("*********************************************************************************");
-            System.out.println("\n1- Administrador          2- Recepcionistas          3- Cliente");
+            System.out.println("\n      1- Administrador          2- Recepcionistas          3- Cliente");
             System.out.println("*********************************************************************************");
             System.out.println("\n\n\n");
             System.out.println("\n0- Salir");
@@ -132,6 +132,17 @@ public class Main
                 if(empleado == null)
                 {
                     System.out.println("La contrasenia es incorrecta");
+                    int selec;
+                    do
+                    {
+                        System.out.print("\nOprima 0 para volver: ");
+                        selec = teclado.nextInt();
+                        teclado.nextLine();
+                        if(selec != 0)
+                        {
+                            System.out.println("Opcion invalida. Intente de nuevo");
+                        }
+                    }while(selec != 0);
                 }else
                 {
                     menuAdministrador(teclado, (Administrador) empleado, datos);
@@ -144,6 +155,17 @@ public class Main
                 if(empleado == null)
                 {
                     System.out.println("La contrasenia es incorrecta");
+                    int selec;
+                    do
+                    {
+                        System.out.print("\nOprima 0 para volver: ");
+                        selec = teclado.nextInt();
+                        teclado.nextLine();
+                        if(selec != 0)
+                        {
+                            System.out.println("Opcion invalida. Intente de nuevo");
+                        }
+                    }while(selec != 0);
                 }else
                 {
                     menuRecepcionista(teclado, (Recepcionista) empleado, datos);
@@ -153,6 +175,7 @@ public class Main
             {
                 Cliente auxCliente = new Cliente();
                 menuCliente(teclado, auxCliente, datos);
+
             }
             case 0 -> System.out.println("\nVolviendo al inicio...");
             default -> System.out.println("Opcion invalida. Intente de nuevo");
