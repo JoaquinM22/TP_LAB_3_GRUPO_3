@@ -24,7 +24,7 @@ public class Main
 //        Administrador unAdministrador = new Administrador("Maria Gutierrez", "Constitucion 5643", 21785124, "admin123", 300000);
 //
 //
-//        Hotel unHotel = new Hotel("CostaGalana");
+//        Hotel unHotel = new Hotel("Hotel 3 Estrellas");
 //        unHotel.agregarEmpleado(unRecepcionista);
 //        unHotel.agregarEmpleado(unAdministrador);
 //
@@ -75,9 +75,14 @@ public class Main
 
         do
         {
-            System.out.println("\n                    Bienvenido al hotel (Placeholder)!!");
+            limpiarPantalla();
+            System.out.println("*********************************************************************************");
+            System.out.println("*  |||||||||||||||||||  Bienvenido al Sistema del Hotel!!  |||||||||||||||||||  *");
+            System.out.println("*********************************************************************************");
             System.out.println("\n¿Como desea ingresar al sistema?");
+            System.out.println("*********************************************************************************");
             System.out.println("\n1- Administrador          2- Recepcionistas          3- Cliente");
+            System.out.println("*********************************************************************************");
             System.out.println("\n\n\n");
             System.out.println("\n0- Salir");
 
@@ -99,12 +104,13 @@ public class Main
                 }
             }else
             {
+                limpiarPantalla();
                 System.out.println("\nOpcion invalida. Intente de nuevo.");
             }
         }while(seleccion != 0);
 
 
-        //Se guardan los datos del Hotel en el archivo
+        /** SE GUARDAN LOS DATOS DEL HOTEL EN EL ARCHIVO **/
         try
         {
             guardarArchivoHotel(datos);
@@ -117,7 +123,7 @@ public class Main
     }
     private static void menus_especificos(Scanner teclado, int ref, Hotel datos)
     {
-
+        limpiarPantalla();
         switch(ref)
         {
             case 1 -> /** ADMINISTRADOR **/
@@ -160,11 +166,16 @@ public class Main
         {
             do
             {
+                limpiarPantalla();
                 System.out.println("\nBienvenido al Sistema Recepcionista " + empleado.getNombre() + "!\n\n");
+                System.out.println("*********************************");
+                System.out.println("*  ||||||||  OPCIONES ||||||||  *");
+                System.out.println("*********************************");
                 System.out.println("1- Ver Habitaciones");
                 System.out.println("2- Ver Clientes");
                 System.out.println("3- Consultar Sueldo");
                 System.out.println("4- Hacer backUp");
+                System.out.println("*********************************");
                 System.out.println("\n0- Volver");
 
                 System.out.print("\nRealice su eleccion: ");
@@ -174,8 +185,10 @@ public class Main
                 if(seleccionado > 4 || seleccionado < 0)
                 {
                     System.out.println("\nOpcion invalida. Intente de nuevo");
+                    limpiarPantalla();
                 }else
                 {
+                    limpiarPantalla();
                     empleado.accionesRecepcionista(teclado, seleccionado, datos);
                 }
 
@@ -192,7 +205,11 @@ public class Main
         {
             do
             {
+                limpiarPantalla();
                 System.out.println("\nBienvenido al Sistema Administrador " + empleado.getNombre() + "!\n\n");
+                System.out.println("*********************************");
+                System.out.println("*  ||||||||  OPCIONES ||||||||  *");
+                System.out.println("*********************************");
                 System.out.println("1- Agregar Recepcionsta");
                 System.out.println("2- Modificar datos Recepcionista");
                 System.out.println("3- Ver Recepcionistas");
@@ -206,6 +223,7 @@ public class Main
                 System.out.println("11- Leer Archivo Registros");
                 System.out.println("12- Conceder permisos a Recepcionista");
                 System.out.println("13- Ver datos del hotel");
+                System.out.println("*********************************");
                 System.out.println("\n0- Volver");
 
                 System.out.print("\nRealice su eleccion: ");
@@ -215,9 +233,11 @@ public class Main
                 if(seleccionado > 13 || seleccionado < 0)
                 {
                     System.out.println("\nOpcion invalida. Intente de nuevo");
+                    limpiarPantalla();
 
                 }else
                 {
+                    limpiarPantalla();
                     empleado.accionesAdmin(teclado, seleccionado, datos);
                 }
 
@@ -234,9 +254,13 @@ public class Main
         {
             do
             {
+                limpiarPantalla();
                 Recepcionista aux = datos.retornarRecepcionista();
                 aux.checkearReservas(datos);
 
+                System.out.println("*********************************");
+                System.out.println("*  ||||||||  OPCIONES ||||||||  *");
+                System.out.println("*********************************");
                 System.out.println("1- Hacer ChekIn");
                 System.out.println("2- Hacer Reserva");
                 System.out.println("3- Cancelar Reserva");
@@ -247,6 +271,7 @@ public class Main
                 System.out.println("8- Cargar Saldo");
                 System.out.println("9- Hacer Consumo");
                 System.out.println("10- Hacer CheckOut");
+                System.out.println("*********************************");
                 System.out.println("\n0- Volver");
 
                 System.out.println("\nRealice su eleccion: ");
@@ -256,9 +281,11 @@ public class Main
                 if(seleccionado > 10 || seleccionado < 0)
                 {
                     System.out.println("\nOpcion invalida. Intente de nuevo");
+                    limpiarPantalla();
 
                 }else
                 {
+                    limpiarPantalla();
                     unCliente.accionesCliente(teclado, seleccionado, datos);
                 }
 
@@ -315,14 +342,23 @@ public class Main
 
 
     /** METODO PAUSA **/
-    public static void pausa(int miliseg)
+    public static void pausa(int milisegundos)
     {
         try
         {
-            Thread.sleep(miliseg);
+            Thread.sleep(milisegundos);
         }catch(InterruptedException e)
         {
             e.printStackTrace();
+        }
+    }
+
+    /** METODO LIMPIAR PANTALLA **/
+    public static void limpiarPantalla()
+    {
+        for(int i=0; i<100; i++)
+        {
+            System.out.println("\n\n\n\n\n\n\n");
         }
     }
 

@@ -593,6 +593,15 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
             e.printStackTrace();
         }
     }
+    /** METODO LIMPIAR PANTALLA **/
+    public static void limpiarPantalla()
+    {
+        for(int i=0; i<100; i++)
+        {
+            System.out.println("\n\n\n\n\n\n\n");
+        }
+    }
+
 
 
 
@@ -658,21 +667,21 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                     if(this.tienePermiso)
                     {
                         hacerBackUp(datos);
-                        System.out.println("\n0- Volver");
-                        do
-                        {
-                            System.out.print("\nRealice su eleccion: ");
-                            seleccion = teclado.nextInt();
-                            teclado.nextLine();
-                            if(seleccion != 0)
-                            {
-                                System.out.println("Opcion invalida. Intente de nuevo");
-                            }
-                        }while(seleccion != 0);
                     }else
                     {
                         System.out.println("No posee permisos de administrador");
                     }
+                    System.out.println("\n0- Volver");
+                    do
+                    {
+                        System.out.print("\nRealice su eleccion: ");
+                        seleccion = teclado.nextInt();
+                        teclado.nextLine();
+                        if(seleccion != 0)
+                        {
+                            System.out.println("Opcion invalida. Intente de nuevo");
+                        }
+                    }while(seleccion != 0);
                 }
                 case 0 -> System.out.println("\nVolviendo al inicio...");
                 default -> System.out.println("Opcion invalida. Intente de nuevo");

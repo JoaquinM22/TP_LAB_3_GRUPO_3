@@ -436,6 +436,15 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
             e.printStackTrace();
         }
     }
+    /** METODO LIMPIAR PANTALLA **/
+    public static void limpiarPantalla()
+    {
+        for(int i=0; i<100; i++)
+        {
+            System.out.println("\n\n\n\n\n\n\n");
+        }
+    }
+
 
 
 
@@ -588,7 +597,6 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                 }
                 case 10 -> /** HACER BACKUP DE LA LISTA DE REGISTROS **/
                 {
-                    System.out.println("Realizando backUp...");
                     hacerBackUp(datos);
                     System.out.println("\n0- Volver");
                     do

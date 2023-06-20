@@ -229,6 +229,15 @@ public class Cliente extends Persona implements CargarDinero, Serializable
             e.printStackTrace();
         }
     }
+    /** METODO LIMPIAR PANTALLA **/
+    public static void limpiarPantalla()
+    {
+        for(int i=0; i<100; i++)
+        {
+            System.out.println("\n\n\n\n\n\n\n");
+        }
+    }
+
 
 
 
@@ -298,18 +307,18 @@ public class Cliente extends Persona implements CargarDinero, Serializable
                 {
                     System.out.println("Reservas del cliente " + auxCliente.getNombre() + " con DNI: " + auxCliente.getDni());
                     unRecepcionista.mostrarHabitacionesReservadasMismaPersona(datos, dniIngresado);
-                    System.out.println("\n0- Volver");
-                    do
-                    {
-                        System.out.print("\nRealice su eleccion: ");
-                        seleccion = teclado.nextInt();
-                        teclado.nextLine();
-                        if(seleccion != 0)
-                        {
-                            System.out.println("Opcion invalida. Intente de nuevo");
-                        }
-                    }while(seleccion != 0);
                 }
+                System.out.println("\n0- Volver");
+                do
+                {
+                    System.out.print("\nRealice su eleccion: ");
+                    seleccion = teclado.nextInt();
+                    teclado.nextLine();
+                    if(seleccion != 0)
+                    {
+                        System.out.println("Opcion invalida. Intente de nuevo");
+                    }
+                }while(seleccion != 0);
             }
             case 5 -> /** Ver Habitaciones Disponibles **/
             {
@@ -339,18 +348,18 @@ public class Cliente extends Persona implements CargarDinero, Serializable
                 {
                     System.out.println("Habitaciones Ocupadas del cliente " + auxCliente.getNombre() + " con DNI: " + auxCliente.getDni());
                     auxCliente.mostrarMisHabitaciones();
-                    System.out.println("\n0- Volver");
-                    do
-                    {
-                        System.out.print("\nRealice su eleccion: ");
-                        seleccion = teclado.nextInt();
-                        teclado.nextLine();
-                        if(seleccion != 0)
-                        {
-                            System.out.println("Opcion invalida. Intente de nuevo");
-                        }
-                    }while(seleccion != 0);
                 }
+                System.out.println("\n0- Volver");
+                do
+                {
+                    System.out.print("\nRealice su eleccion: ");
+                    seleccion = teclado.nextInt();
+                    teclado.nextLine();
+                    if(seleccion != 0)
+                    {
+                        System.out.println("Opcion invalida. Intente de nuevo");
+                    }
+                }while(seleccion != 0);
             }
             case 7 -> /** Consultar Saldo **/
             {
@@ -363,18 +372,18 @@ public class Cliente extends Persona implements CargarDinero, Serializable
                 }else
                 {
                     auxCliente.consultarSaldo();
-                    System.out.println("\n0- Volver");
-                    do
-                    {
-                        System.out.print("\nRealice su eleccion: ");
-                        seleccion = teclado.nextInt();
-                        teclado.nextLine();
-                        if(seleccion != 0)
-                        {
-                            System.out.println("Opcion invalida. Intente de nuevo");
-                        }
-                    }while(seleccion != 0);
                 }
+                System.out.println("\n0- Volver");
+                do
+                {
+                    System.out.print("\nRealice su eleccion: ");
+                    seleccion = teclado.nextInt();
+                    teclado.nextLine();
+                    if(seleccion != 0)
+                    {
+                        System.out.println("Opcion invalida. Intente de nuevo");
+                    }
+                }while(seleccion != 0);
             }
             case 8 -> /** Cargar Saldo **/
             {
@@ -387,18 +396,18 @@ public class Cliente extends Persona implements CargarDinero, Serializable
                 }else
                 {
                     auxCliente.cargarSaldoCliente();
-                    System.out.println("\n0- Volver");
-                    do
-                    {
-                        System.out.print("\nRealice su eleccion: ");
-                        seleccion = teclado.nextInt();
-                        teclado.nextLine();
-                        if(seleccion != 0)
-                        {
-                            System.out.println("Opcion invalida. Intente de nuevo");
-                        }
-                    }while(seleccion != 0);
                 }
+                System.out.println("\n0- Volver");
+                do
+                {
+                    System.out.print("\nRealice su eleccion: ");
+                    seleccion = teclado.nextInt();
+                    teclado.nextLine();
+                    if(seleccion != 0)
+                    {
+                        System.out.println("Opcion invalida. Intente de nuevo");
+                    }
+                }while(seleccion != 0);
             }
             case 9 -> /** Hacer Consumo **/
             {
@@ -412,17 +421,17 @@ public class Cliente extends Persona implements CargarDinero, Serializable
                 {
                     auxCliente.realizarConsumo();
                     System.out.println("\n0- Volver");
-                    do
-                    {
-                        System.out.print("\nRealice su eleccion: ");
-                        seleccion = teclado.nextInt();
-                        teclado.nextLine();
-                        if(seleccion != 0)
-                        {
-                            System.out.println("Opcion invalida. Intente de nuevo");
-                        }
-                    }while(seleccion != 0);
                 }
+                do
+                {
+                    System.out.print("\nRealice su eleccion: ");
+                    seleccion = teclado.nextInt();
+                    teclado.nextLine();
+                    if(seleccion != 0)
+                    {
+                        System.out.println("Opcion invalida. Intente de nuevo");
+                    }
+                }while(seleccion != 0);
             }
             case 10 -> /** Hacer CheckOut **/
             {

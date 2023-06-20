@@ -88,6 +88,14 @@ public class Hotel implements Serializable
     {
         listaRegistro.agregar(registro);
     }
+    public void agregarEmpleado(Persona empleado)
+    {
+        listaEmpleados.agregar(empleado);
+    }
+    public void agregarHabitacion(Habitacion habitacion)
+    {
+        listaHabitaciones.agregar(habitacion);
+    }
 
 
     /** METODOS QUE MUESTRAN DATOS **/
