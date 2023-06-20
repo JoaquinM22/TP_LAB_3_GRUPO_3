@@ -51,12 +51,13 @@ public class Main
 
 
         /** LEER ARCHIVO HOTEL **/
+//        Hotel unHotel;
 //        try
 //        {
-//            Hotel unHotel = leerArchivoHotel();
+//            unHotel = leerArchivoHotel();
 //            if(unHotel != null)
 //            {
-//                unHotel.datosHotel();
+//                //unHotel.datosHotel();
 //            }
 //        }catch(ErrorEnArchivoException e)
 //        {
@@ -89,7 +90,7 @@ public class Main
             System.out.println("\n\n\n");
             System.out.println("\n0- Salir");
 
-            System.out.println("\nRealice su eleccion: ");
+            System.out.print("\nRealice su eleccion: ");
             seleccion = teclado.nextInt();
 
             if(seleccion <= 3 && seleccion > 0)
@@ -98,6 +99,7 @@ public class Main
             }else if(seleccion == 0)
             {
                 System.out.println("\nSeguro que desea salir? s/n");
+                System.out.print("\nRealice su eleccion: ");
                 confirmacion = teclado.next().charAt(0);
 
                 if(confirmacion == 'n')
@@ -110,7 +112,7 @@ public class Main
                 System.out.println("\n0- Volver");
                 do
                 {
-                    System.out.println("Realice su eleccion: ");
+                    System.out.print("\nRealice su eleccion: ");
                     seleccion = teclado.nextInt();
                     teclado.nextLine();
                     if(seleccion != 0)
@@ -180,7 +182,7 @@ public class Main
                 System.out.println("4- Hacer backUp");
                 System.out.println("\n0- Volver");
 
-                System.out.println("\nRealice su eleccion: ");
+                System.out.print("\nRealice su eleccion: ");
                 seleccionado = teclado.nextInt();
                 teclado.nextLine();
 
@@ -213,18 +215,19 @@ public class Main
                 System.out.println("4- Ver Clientes");
                 System.out.println("5- Ver Habitaciones");
                 System.out.println("6- Modificar Datos Habitaciones");
-                System.out.println("7- Agregar Habitacione");
+                System.out.println("7- Agregar Habitacion");
                 System.out.println("8- Consultar Sueldo");
                 System.out.println("9- Ver Registros");
                 System.out.println("10- Realizar backUp");
                 System.out.println("11- Leer Archivo Registros");
+                System.out.println("12- Conceder permisos a Recepcionista");
                 System.out.println("\n0- Volver");
 
-                System.out.println("\nRealice su eleccion: ");
+                System.out.print("\nRealice su eleccion: ");
                 seleccionado = teclado.nextInt();
                 teclado.nextLine();
 
-                if(seleccionado > 11 || seleccionado < 0)
+                if(seleccionado > 12 || seleccionado < 0)
                 {
                     System.out.println("\nOpcion invalida. Intente de nuevo");
 
@@ -233,7 +236,7 @@ public class Main
                     empleado.accionesAdmin(teclado, seleccionado, datos);
                 }
 
-            }while(seleccionado > 11 || seleccionado < 0);
+            }while(seleccionado > 12 || seleccionado < 0);
 
         }while (seleccionado != 0);
 
@@ -252,17 +255,18 @@ public class Main
                 System.out.println("3- Cancelar Reserva");
                 System.out.println("4- Ver mis Reservas");
                 System.out.println("5- Ver habitaciones");
-                System.out.println("6- Ver mis habitaciones");
+                System.out.println("6- Ver mis habitaciones Ocupadas");
                 System.out.println("7- Consultar Saldo");
                 System.out.println("8- Cargar Saldo");
                 System.out.println("9- Hacer Consumo");
+                System.out.println("10- Hacer CheckOut");
                 System.out.println("\n0- Volver");
 
                 System.out.println("\nRealice su eleccion: ");
                 seleccionado = teclado.nextInt();
                 teclado.nextLine();
 
-                if(seleccionado > 9 || seleccionado < 0)
+                if(seleccionado > 10 || seleccionado < 0)
                 {
                     System.out.println("\nOpcion invalida. Intente de nuevo");
 
@@ -271,7 +275,7 @@ public class Main
                     unCliente.accionesCliente(teclado, seleccionado, datos);
                 }
 
-            }while(seleccionado > 9 || seleccionado < 0);
+            }while(seleccionado > 10 || seleccionado < 0);
 
         }while (seleccionado != 0);
 
@@ -376,7 +380,7 @@ public class Main
         {
             if(auxPersona instanceof Recepcionista)
             {
-                if(((Recepcionista) auxPersona).getPassword().equals(contrasenia))
+                if(contrasenia.equals(((Recepcionista) auxPersona).getPassword()))
                 {
                     esCorrecta = auxPersona;
                 }

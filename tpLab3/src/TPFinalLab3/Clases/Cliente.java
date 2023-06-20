@@ -16,6 +16,7 @@ public class Cliente extends Persona implements CargarDinero, Serializable
     private final static Scanner teclado = new Scanner(System.in);
     private boolean consumi = false;
     ColeccionGenerica<Habitacion> listaOcupadas;
+    ColeccionGenerica<Habitacion> listaReservadas;
 
 
 
@@ -24,12 +25,14 @@ public class Cliente extends Persona implements CargarDinero, Serializable
     {
         super();
         this.listaOcupadas = new ColeccionGenerica<>();
+        this.listaReservadas = new ColeccionGenerica<>();
     }
     public Cliente(String nombre, String direccion, int dni, double saldo)
     {
         super(nombre, direccion, dni);
         this.saldo = saldo;
         this.listaOcupadas = new ColeccionGenerica<>();
+        this.listaReservadas = new ColeccionGenerica<>();
     }
 
 
@@ -47,6 +50,10 @@ public class Cliente extends Persona implements CargarDinero, Serializable
     {
         this.listaOcupadas = listaOcupadas;
     }
+    public void setListaReservadas(ColeccionGenerica<Habitacion> listaReservadas)
+    {
+        this.listaReservadas = listaReservadas;
+    }
 
     /** GETTERS **/
     public double getSaldo()
@@ -60,6 +67,10 @@ public class Cliente extends Persona implements CargarDinero, Serializable
     public ColeccionGenerica<Habitacion> getListaOcupadas()
     {
         return listaOcupadas;
+    }
+    public ColeccionGenerica<Habitacion> getListaReservadas()
+    {
+        return listaReservadas;
     }
 
     /** METODOS **/
@@ -76,10 +87,17 @@ public class Cliente extends Persona implements CargarDinero, Serializable
     }
     public void consultarSaldo()
     {
-        System.out.println("Su saldo actual es de $" + this.saldo + "pesos.");
+        System.out.println("Su saldo actual es de $" + this.saldo + " pesos.");
     }
 
-    public void agregar(Habitacion habitacion) {listaOcupadas.agregar(habitacion);}
+    public void agregarOcupada(Habitacion habitacion)
+    {
+        listaOcupadas.agregar(habitacion);
+    }
+    public void agregarReserva(Habitacion habitacion)
+    {
+        listaReservadas.agregar(habitacion);
+    }
 
     public void eliminar(Habitacion habitacion)
     {
@@ -90,9 +108,16 @@ public class Cliente extends Persona implements CargarDinero, Serializable
     {
         return listaOcupadas.tamanio();
     } /**  **/
-    public void mostrarMisHabitaciones() /** MUESTRA TODAS LAS HABITACIONES A MI NOMBRE **/
+    public void mostrarMisHabitaciones() /** MUESTRA TODAS LAS HABITACIONES OCUPADAS A MI NOMBRE **/
     {
         for(Habitacion hab : this.listaOcupadas)
+        {
+            System.out.println(hab.toString());
+        }
+    }
+    public void mostrarMisHabitacionesReservadas() /** MUESTRA TODAS LAS HABITACIONES RESERVADAS A MI NOMBRE **/
+    {
+        for(Habitacion hab : this.listaReservadas)
         {
             System.out.println(hab.toString());
         }
@@ -110,7 +135,15 @@ public class Cliente extends Persona implements CargarDinero, Serializable
                 System.out.println("El monto ingresado no puede ser 0 no un numer negativo. Intente de nuevo");
             }
         }while(monto <= 0);
+        System.out.println("\nCargando Saldo...");
+        pausa(1000);
+        System.out.println("...");
+        pausa(1000);
+        System.out.println("...");
+        pausa(1000);
         this.saldo += monto;
+        System.out.println("... Saldo Cargado Correctamente ...");
+        System.out.println("Saldo Actual: " + this.saldo);
     }
     @Override
     public void cargarSaldo(Cliente aux, double precio) /** ME PIDE CARGAR PARA PODER PAGAR **/
@@ -140,7 +173,7 @@ public class Cliente extends Persona implements CargarDinero, Serializable
         int seleccion = -1;
         do
         {
-            System.out.print("\nIngrese el numero referente a la accion:");
+            System.out.print("\nIngrese el numero referente a la accion: ");
             seleccion = teclado.nextInt();
             if(seleccion < 1 || seleccion > 3)
             {
@@ -148,6 +181,8 @@ public class Cliente extends Persona implements CargarDinero, Serializable
             }
 
         }while(seleccion < 1 || seleccion > 3);
+
+        System.out.println("\nRealizando compra...");
 
         if(seleccion == 1)
         {
@@ -167,8 +202,30 @@ public class Cliente extends Persona implements CargarDinero, Serializable
         {
             this.setConsumi(true);
         }
-
+        pausa(1000);
+        System.out.println("...");
+        pausa(1000);
+        System.out.println("...");
+        pausa(1000);
+        System.out.println("... Compra realizada con exito ...");
+        System.out.println("Saldo Actual: " + this.saldo);
     }
+
+
+
+
+    /** METODO PAUSA **/
+    public static void pausa(int miliseg)
+    {
+        try
+        {
+            Thread.sleep(miliseg);
+        }catch(InterruptedException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
 
 
     /** MENU CLIENTE **/
@@ -179,13 +236,12 @@ public class Cliente extends Persona implements CargarDinero, Serializable
         {
             case 1 -> /** Hacer CheckIn **/
             {
-                System.out.println("1");
                 Recepcionista unRecepcionista = datos.retornarRecepcionista();
                 unRecepcionista.checkIn(datos);
                 System.out.println("\n0- Volver");
                 do
                 {
-                    System.out.println("Realice su eleccion: ");
+                    System.out.print("\nRealice su eleccion: ");
                     seleccion = teclado.nextInt();
                     teclado.nextLine();
                     if(seleccion != 0)
@@ -201,7 +257,7 @@ public class Cliente extends Persona implements CargarDinero, Serializable
                 System.out.println("\n0- Volver");
                 do
                 {
-                    System.out.println("Realice su eleccion: ");
+                    System.out.print("\nRealice su eleccion: ");
                     seleccion = teclado.nextInt();
                     teclado.nextLine();
                     if(seleccion != 0)
@@ -217,7 +273,7 @@ public class Cliente extends Persona implements CargarDinero, Serializable
                 System.out.println("\n0- Volver");
                 do
                 {
-                    System.out.println("Realice su eleccion: ");
+                    System.out.print("\nRealice su eleccion: ");
                     seleccion = teclado.nextInt();
                     teclado.nextLine();
                     if(seleccion != 0)
@@ -230,17 +286,18 @@ public class Cliente extends Persona implements CargarDinero, Serializable
             {
                 Recepcionista unRecepcionista = datos.retornarRecepcionista();
                 int dniIngresado = unRecepcionista.validarDNI();
-                Cliente aux = unRecepcionista.existeCliente(dniIngresado, datos);
-                if(aux == null)
+                Cliente auxCliente = unRecepcionista.existeCliente(dniIngresado, datos);
+                if(auxCliente == null)
                 {
                     System.out.println("El dni ingresado no corresponde a ningun cliente");
                 }else
                 {
+                    System.out.println("Reservas del cliente " + auxCliente.getNombre() + " con DNI: " + auxCliente.getDni());
                     unRecepcionista.mostrarHabitacionesReservadasMismaPersona(datos, dniIngresado);
                     System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.println("Realice su eleccion: ");
+                        System.out.print("\nRealice su eleccion: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)
@@ -257,7 +314,7 @@ public class Cliente extends Persona implements CargarDinero, Serializable
                 System.out.println("\n0- Volver");
                 do
                 {
-                    System.out.println("Realice su eleccion: ");
+                    System.out.print("\nRealice su eleccion: ");
                     seleccion = teclado.nextInt();
                     teclado.nextLine();
                     if(seleccion != 0)
@@ -270,17 +327,18 @@ public class Cliente extends Persona implements CargarDinero, Serializable
             {
                 Recepcionista unRecepcionista = datos.retornarRecepcionista();
                 int dniIngresado = unRecepcionista.validarDNI();
-                Cliente aux = unRecepcionista.existeCliente(dniIngresado, datos);
-                if(aux == null)
+                Cliente auxCliente = unRecepcionista.existeCliente(dniIngresado, datos);
+                if(auxCliente == null)
                 {
                     System.out.println("El dni ingresado no corresponde a ningun cliente");
                 }else
                 {
-                    aux.mostrarMisHabitaciones();
+                    System.out.println("Habitaciones Ocupadas del cliente " + auxCliente.getNombre() + " con DNI: " + auxCliente.getDni());
+                    auxCliente.mostrarMisHabitaciones();
                     System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.println("Realice su eleccion: ");
+                        System.out.print("\nRealice su eleccion: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)
@@ -294,17 +352,17 @@ public class Cliente extends Persona implements CargarDinero, Serializable
             {
                 Recepcionista unRecepcionista = datos.retornarRecepcionista();
                 int dniIngresado = unRecepcionista.validarDNI();
-                Cliente aux = unRecepcionista.existeCliente(dniIngresado, datos);
-                if(aux == null)
+                Cliente auxCliente = unRecepcionista.existeCliente(dniIngresado, datos);
+                if(auxCliente == null)
                 {
                     System.out.println("El dni ingresado no corresponde a ningun cliente");
                 }else
                 {
-                    aux.consultarSaldo();
+                    auxCliente.consultarSaldo();
                     System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.println("Realice su eleccion: ");
+                        System.out.print("\nRealice su eleccion: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)
@@ -318,18 +376,17 @@ public class Cliente extends Persona implements CargarDinero, Serializable
             {
                 Recepcionista unRecepcionista = datos.retornarRecepcionista();
                 int dniIngresado = unRecepcionista.validarDNI();
-                Cliente aux = unRecepcionista.existeCliente(dniIngresado, datos);
-                if(aux == null)
+                Cliente auxCliente = unRecepcionista.existeCliente(dniIngresado, datos);
+                if(auxCliente == null)
                 {
                     System.out.println("El dni ingresado no corresponde a ningun cliente");
                 }else
                 {
-                    //unRecepcionista.cargarSaldoCliente(aux);
-                    aux.cargarSaldoCliente();
+                    auxCliente.cargarSaldoCliente();
                     System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.println("Realice su eleccion: ");
+                        System.out.print("\nRealice su eleccion: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)
@@ -343,17 +400,17 @@ public class Cliente extends Persona implements CargarDinero, Serializable
             {
                 Recepcionista unRecepcionista = datos.retornarRecepcionista();
                 int dniIngresado = unRecepcionista.validarDNI();
-                Cliente aux = unRecepcionista.existeCliente(dniIngresado, datos);
-                if(aux == null)
+                Cliente auxCliente = unRecepcionista.existeCliente(dniIngresado, datos);
+                if(auxCliente == null)
                 {
                     System.out.println("El dni ingresado no corresponde a ningun cliente");
                 }else
                 {
-                    aux.realizarConsumo();
+                    auxCliente.realizarConsumo();
                     System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.println("Realice su eleccion: ");
+                        System.out.print("\nRealice su eleccion: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)
@@ -362,6 +419,22 @@ public class Cliente extends Persona implements CargarDinero, Serializable
                         }
                     }while(seleccion != 0);
                 }
+            }
+            case 10 -> /** Hacer CheckOut **/
+            {
+                Recepcionista unRecepcionista = datos.retornarRecepcionista();
+                unRecepcionista.checkOut(datos);
+                System.out.println("\n0- Volver");
+                do
+                {
+                    System.out.print("\nRealice su eleccion: ");
+                    seleccion = teclado.nextInt();
+                    teclado.nextLine();
+                    if(seleccion != 0)
+                    {
+                        System.out.println("Opcion invalida. Intente de nuevo");
+                    }
+                }while(seleccion != 0);
             }
             case 0 ->
             {

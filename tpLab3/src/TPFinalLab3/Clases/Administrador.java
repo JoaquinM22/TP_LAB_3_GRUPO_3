@@ -78,8 +78,8 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
     }
     public void concederPermisos(Hotel unHotel)
     {
-        System.out.println("Ingrese el dni del Recepcionista al que desea concederle los permisos de administrador:");
         unHotel.mostrarRecepcionistas();
+        System.out.print("\nIngrese el dni del Recepcionista al que desea concederle los permisos de administrador: ");
         int dniIngresado = validarDNI();
         Recepcionista encontrado = existeRecepcionista(dniIngresado, unHotel);
 
@@ -91,13 +91,18 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
             if(!encontrado.isTienePermiso())
             {
                 encontrado.setTienePermiso(true);
-                System.out.println("Ahora el Recpecionista tiene permisos de Administrador");
+                System.out.println("Concediendo permisos...");
+                pausa(1000);
+                System.out.println("...");
+                pausa(1000);
+                System.out.println("...");
+                pausa(1000);
+                System.out.println("... Ahora el Recepecionista posee permisos de Administrador ...");
             }else
             {
                 System.out.println("El Recepcionista ya posee permisos de Administrador");
             }
         }
-
     }
 
 
@@ -183,6 +188,8 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
     }
 
 
+
+    /** MODIFICAR Y AGREGAR RECEPCIONISTA Y HABITACION **/
     public Recepcionista existeRecepcionista(int dato, Hotel datos)
     {
         Recepcionista encontrado = null;
@@ -202,24 +209,38 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
     {
         System.out.println("A continuacion ingrese los datos del nuevo empleado: ");
         int dni = validarDNI();
-        Recepcionista aux = existeRecepcionista(dni, datos);
+        Recepcionista auxRecepcionista = existeRecepcionista(dni, datos);
 
-        if(aux == null)
+        if(auxRecepcionista == null)
         {
-            aux = new Recepcionista();
-            aux.setDni(dni);
+            auxRecepcionista = new Recepcionista();
+            auxRecepcionista.setDni(dni);
 
-            System.out.print("\nIngrese nombre del Recepcionista: ");
-            aux.setNombre(teclado.nextLine());
             teclado.nextLine();
+            System.out.print("\nIngrese nombre del Recepcionista: ");
+            auxRecepcionista.setNombre(teclado.nextLine());
 
             System.out.print("\nIngrese direccion del Recepcionista: ");
-            aux.setDireccion(teclado.nextLine());
+            auxRecepcionista.setDireccion(teclado.nextLine());
 
-            aux.setSueldo(validarImporte());
-            teclado.nextLine();
+            System.out.print("\nIngrese Contrasenia Recepcionista: ");
+            auxRecepcionista.setPassword(teclado.nextLine());
 
-            datos.listaEmpleados.agregar(aux);
+            auxRecepcionista.setSueldo(validarImporte());
+
+            System.out.println("\nAgregando datos al sistema...");
+            pausa(1000);
+            System.out.println("...");
+            pausa(1000);
+            System.out.println("...");
+            pausa(1000);
+            System.out.println("...");
+            pausa(1000);
+            datos.listaEmpleados.agregar(auxRecepcionista);
+            System.out.println("... LOS DATOS SE GUARDARON CORRECTAMENTE ...");
+            System.out.println("Datos Recepcionista Creado:");
+            System.out.println(auxRecepcionista.toString());
+            pausa(3000);
         }else
         {
             System.out.println("El Recepcionista que quiso agregar, ya existe.");
@@ -228,21 +249,31 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
     public void modificarRecepcionista(Hotel datos)
     {
         int dni = validarDNI();
-        Recepcionista aux = existeRecepcionista(dni, datos);
+        Recepcionista auxRecepcionista = existeRecepcionista(dni, datos);
 
-        if(aux != null)
+        if(auxRecepcionista != null)
         {
+            teclado.nextLine();
             System.out.print("\nIngrese nuevo nombre del Recepcionista: ");
-            aux.setNombre(teclado.nextLine());
-            teclado.nextLine();
+            auxRecepcionista.setNombre(teclado.nextLine());
 
-            System.out.println("\nIngrese nueva direccion del Recepcionista: ");
-            aux.setDireccion(teclado.nextLine());
+            System.out.print("\nIngrese nueva direccion del Recepcionista: ");
+            auxRecepcionista.setDireccion(teclado.nextLine());
 
-            aux.setSueldo(validarImporte());
-            teclado.nextLine();
+            auxRecepcionista.setSueldo(validarImporte());
 
-            System.out.println("... Los datos se han actualizado correctamente ...");
+            System.out.println("Modificando datos ...");
+            pausa(1000);
+            System.out.println("...");
+            pausa(1000);
+            System.out.println("...");
+            pausa(1000);
+            System.out.println("...");
+            pausa(1000);
+            System.out.println("... LOS DATOS SE ACTUALIZARON CORRECTAMENTE ...");
+            System.out.println("Datos actualizados Recepcionista:");
+            System.out.println(auxRecepcionista.toString());
+            pausa(3000);
         }else
         {
             System.out.println("El Recepcionista no existe.");
@@ -295,12 +326,35 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
         existeHab.setPrecio(teclado.nextDouble());
         teclado.nextLine();
 
-        System.out.println("\nIngrese nueva descripcion de la habitacion: ");
+        System.out.print("\nIngrese nueva descripcion de la habitacion: ");
         existeHab.setDescripcion(teclado.nextLine());
 
         System.out.println("\nIngrese nuevo Estado de la habitacion: ");
-        existeHab.setEstado(Habitacion.Estado.valueOf(teclado.nextLine()));
-        teclado.nextLine();
+        System.out.println("\nDisponible: 1  -  Ocupada: 2  - Reservada: 3   - Mantenimiento: 4");
+        int num;
+        do
+        {
+            System.out.print("\nIngrese numero: ");
+            num = teclado.nextInt();
+            if(num > 4 || num <1)
+            {
+                System.out.println("Numero invalido. Intente de nuevo");
+            }
+        }while(num > 4 || num <1);
+
+        if(num == 1)
+        {
+            existeHab.setEstado(Habitacion.Estado.DISPONIBLE);
+        }else if(num == 2)
+        {
+            existeHab.setEstado(Habitacion.Estado.OCUPADO);
+        }else if(num == 3)
+        {
+            existeHab.setEstado(Habitacion.Estado.RESERVADO);
+        }else if(num == 4)
+        {
+            existeHab.setEstado(Habitacion.Estado.MANTENIMIENTO);
+        }
 
         System.out.println("Modificando datos ...");
         pausa(1000);
@@ -310,9 +364,10 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
         pausa(1000);
         System.out.println("...");
         pausa(1000);
-        System.out.println("... Los datos se han actualizado correctamente ...");
-        System.out.println("Habitacion con datos actualizados: ");
+        System.out.println("... LOS DATOS SE ACTUALIZARON CORRECTAMENTE ...");
+        System.out.println("Datos actualizados Habitacion: ");
         System.out.println(existeHab.toString());
+        pausa(3000);
     }
     public void agregarHabitacion(Hotel datos)
     {
@@ -335,6 +390,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
             }
         }while(nuevaHabitacion != null);
 
+        nuevaHabitacion = new Habitacion();
         nuevaHabitacion.setId(idIngresado);
 
         System.out.print("\nIngrese precio nueva Habitacion: ");
@@ -345,7 +401,6 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
 
         System.out.print("\nIngrese descripcion nueva Habitacion: ");
         nuevaHabitacion.setDescripcion(teclado.nextLine());
-        teclado.nextLine();
 
         nuevaHabitacion.setOcupante(null);
         nuevaHabitacion.setFechaInicioReserva(null);
@@ -360,6 +415,8 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
         pausa(1000);
         datos.listaHabitaciones.agregar(nuevaHabitacion);
         System.out.println("... LOS DATOS SE GUARDARON CORRECTAMENTE ...");
+        System.out.println("Datos Habitacion Creada:");
+        System.out.println(nuevaHabitacion.toString());
         pausa(3000);
     }
 
@@ -394,7 +451,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                     System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.println("Realice su eleccion: ");
+                        System.out.print("\nRealice su eleccion: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)
@@ -409,7 +466,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                     System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.println("Realice su eleccion: ");
+                        System.out.print("\nRealice su eleccion: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)
@@ -425,7 +482,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                     System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.println("Realice su eleccion: ");
+                        System.out.print("\nRealice su eleccion: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)
@@ -441,7 +498,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                     System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.println("Realice su eleccion: ");
+                        System.out.print("\nRealice su eleccion: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)
@@ -457,7 +514,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                     System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.println("Realice su eleccion: ");
+                        System.out.print("\nRealice su eleccion: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)
@@ -472,7 +529,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                     System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.println("Realice su eleccion: ");
+                        System.out.print("\nRealice su eleccion: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)
@@ -487,7 +544,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                     System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.println("Realice su eleccion: ");
+                        System.out.print("\nRealice su eleccion: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)
@@ -502,7 +559,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                     System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.println("Realice su eleccion: ");
+                        System.out.print("\nRealice su eleccion: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)
@@ -517,7 +574,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                     System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.println("Realice su eleccion: ");
+                        System.out.print("\nRealice su eleccion: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)
@@ -533,7 +590,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                     System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.println("Realice su eleccion: ");
+                        System.out.print("\nRealice su eleccion: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)
@@ -549,7 +606,22 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                     System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.println("Realice su eleccion: ");
+                        System.out.print("\nRealice su eleccion: ");
+                        seleccion = teclado.nextInt();
+                        teclado.nextLine();
+                        if(seleccion != 0)
+                        {
+                            System.out.println("Opcion invalida. Intente de nuevo");
+                        }
+                    }while(seleccion != 0);
+                }
+                case 12 -> /** CONCEDER PERMISOS A RECEPCIONISTA **/
+                {
+                    concederPermisos(datos);
+                    System.out.println("\n0- Volver");
+                    do
+                    {
+                        System.out.print("\nRealice su eleccion: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)

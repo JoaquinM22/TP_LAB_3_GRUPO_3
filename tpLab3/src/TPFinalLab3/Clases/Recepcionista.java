@@ -99,7 +99,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
 
 
     /** METODO BUSQUEDA Y CARGA DE NUEVO CLIENTE **/
-    public Cliente existeCliente(int dato, Hotel datos) /** Si no existe lanzar excepcion **/
+    public Cliente existeCliente(int dato, Hotel datos)
     {
         Cliente encontrado = null;
         for(Cliente aux : datos.listaClientes)
@@ -123,11 +123,11 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
             aux.setDni(dni);
 
             teclado.nextLine();
-            System.out.println("\nPor favor ingrese su nombre: ");
+            System.out.print("\nPor favor ingrese su nombre: ");
             aux.setNombre(teclado.nextLine());
 
 
-            System.out.println("\nIngrese su direccion: ");
+            System.out.print("\nIngrese su direccion: ");
             aux.setDireccion(teclado.nextLine());
 
             aux.setSaldo(validarImporte());
@@ -147,27 +147,13 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                 System.out.println("Usted no tiene el saldo suficiente para pagar la habitacion. Cargue saldo a su cuenta a continuacion: ");
                 System.out.println("Precio habitacion: $" + precio);
                 System.out.println("Su saldo: $" + aux.getSaldo());
-                System.out.println("Ingrese la cantidad a cargar: ");
+                System.out.print("\nIngrese la cantidad a cargar: ");
                 aux.setSaldo(aux.getSaldo() + teclado.nextDouble());
             }while(aux.getSaldo() < precio);
         }
     }
 
-//    public void cargarSaldoCliente(Cliente aux)
-//    {
-//        double monto;
-//        do
-//        {
-//            System.out.println("Cuanto dinero quiere cargar?");
-//            System.out.print("\nIngrese un monto: ");
-//            monto = teclado.nextDouble();
-//            if(monto <=0)
-//            {
-//                System.out.println("El monto ingresado no puede ser 0 no un numer negativo. Intente de nuevo");
-//            }
-//        }while(monto <= 0);
-//        aux.setSaldo(aux.getSaldo() + monto);
-//    }
+
 
     /** CHECK IN Y CHECK OUT **/
     public void checkIn(Hotel datos)
@@ -184,7 +170,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
         Habitacion existeHab;
         do
         {
-            System.out.println("Ingrese el id de la habitacion que desea: ");
+            System.out.print("\nIngrese el id de la habitacion que desea: ");
             existeHab = buscarHabitacion(teclado.nextInt(), datos.listaHabitaciones);
             if(existeHab == null)
             {
@@ -198,11 +184,12 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
         existeHab.setOcupante(auxCliente);
 
         /** LE CARGA LA HABITACION A LA LISTA DEL CLIENTE **/
-        auxCliente.agregar(existeHab);
+        auxCliente.agregarOcupada(existeHab);
 
         /** LE CAMBIA EL ESTADO A "OCUPADO" **/
         existeHab.setEstado(Habitacion.Estado.OCUPADO);
 
+        pausa(1000);
         System.out.println("...");
         pausa(1000);
         System.out.println("...");
@@ -215,6 +202,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
         System.out.println("A continuacion se muestra los datos de la habitacion:");
         existeHab.datosHabitacion();
         System.out.println("\n\n");
+        pausa(3000);
     }
     public void checkOut(Hotel datos)
     {
@@ -232,11 +220,12 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                 /** ELIGE LA HABITACION A LA QUE QUIERE HACER UN CHECKOUT **/
                 Habitacion existeHab = validarID(auxCliente, datos);
 
-                System.out.println("Haciendo ChekOut ...");
-
                 /** CON UN RANDOM INGRESA CUANTOS DIAS SE HOSPEDO **/
                 int cantDias = (int)(Math.random() * 20 + 1);
                 cargarSaldo(auxCliente,existeHab.getPrecio()*cantDias);
+
+                System.out.println("Haciendo ChekOut ...");
+
                 auxCliente.setSaldo(auxCliente.getSaldo() - (existeHab.getPrecio()*cantDias));
                 LocalDate fechaSalida = LocalDate.now();
                 LocalDate fechaEntrada = fechaSalida.minusDays(cantDias);
@@ -252,6 +241,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                 /** CAMBIA EL ESTADO A DISPONIBLE **/
                 existeHab.setEstado(Habitacion.Estado.DISPONIBLE);
 
+                pausa(1000);
                 System.out.println("...");
                 pausa(1000);
                 System.out.println("...");
@@ -292,17 +282,37 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
 
         return existeHab;
     }
+    private Habitacion mostrarHabitacionesReservadasYValidar(Cliente auxCliente, Hotel datos)
+    {
+        Habitacion existeHab;
+        int id = 0;
+        do
+        {
+            System.out.println("A continuacion se muestran las Habitaciones que usted tiene Reservadas:");
+            auxCliente.mostrarMisHabitacionesReservadas();
+            System.out.print("\nIngrese el ID de la habitacion que desea cancelar la Reserva: ");
+            int idCancelar = teclado.nextInt();
+            existeHab = buscarHabitacionesReservadas(datos, auxCliente, idCancelar);
+
+            if(existeHab == null)
+            {
+                System.out.println("\nLa habitacion buscada no existe. Intente de nuevo");
+            }
+        }while(existeHab == null);
+
+        return existeHab;
+    }
     @Override
     public double validarImporte()
     {
         double saldo;
         do{
-            System.out.println("\nIngrese el saldo de su cuenta: ");
+            System.out.print("\nIngrese el saldo de su cuenta: ");
             saldo = teclado.nextDouble();
-            if(saldo < 5000){
-                System.out.println("El saldo minimo a cargar es de $5000");
+            if(saldo < 150000){
+                System.out.println("El saldo minimo a cargar es de $150000");
             }
-        }while(saldo < 5000);
+        }while(saldo < 150000);
         return saldo;
     }
     @Override
@@ -310,7 +320,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
     {
         int dni;
         do {
-            System.out.println("\nPor favor ingrese su DNI: ");
+            System.out.print("\nPor favor ingrese su DNI: ");
             dni = teclado.nextInt();
 
 
@@ -329,7 +339,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
     /** METODOS HACER RESERVA Y CANCELAR RESERVA **/
     public void hacerReserva(Hotel unHotel)
     {
-        Cliente aux = agregarCliente(unHotel);
+        Cliente auxCliente = agregarCliente(unHotel);
 
         System.out.println("Que habitacion desea reservar?");
         System.out.println("Para la reserva debe abonar el 20% del total del precio, y el resto al momento del CheckOut");
@@ -338,7 +348,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
         Habitacion existeHab;
         do
         {
-            System.out.println("Ingrese el id de la habitacion que desea reservar: ");
+            System.out.print("\nIngrese el id de la habitacion que desea reservar: ");
             existeHab = buscarHabitacion(teclado.nextInt(), unHotel.listaHabitaciones);
             if(existeHab == null)
             {
@@ -347,67 +357,98 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
 
         }while(existeHab == null);
 
-        existeHab.setOcupante(aux);
+        existeHab.setOcupante(auxCliente);
 
-        System.out.println("Cuantos dias va a hospedarse? ");
+        System.out.print("\nCuantos dias va a hospedarse? ");
         int cantDias = teclado.nextInt();
 
-        System.out.println("Ingrese fecha de ingreso: ");
+        System.out.print("\nIngrese fecha de ingreso: ");
         System.out.print("\nDia: ");
         int diaIngreso = teclado.nextInt();
         System.out.print("\nMes: ");
         int mesIngreso = teclado.nextInt();
         System.out.print("\nAnio: ");
         int anioIngreso = teclado.nextInt();
+
         LocalDate inicioReserva = LocalDate.of(anioIngreso, mesIngreso, diaIngreso);
         LocalDate finReserva = inicioReserva.plusDays(cantDias);
         double nuevoPrecio = existeHab.getPrecio()*cantDias;
 
-        seniarHabitacion(aux, nuevoPrecio);
+        seniarHabitacion(auxCliente, nuevoPrecio);
+
+        System.out.println("Cargando Reserva en el sistema ...");
+
+        /** LE CARGA LA HABITACION A LA LISTA DE RESERVAS DEL CLIENTE **/
+        auxCliente.agregarReserva(existeHab);
 
         double senia = nuevoPrecio*0.20;
-        aux.setSaldo(aux.getSaldo() - senia);
+        auxCliente.setSaldo(auxCliente.getSaldo() - senia);
         existeHab.setEstado(Habitacion.Estado.RESERVADO);
         existeHab.setFechaInicioReserva(inicioReserva);
         existeHab.setFechaFinReserva(finReserva);
 
-        System.out.println(".... La Reserva se realizo exitosamene! ....");
+        pausa(1000);
+        System.out.println("...");
+        pausa(1000);
+        System.out.println("...");
+        pausa(1000);
+        System.out.println("...");
+        pausa(1000);
+        System.out.println("... La Reserva se realizo con exito! ...");
+        System.out.println("Pago de senia:$" + senia);
         System.out.println("A continuacion se muestran los datos de la Reserva:");
         existeHab.datosReserva();
     }
     public void cancelarReserva(Hotel unHotel)
     {
-        System.out.println("Ingrese dni: ");
-        int dniIngresado = teclado.nextInt();
-        Habitacion existeHab = buscarHabitacionesReservadas(unHotel, dniIngresado);
-        if(existeHab == null)
-        {
-            System.out.println("No hay ninguna habitacion reservada a su nombre.");
-        }else
-        {
-            existeHab.datosReserva();
-            int cantDias = (int) ChronoUnit.DAYS.between(existeHab.getFechaFinReserva(), existeHab.getFechaInicioReserva());
-            cantDias = cantDias* (-1);
-            double senia = (existeHab.getPrecio()*cantDias) *0.20 ;
-            Cliente clienteHab = unHotel.listaClientes.obtener(existeHab.getOcupante());
-            clienteHab.setSaldo(clienteHab.getSaldo() + senia);
-            System.out.println("Se le ha devuelto los $" + senia + " de la senia.");
+        int dniIngresado = validarDNI();
+        Cliente auxCliente = existeCliente(dniIngresado, unHotel);
 
-            existeHab.setEstado(Habitacion.Estado.DISPONIBLE);
-            existeHab.setOcupante(null);
-            existeHab.setFechaInicioReserva(null);
-            existeHab.setFechaFinReserva(null);
-            System.out.println(".... La cancelacion de la reserva se hizo exitosamente! ....");
-            System.out.println(existeHab);
-            System.out.println("Estado Hab: " + existeHab.getEstado());
-            if(existeHab.getOcupante() == null)
+        if(auxCliente != null)
+        {
+            int dimension = auxCliente.listaReservadas.tamanio();
+            if(dimension > 0)
             {
-                System.out.println("Ocupante: NULL");
+                /** ELIGE LA HABITACION A LA QUE QUIERE HACER UN CHECKOUT **/
+                Habitacion existeHab = mostrarHabitacionesReservadasYValidar(auxCliente, unHotel);
+                System.out.println("Eliminando Reserva del Sistema....");
+                int cantDias = (int) ChronoUnit.DAYS.between(existeHab.getFechaFinReserva(), existeHab.getFechaInicioReserva());
+                cantDias = cantDias* (-1);
+                double senia = (existeHab.getPrecio()*cantDias) *0.20 ;
+                Cliente clienteHab = unHotel.listaClientes.obtener(existeHab.getOcupante());
+                clienteHab.setSaldo(clienteHab.getSaldo() + senia);
+
+                existeHab.setEstado(Habitacion.Estado.DISPONIBLE);
+                existeHab.setOcupante(null);
+                existeHab.setFechaInicioReserva(null);
+                existeHab.setFechaFinReserva(null);
+                pausa(1000);
+                System.out.println("...");
+                pausa(1000);
+                System.out.println("...");
+                pausa(1000);
+                System.out.println("...");
+                pausa(1000);
+                System.out.println(".... La cancelacion de la reserva se realizo exitosamente! ....");
+                System.out.println("Se le ha devuelto los $" + senia + " de la senia.");
+                System.out.println("Datos actalzados de la Habitacion: ");
+                System.out.println(existeHab);
+                System.out.println("Estado Hab: " + existeHab.getEstado());
+                if(existeHab.getOcupante() == null)
+                {
+                    System.out.println("Ocupante: NULL");
+                }else
+                {
+                    System.out.println(existeHab.getOcupante().toString());
+                    System.out.println("Saldo Ocupante Hab: " + existeHab.getOcupante().getSaldo());
+                }
             }else
             {
-                System.out.println(existeHab.getOcupante().toString());
-                System.out.println("Saldo Ocupante Hab: " + existeHab.getOcupante().getSaldo());
+                System.out.println("Usted no esta reservando ninguna habitacion en este hotel");
             }
+        }else
+        {
+            System.out.println("El DNI ingresado no corresponde a ningun cliente en nuestro sistema");
         }
     }
 
@@ -422,7 +463,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                 System.out.println("Usted no tiene el saldo suficiente para pagar la habitacion. Cargue saldo a su cuenta a continuacion: ");
                 System.out.println("Precio senia: $" + nuevoPrecio);
                 System.out.println("Saldo Actual: $" + aux.getSaldo());
-                System.out.println("Ingrese la cantidad a cargar: ");
+                System.out.print("\nIngrese la cantidad a cargar: ");
                 aux.setSaldo(aux.getSaldo() + teclado.nextDouble());
             }while(aux.getSaldo() < nuevoPrecio);
         }
@@ -438,8 +479,12 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
             {
                 if(LocalDate.now().isEqual(auxHab.getFechaInicioReserva()) || (LocalDate.now().isAfter(auxHab.getFechaInicioReserva()) && LocalDate.now().isBefore(auxHab.getFechaFinReserva())))
                 {
-                    auxHab.setEstado(Habitacion.Estado.OCUPADO); /** CAMBIO EL ESTADO DE "RESERVADO" A "OCUPADO" **/
-                    auxHab.getOcupante().agregar(auxHab); /** AGREGO LA HABITACION A LA LISTA DE HABITACIONES **/
+                    /** CAMBIO EL ESTADO DE "RESERVADO" A "OCUPADO" **/
+                    auxHab.setEstado(Habitacion.Estado.OCUPADO);
+                    /** ELIMINO LA HABITACION DE LA LISTA DE RESERVAS Y LA ANIADO EN LA LISTA DE OCUPADAS **/
+                    auxHab.getOcupante().listaReservadas.eliminar(auxHab);
+                    /** AGREGO LA HABITACION A LA LISTA DE HABITACIONES OCUPADAS **/
+                    auxHab.getOcupante().agregarOcupada(auxHab);
                 }
             }else if(auxHab.getFechaFinReserva() != null && auxHab.getFechaInicioReserva() == null)
             {
@@ -484,12 +529,12 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
         }
         return encontrado;
     }
-    public Habitacion buscarHabitacionesReservadas(Hotel unHotel, int dniIngresado) /** POR ID HABITACIONES RESERVADAS **/
+    public Habitacion buscarHabitacionesReservadas(Hotel unHotel, Cliente cliente, int idHabitacion) /** POR ID HABITACIONES RESERVADAS **/
     {
         Habitacion encontrado = null;
         for(Habitacion auxHab : unHotel.listaHabitaciones)
         {
-            if(auxHab.getEstado() == Habitacion.Estado.RESERVADO && auxHab.getOcupante().getDni() == dniIngresado)
+            if(auxHab.getEstado() == Habitacion.Estado.RESERVADO && auxHab.getOcupante().equals(cliente) && idHabitacion == auxHab.getId())
             {
                 encontrado = auxHab;
             }
@@ -568,7 +613,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                     System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.println("Realice su eleccion: ");
+                        System.out.print("\nRealice su eleccion: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)
@@ -584,7 +629,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                     System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.println("Realice su eleccion: ");
+                        System.out.print("\nRealice su eleccion: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)
@@ -599,7 +644,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                     System.out.println("\n0- Volver");
                     do
                     {
-                        System.out.println("Realice su eleccion: ");
+                        System.out.print("\nRealice su eleccion: ");
                         seleccion = teclado.nextInt();
                         teclado.nextLine();
                         if(seleccion != 0)
@@ -616,7 +661,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
                         System.out.println("\n0- Volver");
                         do
                         {
-                            System.out.println("Realice su eleccion: ");
+                            System.out.print("\nRealice su eleccion: ");
                             seleccion = teclado.nextInt();
                             teclado.nextLine();
                             if(seleccion != 0)

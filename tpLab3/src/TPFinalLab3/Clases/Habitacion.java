@@ -143,7 +143,7 @@ public class Habitacion implements Serializable
         int cantDias = (int) ChronoUnit.DAYS.between(this.getFechaFinReserva(), this.getFechaInicioReserva());
         cantDias = cantDias * (-1);
         double nuevoPrecio = cantDias*precio;
-        System.out.println("Precio: " + nuevoPrecio);
+        System.out.println("Precio: $" + nuevoPrecio);
         System.out.println("Descripcion: " + descripcion);
         System.out.println(this.getOcupante().toString());
         System.out.println("Fecha inicio Reserva: " + fechaInicioReserva);
@@ -152,9 +152,28 @@ public class Habitacion implements Serializable
         System.out.println("Estado: " + estado.getAbreviatura());
         System.out.println("----------------------");
     }
-    public void datosHabitacion()
+    public void datosHabitacionReserva()
     {
         System.out.println("----------------------");
+        System.out.println("DATOS RESERVA");
+        System.out.println("----------------------");
+        System.out.println("Num Habitacion: " + id);
+        int cantDias = (int) ChronoUnit.DAYS.between(this.getFechaFinReserva(), this.getFechaInicioReserva());
+        cantDias = cantDias * (-1);
+        double nuevoPrecio = cantDias*precio;
+        System.out.println("Precio: $" + nuevoPrecio);
+        System.out.println("Descripcion: " + descripcion);
+        //System.out.println(this.getOcupante().toString());
+        System.out.println("Fecha inicio Reserva: " + fechaInicioReserva);
+        System.out.println("Fecha Fin Reserva: " + fechaFinReserva);
+        System.out.println("Total de Dias: " + cantDias);
+        System.out.println("Estado: " + estado.getAbreviatura());
+        System.out.println("----------------------");
+    }
+
+    public void datosHabitacion()
+    {
+        System.out.println("\n\n----------------------");
         System.out.println("DATOS HABITACION");
         System.out.println("----------------------");
         System.out.println("Num Habitacion: " + id);

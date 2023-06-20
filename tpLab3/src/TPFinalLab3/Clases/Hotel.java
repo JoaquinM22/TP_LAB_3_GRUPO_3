@@ -131,38 +131,38 @@ public class Hotel implements Serializable
     public void mostrarHabitacionesOrdenado()
     {
         System.out.println("HABITACIONES DISPONIBLES:");
-        for(Habitacion aux : listaHabitaciones)
+        for(Habitacion auxHab : listaHabitaciones)
         {
-            if(aux.getEstado() == Habitacion.Estado.DISPONIBLE)
+            if(auxHab.getEstado() == Habitacion.Estado.DISPONIBLE)
             {
-                aux.datosHabitacion();
+                auxHab.datosHabitacion();
             }
         }
 
-        System.out.println("\n\nHABITACIONES OCUPADAS:");
-        for(Habitacion aux : listaHabitaciones)
+        System.out.println("\n\n\nHABITACIONES OCUPADAS:");
+        for(Habitacion auxHab : listaHabitaciones)
         {
-            if(aux.getEstado() == Habitacion.Estado.OCUPADO)
+            if(auxHab.getEstado() == Habitacion.Estado.OCUPADO)
             {
-                aux.datosHabitacion();
+                auxHab.datosHabitacion();
             }
         }
 
-        System.out.println("\n\nHABITACIONES RESERVADAS:");
-        for(Habitacion aux : listaHabitaciones)
+        System.out.println("\n\n\nHABITACIONES RESERVADAS:");
+        for(Habitacion auxHab : listaHabitaciones)
         {
-            if(aux.getEstado() == Habitacion.Estado.RESERVADO)
+            if(auxHab.getEstado() == Habitacion.Estado.RESERVADO)
             {
-                aux.datosHabitacion();
+                auxHab.datosHabitacion();
             }
         }
 
-        System.out.println("\n\nHABITACIONES EN MANTENIMIENTO:");
-        for(Habitacion aux : listaHabitaciones)
+        System.out.println("\n\n\nHABITACIONES EN MANTENIMIENTO:");
+        for(Habitacion auxHab : listaHabitaciones)
         {
-            if(aux.getEstado() == Habitacion.Estado.MANTENIMIENTO)
+            if(auxHab.getEstado() == Habitacion.Estado.MANTENIMIENTO)
             {
-                aux.datosHabitacion();
+                auxHab.datosHabitacion();
             }
         }
     }
