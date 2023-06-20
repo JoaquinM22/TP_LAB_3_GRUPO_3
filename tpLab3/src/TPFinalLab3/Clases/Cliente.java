@@ -55,6 +55,7 @@ public class Cliente extends Persona implements CargarDinero, Serializable
         this.listaReservadas = listaReservadas;
     }
 
+
     /** GETTERS **/
     public double getSaldo()
     {
@@ -73,6 +74,7 @@ public class Cliente extends Persona implements CargarDinero, Serializable
         return listaReservadas;
     }
 
+
     /** METODOS **/
     @Override
     public String toString()
@@ -90,6 +92,8 @@ public class Cliente extends Persona implements CargarDinero, Serializable
         System.out.println("Su saldo actual es de $" + this.saldo + " pesos.");
     }
 
+
+    /** Funciones que trabajan con habitaciones **/
     public void agregarOcupada(Habitacion habitacion)
     {
         listaOcupadas.agregar(habitacion);
@@ -104,10 +108,6 @@ public class Cliente extends Persona implements CargarDinero, Serializable
         listaOcupadas.eliminar(habitacion);
     }
 
-    public int tamanio()
-    {
-        return listaOcupadas.tamanio();
-    } /**  **/
     public void mostrarMisHabitaciones() /** MUESTRA TODAS LAS HABITACIONES OCUPADAS A MI NOMBRE **/
     {
         for(Habitacion hab : this.listaOcupadas)
@@ -122,6 +122,9 @@ public class Cliente extends Persona implements CargarDinero, Serializable
             System.out.println(hab.toString());
         }
     }
+
+
+    /** Funciones del saldo del cliente **/
     public void cargarSaldoCliente() /** CARGA SALDO A MI CUENTA **/
     {
         double monto;
@@ -163,6 +166,9 @@ public class Cliente extends Persona implements CargarDinero, Serializable
             }while(aux.getSaldo() < precio);
         }
     }
+
+
+    /** Compra comida o bebida **/
     public void realizarConsumo()
     {
         System.out.println("Que consumo desea realizar?");
@@ -170,7 +176,7 @@ public class Cliente extends Persona implements CargarDinero, Serializable
         System.out.println("2- Comprar comida: $1200");
         System.out.println("3- Comprar comida y Bebida: $1800");
         System.out.println("\n0- Cancelar");
-        int seleccion = -1;
+        int seleccion;
         do
         {
             System.out.print("\nIngrese el numero referente a la accion: ");
@@ -192,16 +198,14 @@ public class Cliente extends Persona implements CargarDinero, Serializable
         {
             cargarSaldo(this, 1200);
             this.setSaldo(this.getSaldo() - 1200);
-        }else if(seleccion == 3)
+        }else
         {
             cargarSaldo(this, 1800);
             this.setSaldo(this.getSaldo() - 1800);
         }
 
-        if(seleccion >= 1 || seleccion <= 3)
-        {
-            this.setConsumi(true);
-        }
+        this.setConsumi(true);
+
         pausa(1000);
         System.out.println("...");
         pausa(1000);
@@ -436,15 +440,8 @@ public class Cliente extends Persona implements CargarDinero, Serializable
                     }
                 }while(seleccion != 0);
             }
-            case 0 ->
-            {
-                System.out.println("\nVolviendo al inicio...");
-            }
-            default ->
-            {
-                System.out.println("Opcion invalida. Intente de nuevo");
-                seleccion = -1;
-            }
+            case 0 -> System.out.println("\nVolviendo al inicio...");
+            default -> System.out.println("Opcion invalida. Intente de nuevo");
         }
     }
 }

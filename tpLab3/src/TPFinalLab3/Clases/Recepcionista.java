@@ -266,13 +266,13 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
     private Habitacion validarID(Cliente aux, Hotel datos)
     {
         Habitacion existeHab;
-        int id = 0;
+        int idRetirar;
         do
         {
             System.out.println("A continuacion se muestran las Habitaciones que usted actualmente ocupa:");
             aux.mostrarMisHabitaciones();
             System.out.print("\nIngrese el ID de la habitacion que se retira: ");
-            int idRetirar = teclado.nextInt();
+            idRetirar = teclado.nextInt();
             existeHab = buscarHabitacionOcupada(datos, aux, idRetirar);
             if(existeHab == null)
             {
@@ -285,13 +285,13 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
     private Habitacion mostrarHabitacionesReservadasYValidar(Cliente auxCliente, Hotel datos)
     {
         Habitacion existeHab;
-        int id = 0;
+        int idCancelar;
         do
         {
             System.out.println("A continuacion se muestran las Habitaciones que usted tiene Reservadas:");
             auxCliente.mostrarMisHabitacionesReservadas();
             System.out.print("\nIngrese el ID de la habitacion que desea cancelar la Reserva: ");
-            int idCancelar = teclado.nextInt();
+            idCancelar = teclado.nextInt();
             existeHab = buscarHabitacionesReservadas(datos, auxCliente, idCancelar);
 
             if(existeHab == null)
@@ -582,7 +582,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
 
 
 
-    /** METODOD PAUSA **/
+    /** METODO PAUSA **/
     public static void pausa(int miliseg)
     {
         try

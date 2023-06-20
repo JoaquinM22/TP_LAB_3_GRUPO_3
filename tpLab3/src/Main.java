@@ -8,60 +8,51 @@ public class Main
 {
     public static void main(String[] args)
     {
-        Habitacion unaHab1 = new Habitacion(1, 35000, "Habitacion con 2 camas y un baño");
-        Habitacion unaHab2 = new Habitacion(2, 40000, "Habitacion con 3 camas y un baño");
-        Habitacion unaHab3 = new Habitacion(3, 20000, "Habitacion con una cama y un baño");
-        Habitacion unaHab4 = new Habitacion(4, 50000, "Habitacion con 3 cama, un baño y un jacuzzi");
-        Habitacion unaHab5 = new Habitacion(5, 30000, "Habitacion con 1 cama matrimonial y un baño");
-        Habitacion unaHab6 = new Habitacion(6, 40000, "Habitacion con 2 camas matrimoniales y un baño");
-        Habitacion unaHab7 = new Habitacion(7, 55000, "Habitacion con 3 camas matrimoniales y un baño");
-        Habitacion unaHab8 = new Habitacion(8, 55000, "Habitacion con 3 camas matrimoniales, un baño y un jacuzzi");
-        Habitacion unaHab9 = new Habitacion(9, 60000, "Habitacion con 3 camas matrimoniales, una cama idividual, un baño y un jacuzzi");
-        Habitacion unaHab10 = new Habitacion(10, 70000, "Habitacion con 3 camas matrimoniales, 2 camas idividuales, un baño y un jacuzzi");
-
-
-        Recepcionista unRecepcionista = new Recepcionista("Mario Rodriguez", "Luro 1648", 22345164, "recepcionista123", 150000);
-        Administrador unAdministrador = new Administrador("Maria Gutierrez", "Constitucion 5643", 21785124, "admin123", 300000);
-
-
-        Hotel unHotel = new Hotel("CostaGalana");
-        unHotel.agregarEmpleado(unRecepcionista);
-        unHotel.agregarEmpleado(unAdministrador);
-
-        unHotel.agregarHabitacion(unaHab1);
-        unHotel.agregarHabitacion(unaHab2);
-        unHotel.agregarHabitacion(unaHab3);
-        unHotel.agregarHabitacion(unaHab4);
-        unHotel.agregarHabitacion(unaHab5);
-        unHotel.agregarHabitacion(unaHab6);
-        unHotel.agregarHabitacion(unaHab7);
-        unHotel.agregarHabitacion(unaHab8);
-        unHotel.agregarHabitacion(unaHab9);
-        unHotel.agregarHabitacion(unaHab10);
-
-        /** ESCRIBIR ARCHIVO HOTEL **/
-//        try
-//        {
-//            guardarArchivoHotel(unHotel);
-//        }catch(ErrorEnArchivoException e)
-//        {
-//            throw new RuntimeException(e);
-//        }
+//        Habitacion unaHab1 = new Habitacion(1, 35000, "Habitacion con 2 camas y un baño");
+//        Habitacion unaHab2 = new Habitacion(2, 40000, "Habitacion con 3 camas y un baño");
+//        Habitacion unaHab3 = new Habitacion(3, 20000, "Habitacion con una cama y un baño");
+//        Habitacion unaHab4 = new Habitacion(4, 50000, "Habitacion con 3 cama, un baño y un jacuzzi");
+//        Habitacion unaHab5 = new Habitacion(5, 30000, "Habitacion con 1 cama matrimonial y un baño");
+//        Habitacion unaHab6 = new Habitacion(6, 40000, "Habitacion con 2 camas matrimoniales y un baño");
+//        Habitacion unaHab7 = new Habitacion(7, 55000, "Habitacion con 3 camas matrimoniales y un baño");
+//        Habitacion unaHab8 = new Habitacion(8, 55000, "Habitacion con 3 camas matrimoniales, un baño y un jacuzzi");
+//        Habitacion unaHab9 = new Habitacion(9, 60000, "Habitacion con 3 camas matrimoniales, una cama idividual, un baño y un jacuzzi");
+//        Habitacion unaHab10 = new Habitacion(10, 70000, "Habitacion con 3 camas matrimoniales, 2 camas idividuales, un baño y un jacuzzi");
+//
+//
+//        Recepcionista unRecepcionista = new Recepcionista("Mario Rodriguez", "Luro 1648", 22345164, "recepcionista123", 150000);
+//        Administrador unAdministrador = new Administrador("Maria Gutierrez", "Constitucion 5643", 21785124, "admin123", 300000);
+//
+//
+//        Hotel unHotel = new Hotel("CostaGalana");
+//        unHotel.agregarEmpleado(unRecepcionista);
+//        unHotel.agregarEmpleado(unAdministrador);
+//
+//        unHotel.agregarHabitacion(unaHab1);
+//        unHotel.agregarHabitacion(unaHab2);
+//        unHotel.agregarHabitacion(unaHab3);
+//        unHotel.agregarHabitacion(unaHab4);
+//        unHotel.agregarHabitacion(unaHab5);
+//        unHotel.agregarHabitacion(unaHab6);
+//        unHotel.agregarHabitacion(unaHab7);
+//        unHotel.agregarHabitacion(unaHab8);
+//        unHotel.agregarHabitacion(unaHab9);
+//        unHotel.agregarHabitacion(unaHab10);
 
 
         /** LEER ARCHIVO HOTEL **/
-//        Hotel unHotel;
-//        try
-//        {
-//            unHotel = leerArchivoHotel();
+        Hotel unHotel;
+        try
+        {
+            unHotel = leerArchivoHotel();
 //            if(unHotel != null)
 //            {
-//                //unHotel.datosHotel();
+//                unHotel.datosHotel();
 //            }
-//        }catch(ErrorEnArchivoException e)
-//        {
-//            throw new RuntimeException(e);
-//        }
+        }catch(ErrorEnArchivoException e)
+        {
+            throw new RuntimeException(e);
+        }
 
 //        unHotel.datosHotel();
 //        unRecepcionista.hacerReserva(unHotel);
@@ -80,6 +71,7 @@ public class Main
         Scanner teclado = new Scanner(System.in);
         int seleccion;
         char confirmacion;
+
 
         do
         {
@@ -108,27 +100,25 @@ public class Main
             }else
             {
                 System.out.println("\nOpcion invalida. Intente de nuevo.");
-                System.out.println("\n0- Volver");
-                do
-                {
-                    System.out.print("\nRealice su eleccion: ");
-                    seleccion = teclado.nextInt();
-                    teclado.nextLine();
-                    if(seleccion != 0)
-                    {
-                        System.out.println("Opcion invalida. Intente de nuevo");
-                    }
-                }while(seleccion != 0);
-                seleccion = -1;
             }
         }while(seleccion != 0);
+
+
+        //Se guardan los datos del Hotel en el archivo
+        try
+        {
+            guardarArchivoHotel(datos);
+        }catch(ErrorEnArchivoException e)
+        {
+            throw new RuntimeException(e);
+        }
+
         teclado.close();
     }
     private static void menus_especificos(Scanner teclado, int ref, Hotel datos)
     {
-        int seleccion = ref;
 
-        switch(seleccion)
+        switch(ref)
         {
             case 1 -> /** ADMINISTRADOR **/
             {
@@ -138,7 +128,7 @@ public class Main
                     System.out.println("La contrasenia es incorrecta");
                 }else
                 {
-                    seleccion = menuAdministrador(teclado, (Administrador) empleado, datos);
+                    menuAdministrador(teclado, (Administrador) empleado, datos);
                 }
 
             }
@@ -150,7 +140,7 @@ public class Main
                     System.out.println("La contrasenia es incorrecta");
                 }else
                 {
-                    seleccion = menuRecepcionista(teclado, (Recepcionista) empleado, datos);
+                    menuRecepcionista(teclado, (Recepcionista) empleado, datos);
                 }
             }
             case 3 ->/** CLIENTE **/
@@ -162,7 +152,7 @@ public class Main
             default -> System.out.println("Opcion invalida. Intente de nuevo");
         }
     }
-    private static int menuRecepcionista(Scanner teclado, Recepcionista empleado, Hotel datos)
+    private static void menuRecepcionista(Scanner teclado, Recepcionista empleado, Hotel datos)
     {
         int seleccionado;
 
@@ -193,9 +183,8 @@ public class Main
 
         }while (seleccionado != 0);
 
-        return seleccionado;
     }
-    private static int menuAdministrador(Scanner teclado, Administrador empleado, Hotel datos)
+    private static void menuAdministrador(Scanner teclado, Administrador empleado, Hotel datos)
     {
         int seleccionado;
 
@@ -216,13 +205,14 @@ public class Main
                 System.out.println("10- Realizar backUp");
                 System.out.println("11- Leer Archivo Registros");
                 System.out.println("12- Conceder permisos a Recepcionista");
+                System.out.println("13- Ver datos del hotel");
                 System.out.println("\n0- Volver");
 
                 System.out.print("\nRealice su eleccion: ");
                 seleccionado = teclado.nextInt();
                 teclado.nextLine();
 
-                if(seleccionado > 12 || seleccionado < 0)
+                if(seleccionado > 13 || seleccionado < 0)
                 {
                     System.out.println("\nOpcion invalida. Intente de nuevo");
 
@@ -231,13 +221,12 @@ public class Main
                     empleado.accionesAdmin(teclado, seleccionado, datos);
                 }
 
-            }while(seleccionado > 12 || seleccionado < 0);
+            }while(seleccionado > 13 || seleccionado < 0);
 
         }while (seleccionado != 0);
 
-        return seleccionado;
     }
-    private static int menuCliente(Scanner teclado, Cliente unCliente, Hotel datos)
+    private static void menuCliente(Scanner teclado, Cliente unCliente, Hotel datos)
     {
         int seleccionado;
 
@@ -245,6 +234,9 @@ public class Main
         {
             do
             {
+                Recepcionista aux = datos.retornarRecepcionista();
+                aux.checkearReservas(datos);
+
                 System.out.println("1- Hacer ChekIn");
                 System.out.println("2- Hacer Reserva");
                 System.out.println("3- Cancelar Reserva");
@@ -274,7 +266,6 @@ public class Main
 
         }while (seleccionado != 0);
 
-        return seleccionado;
     }
 
 

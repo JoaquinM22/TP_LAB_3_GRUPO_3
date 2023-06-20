@@ -84,25 +84,13 @@ public class Hotel implements Serializable
 
 
     /** METODOS **/
-    public void agregarCliente(Cliente cliente)
-    {
-        listaClientes.agregar(cliente);
-    }
-    public void agregarEmpleado(Persona empleado)
-    {
-        listaEmpleados.agregar(empleado);
-    }
-    public void agregarHabitacion(Habitacion habitacion)
-    {
-        listaHabitaciones.agregar(habitacion);
-    }
     public void agregarRegistro(Registro registro)
     {
         listaRegistro.agregar(registro);
     }
 
 
-
+    /** METODOS QUE MUESTRAN DATOS **/
     public void mostrarEmpleados()
     {
         listaEmpleados.listar();
@@ -171,19 +159,19 @@ public class Hotel implements Serializable
         listaRegistro.listar();
     }
 
-    public Registro buscarRegistro(int dniBuscado)
-    {
-        Registro encontrado = null;
-
-        for(Registro aux: listaRegistro)
-        {
-            if(aux.getOcupante().getDni() == dniBuscado)
-            {
-                encontrado = aux;
-            }
-        }
-        return encontrado;
-    }
+//    public Registro buscarRegistro(int dniBuscado)
+//    {
+//        Registro encontrado = null;
+//
+//        for(Registro aux: listaRegistro)
+//        {
+//            if(aux.getOcupante().getDni() == dniBuscado)
+//            {
+//                encontrado = aux;
+//            }
+//        }
+//        return encontrado;
+//    }
 
 
     public void datosHotel()
@@ -198,6 +186,8 @@ public class Hotel implements Serializable
         mostrarHabitaciones();
         System.out.println("-------------------------");
     }
+
+    /** RETORNAN UN EMPLEADO DEL SISTEMA**/
     public Administrador retornarAdministrador()
     {
         Administrador admin = null;

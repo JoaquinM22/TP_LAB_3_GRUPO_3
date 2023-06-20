@@ -19,6 +19,7 @@ public class Habitacion implements Serializable
     private LocalDate fechaInicioReserva = null;
     private LocalDate fechaFinReserva = null;
 
+    /** Enum que indica el estado de la habitacion **/
     public enum Estado
     {
         /** ATRIBUTOS **/
@@ -121,7 +122,7 @@ public class Habitacion implements Serializable
 
 
 
-    /** METODOS **/
+    /** METODOS PARA MOSTRAR DATOS**/
     @Override
     public String toString()
     {
@@ -146,24 +147,6 @@ public class Habitacion implements Serializable
         System.out.println("Precio: $" + nuevoPrecio);
         System.out.println("Descripcion: " + descripcion);
         System.out.println(this.getOcupante().toString());
-        System.out.println("Fecha inicio Reserva: " + fechaInicioReserva);
-        System.out.println("Fecha Fin Reserva: " + fechaFinReserva);
-        System.out.println("Total de Dias: " + cantDias);
-        System.out.println("Estado: " + estado.getAbreviatura());
-        System.out.println("----------------------");
-    }
-    public void datosHabitacionReserva()
-    {
-        System.out.println("----------------------");
-        System.out.println("DATOS RESERVA");
-        System.out.println("----------------------");
-        System.out.println("Num Habitacion: " + id);
-        int cantDias = (int) ChronoUnit.DAYS.between(this.getFechaFinReserva(), this.getFechaInicioReserva());
-        cantDias = cantDias * (-1);
-        double nuevoPrecio = cantDias*precio;
-        System.out.println("Precio: $" + nuevoPrecio);
-        System.out.println("Descripcion: " + descripcion);
-        //System.out.println(this.getOcupante().toString());
         System.out.println("Fecha inicio Reserva: " + fechaInicioReserva);
         System.out.println("Fecha Fin Reserva: " + fechaFinReserva);
         System.out.println("Total de Dias: " + cantDias);

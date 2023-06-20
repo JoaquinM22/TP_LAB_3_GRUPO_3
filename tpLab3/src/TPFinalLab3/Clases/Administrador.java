@@ -131,6 +131,8 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
             throw new ErrorEnArchivoException(1);
         }
     }
+
+    /** Lee el archivo de registros **/
     private static ColeccionGenerica<Registro> leerArchivoRegistros() throws ErrorEnArchivoException
     {
         ColeccionGenerica<Registro> listaRegistros = null;
@@ -155,7 +157,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
 
 
 
-
+    /** Metodos de validacion **/
     @Override
     public double validarImporte()
     {
@@ -239,7 +241,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
             datos.listaEmpleados.agregar(auxRecepcionista);
             System.out.println("... LOS DATOS SE GUARDARON CORRECTAMENTE ...");
             System.out.println("Datos Recepcionista Creado:");
-            System.out.println(auxRecepcionista.toString());
+            System.out.println(auxRecepcionista);
             pausa(3000);
         }else
         {
@@ -272,36 +274,37 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
             pausa(1000);
             System.out.println("... LOS DATOS SE ACTUALIZARON CORRECTAMENTE ...");
             System.out.println("Datos actualizados Recepcionista:");
-            System.out.println(auxRecepcionista.toString());
+            System.out.println(auxRecepcionista);
             pausa(3000);
         }else
         {
             System.out.println("El Recepcionista no existe.");
         }
     }
-    public void eliminarRecepcionista(Hotel datos)
-    {
-        int dni = validarDNI();
-        Recepcionista aux = existeRecepcionista(dni, datos);
-
-        if(aux != null)
-        {
-            System.out.println("A continuacion se muestran los datos del Recepcionista: \n");
-            System.out.println(aux);
-            System.out.println("Borrando Recepcionista ...");
-            pausa(1000);
-            System.out.println("....");
-            pausa(1000);
-            System.out.println("....");
-            pausa(1000);
-            System.out.println("....");
-            pausa(1000);
-            System.out.println("... El Recepcionista a sido borrado correctamente ...");
-        }else
-        {
-            System.out.println("El Recepcionista no existe.");
-        }
-    }
+//    public void eliminarRecepcionista(Hotel datos)
+//    {
+//        int dni = validarDNI();
+//        Recepcionista aux = existeRecepcionista(dni, datos);
+//
+//        if(aux != null)
+//        {
+//            System.out.println("A continuacion se muestran los datos del Recepcionista: \n");
+//            System.out.println(aux);
+//            //Falta que elimine el recepcionista
+//            System.out.println("Borrando Recepcionista ...");
+//            pausa(1000);
+//            System.out.println("....");
+//            pausa(1000);
+//            System.out.println("....");
+//            pausa(1000);
+//            System.out.println("....");
+//            pausa(1000);
+//            System.out.println("... El Recepcionista a sido borrado correctamente ...");
+//        }else
+//        {
+//            System.out.println("El Recepcionista no existe.");
+//        }
+//    }
     public void modificarHabitacion(Hotel datos)
     {
         Recepcionista auxRecepcionista = datos.retornarRecepcionista();
@@ -351,7 +354,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
         }else if(num == 3)
         {
             existeHab.setEstado(Habitacion.Estado.RESERVADO);
-        }else if(num == 4)
+        }else
         {
             existeHab.setEstado(Habitacion.Estado.MANTENIMIENTO);
         }
@@ -366,7 +369,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
         pausa(1000);
         System.out.println("... LOS DATOS SE ACTUALIZARON CORRECTAMENTE ...");
         System.out.println("Datos actualizados Habitacion: ");
-        System.out.println(existeHab.toString());
+        System.out.println(existeHab);
         pausa(3000);
     }
     public void agregarHabitacion(Hotel datos)
@@ -416,7 +419,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
         datos.listaHabitaciones.agregar(nuevaHabitacion);
         System.out.println("... LOS DATOS SE GUARDARON CORRECTAMENTE ...");
         System.out.println("Datos Habitacion Creada:");
-        System.out.println(nuevaHabitacion.toString());
+        System.out.println(nuevaHabitacion);
         pausa(3000);
     }
 
@@ -630,12 +633,23 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                         }
                     }while(seleccion != 0);
                 }
-                case 0 -> System.out.println("\nVolviendo al inicio...");
-                default ->
+                case 13 -> /** MOSTRAR DATOS HOTEL **/
                 {
-                    System.out.println("Opcion invalida. Intente de nuevo");
-                    seleccion = -1;
+                    datos.datosHotel();
+                    System.out.println("\n0- Volver");
+                    do
+                    {
+                        System.out.print("\nRealice su eleccion: ");
+                        seleccion = teclado.nextInt();
+                        teclado.nextLine();
+                        if(seleccion != 0)
+                        {
+                            System.out.println("Opcion invalida. Intente de nuevo");
+                        }
+                    }while(seleccion != 0);
                 }
+                case 0 -> System.out.println("\nVolviendo al inicio...");
+                default -> System.out.println("Opcion invalida. Intente de nuevo");
             }
         }catch(ErrorEnArchivoException e)
         {
