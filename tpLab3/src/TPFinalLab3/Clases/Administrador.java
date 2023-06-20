@@ -181,6 +181,8 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
         }while(dni < 1000000);
         return dni;
     }
+
+
     public Recepcionista existeRecepcionista(int dato, Hotel datos)
     {
         Recepcionista encontrado = null;
@@ -207,11 +209,11 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
             aux = new Recepcionista();
             aux.setDni(dni);
 
-            System.out.println("\nIngrese nombre del Recepcionista: ");
+            System.out.print("\nIngrese nombre del Recepcionista: ");
             aux.setNombre(teclado.nextLine());
             teclado.nextLine();
 
-            System.out.println("\nIngrese direccion del Recepcionista: ");
+            System.out.print("\nIngrese direccion del Recepcionista: ");
             aux.setDireccion(teclado.nextLine());
 
             aux.setSueldo(validarImporte());
@@ -269,6 +271,97 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
             System.out.println("El Recepcionista no existe.");
         }
     }
+    public void modificarHabitacion(Hotel datos)
+    {
+        Recepcionista auxRecepcionista = datos.retornarRecepcionista();
+        System.out.println("A continuacion se muestran todas las habitaciones: ");
+        datos.mostrarHabitacionesOrdenado();
+        int idIngresado;
+        Habitacion existeHab;
+        do
+        {
+            System.out.print("\nIngrese el ID de la habitacion que desea modificar: ");
+            idIngresado = teclado.nextInt();
+            existeHab = auxRecepcionista.buscarHabitacion(idIngresado, datos.listaHabitaciones);
+            if(existeHab == null)
+            {
+                System.out.println("ID invalido. Intente de nuevo");
+            }
+        }while(existeHab == null);
+
+        System.out.println("A continuacion ingrese los nuevos datos de la Habitacion: ");
+
+        System.out.print("\nIngrese nuevo precio de la habitacion: ");
+        existeHab.setPrecio(teclado.nextDouble());
+        teclado.nextLine();
+
+        System.out.println("\nIngrese nueva descripcion de la habitacion: ");
+        existeHab.setDescripcion(teclado.nextLine());
+
+        System.out.println("\nIngrese nuevo Estado de la habitacion: ");
+        existeHab.setEstado(Habitacion.Estado.valueOf(teclado.nextLine()));
+        teclado.nextLine();
+
+        System.out.println("Modificando datos ...");
+        pausa(1000);
+        System.out.println("...");
+        pausa(1000);
+        System.out.println("...");
+        pausa(1000);
+        System.out.println("...");
+        pausa(1000);
+        System.out.println("... Los datos se han actualizado correctamente ...");
+        System.out.println("Habitacion con datos actualizados: ");
+        System.out.println(existeHab.toString());
+    }
+    public void agregarHabitacion(Hotel datos)
+    {
+        System.out.println("A continuacion se muestran todas las habitaciones: ");
+        datos.mostrarHabitacionesOrdenado();
+
+        System.out.println("\nIngrese los datos de la nueva Habitacion: ");
+        Recepcionista auxRecepcionista = datos.retornarRecepcionista();
+
+        int idIngresado;
+        Habitacion nuevaHabitacion;
+        do
+        {
+            System.out.print("\nIngrese el ID de la nueva habitacion: ");
+            idIngresado = teclado.nextInt();
+            nuevaHabitacion = auxRecepcionista.buscarHabitacion(idIngresado, datos.listaHabitaciones);
+            if(nuevaHabitacion != null)
+            {
+                System.out.println("El ID de la Habitacion ya existe. Intente de nuevo");
+            }
+        }while(nuevaHabitacion != null);
+
+        nuevaHabitacion.setId(idIngresado);
+
+        System.out.print("\nIngrese precio nueva Habitacion: ");
+        nuevaHabitacion.setPrecio(teclado.nextDouble());
+        teclado.nextLine();
+
+        nuevaHabitacion.setEstado(Habitacion.Estado.DISPONIBLE);
+
+        System.out.print("\nIngrese descripcion nueva Habitacion: ");
+        nuevaHabitacion.setDescripcion(teclado.nextLine());
+        teclado.nextLine();
+
+        nuevaHabitacion.setOcupante(null);
+        nuevaHabitacion.setFechaInicioReserva(null);
+        nuevaHabitacion.setFechaFinReserva(null);
+        System.out.println("\nAgregando datos al sistema...");
+        pausa(1000);
+        System.out.println("...");
+        pausa(1000);
+        System.out.println("...");
+        pausa(1000);
+        System.out.println("...");
+        pausa(1000);
+        datos.listaHabitaciones.agregar(nuevaHabitacion);
+        System.out.println("... LOS DATOS SE GUARDARON CORRECTAMENTE ...");
+        pausa(3000);
+    }
 
 
 
@@ -295,23 +388,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
 
             switch(seleccion)
             {
-                case 1 ->
-                {
-                    System.out.println("Realizando backUp...");
-                    hacerBackUp(datos);
-                    System.out.println("\n0- Volver");
-                    do
-                    {
-                        System.out.println("Realice su eleccion: ");
-                        seleccion = teclado.nextInt();
-                        teclado.nextLine();
-                        if(seleccion != 0)
-                        {
-                            System.out.println("Opcion invalida. Intente de nuevo");
-                        }
-                    }while(seleccion != 0);
-                }
-                case 2 ->
+                case 1 -> /** AGREGAR NUEVO RECEPCIONISTA **/
                 {
                     agregarRecepcionista(datos);
                     System.out.println("\n0- Volver");
@@ -326,7 +403,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                         }
                     }while(seleccion != 0);
                 }
-                case 3 ->
+                case 2 -> /** MODIFICAR DATOS RECEPCIONISTA **/
                 {
                     modificarRecepcionista(datos);
                     System.out.println("\n0- Volver");
@@ -341,39 +418,7 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                         }
                     }while(seleccion != 0);
                 }
-                case 4 ->
-                {
-                    System.out.println("A continuacion se muestran todas las habitaciones: ");
-                    datos.mostrarHabitacionesOrdenado();
-                    System.out.println("\n0- Volver");
-                    do
-                    {
-                        System.out.println("Realice su eleccion: ");
-                        seleccion = teclado.nextInt();
-                        teclado.nextLine();
-                        if(seleccion != 0)
-                        {
-                            System.out.println("Opcion invalida. Intente de nuevo");
-                        }
-                    }while(seleccion != 0);
-                }
-                case 5 ->
-                {
-                    System.out.println("A continuacion se muestran todos los clientes: ");
-                    datos.mostrarClientes();
-                    System.out.println("\n0- Volver");
-                    do
-                    {
-                        System.out.println("Realice su eleccion: ");
-                        seleccion = teclado.nextInt();
-                        teclado.nextLine();
-                        if(seleccion != 0)
-                        {
-                            System.out.println("Opcion invalida. Intente de nuevo");
-                        }
-                    }while(seleccion != 0);
-                }
-                case 6 ->
+                case 3 -> /** MUESTAR TODOS LOS RECEPCIONISTAS DEL SISTEMA **/
                 {
                     System.out.println("A continuacion se muestran todos los Recepcionsitas: ");
                     datos.mostrarRecepcionistas();
@@ -389,9 +434,118 @@ public class Administrador extends Persona implements MetodosValidaciones, Funci
                         }
                     }while(seleccion != 0);
                 }
-                case 7 ->
+                case 4 -> /** MUESTRA TODOS LOS CLIENTES DEL SISTEMA **/
+                {
+                    System.out.println("A continuacion se muestran todos los clientes: ");
+                    datos.mostrarClientes();
+                    System.out.println("\n0- Volver");
+                    do
+                    {
+                        System.out.println("Realice su eleccion: ");
+                        seleccion = teclado.nextInt();
+                        teclado.nextLine();
+                        if(seleccion != 0)
+                        {
+                            System.out.println("Opcion invalida. Intente de nuevo");
+                        }
+                    }while(seleccion != 0);
+                }
+                case 5 -> /** MUESTRA TODAS LAS HABITACIONES **/
+                {
+                    System.out.println("A continuacion se muestran todas las habitaciones: ");
+                    datos.mostrarHabitacionesOrdenado();
+                    System.out.println("\n0- Volver");
+                    do
+                    {
+                        System.out.println("Realice su eleccion: ");
+                        seleccion = teclado.nextInt();
+                        teclado.nextLine();
+                        if(seleccion != 0)
+                        {
+                            System.out.println("Opcion invalida. Intente de nuevo");
+                        }
+                    }while(seleccion != 0);
+                }
+                case 6 -> /** MODIFICAR HABITACION **/
+                {
+                    modificarHabitacion(datos);
+                    System.out.println("\n0- Volver");
+                    do
+                    {
+                        System.out.println("Realice su eleccion: ");
+                        seleccion = teclado.nextInt();
+                        teclado.nextLine();
+                        if(seleccion != 0)
+                        {
+                            System.out.println("Opcion invalida. Intente de nuevo");
+                        }
+                    }while(seleccion != 0);
+                }
+                case 7 -> /** AGREGAR HABITACION **/
+                {
+                    agregarHabitacion(datos);
+                    System.out.println("\n0- Volver");
+                    do
+                    {
+                        System.out.println("Realice su eleccion: ");
+                        seleccion = teclado.nextInt();
+                        teclado.nextLine();
+                        if(seleccion != 0)
+                        {
+                            System.out.println("Opcion invalida. Intente de nuevo");
+                        }
+                    }while(seleccion != 0);
+                }
+                case 8 -> /** CONSULTA EL SUELDO DEL ADMINISTRADOR **/
                 {
                     consultarSueldo();
+                    System.out.println("\n0- Volver");
+                    do
+                    {
+                        System.out.println("Realice su eleccion: ");
+                        seleccion = teclado.nextInt();
+                        teclado.nextLine();
+                        if(seleccion != 0)
+                        {
+                            System.out.println("Opcion invalida. Intente de nuevo");
+                        }
+                    }while(seleccion != 0);
+                }
+                case 9 -> /** VER LISTA DE REGISTROS **/
+                {
+                    datos.mostrarRegistro();
+                    System.out.println("\n0- Volver");
+                    do
+                    {
+                        System.out.println("Realice su eleccion: ");
+                        seleccion = teclado.nextInt();
+                        teclado.nextLine();
+                        if(seleccion != 0)
+                        {
+                            System.out.println("Opcion invalida. Intente de nuevo");
+                        }
+                    }while(seleccion != 0);
+                }
+                case 10 -> /** HACER BACKUP DE LA LISTA DE REGISTROS **/
+                {
+                    System.out.println("Realizando backUp...");
+                    hacerBackUp(datos);
+                    System.out.println("\n0- Volver");
+                    do
+                    {
+                        System.out.println("Realice su eleccion: ");
+                        seleccion = teclado.nextInt();
+                        teclado.nextLine();
+                        if(seleccion != 0)
+                        {
+                            System.out.println("Opcion invalida. Intente de nuevo");
+                        }
+                    }while(seleccion != 0);
+                }
+                case 11 -> /** LEER ARCHIVO REGISTROS **/
+                {
+                    ColeccionGenerica<Registro> listaRetornadaRegistros = leerArchivoRegistros();
+                    listaRetornadaRegistros.listar();
                     System.out.println("\n0- Volver");
                     do
                     {

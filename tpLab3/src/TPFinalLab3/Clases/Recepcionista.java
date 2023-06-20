@@ -225,14 +225,14 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
         Cliente auxCliente = existeCliente(dniIngresado, datos);
         if(auxCliente != null)
         {
-            /** VERIFICA QUE TENGA HABITACIONES OCUPADAS Y NO RESERVADAS **/
-            boolean tiene = validarOcupadas(auxCliente);
-            if(tiene)
+            /** VERIFICA QUE EL CLIENTE TENGA HABITACIONES OCUPADAS Y NO RESERVADAS **/
+            int dimension = auxCliente.listaOcupadas.tamanio();
+            if(dimension > 0)
             {
-                System.out.println("Haciendo ChekOut ...");
-
                 /** ELIGE LA HABITACION A LA QUE QUIERE HACER UN CHECKOUT **/
                 Habitacion existeHab = validarID(auxCliente, datos);
+
+                System.out.println("Haciendo ChekOut ...");
 
                 /** CON UN RANDOM INGRESA CUANTOS DIAS SE HOSPEDO **/
                 int cantDias = (int)(Math.random() * 20 + 1);
@@ -279,9 +279,9 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
         int id = 0;
         do
         {
-            System.out.println("Habitaciones que usted actualmente ocupa");
+            System.out.println("A continuacion se muestran las Habitaciones que usted actualmente ocupa:");
             aux.mostrarMisHabitaciones();
-            System.out.println("Ingrese el ID de la habitacion que se retira");
+            System.out.print("\nIngrese el ID de la habitacion que se retira: ");
             int idRetirar = teclado.nextInt();
             existeHab = buscarHabitacionOcupada(datos, aux, idRetirar);
             if(existeHab == null)
@@ -291,10 +291,6 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
         }while(existeHab == null);
 
         return existeHab;
-    }
-    private boolean validarOcupadas(Cliente aux)
-    {
-        return aux.tamanio() > 0;
     }
     @Override
     public double validarImporte()
@@ -416,7 +412,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
     }
 
     /** SENIA LA HABITACION A RESERVAR **/
-    private void seniarHabitacion(Cliente aux, double precio)
+    public void seniarHabitacion(Cliente aux, double precio)
     {
         double nuevoPrecio = precio*0.20;
         if(aux.getSaldo() < nuevoPrecio)
@@ -475,7 +471,7 @@ public class Recepcionista extends Persona implements CargarDinero, MetodosValid
 
 
     /** METODOS DE BUSQUEDA DE HABITACIONES **/
-    private Habitacion buscarHabitacion(int id, ColeccionGenerica<Habitacion> listaHabitaciones) /** POR ID **/
+    public Habitacion buscarHabitacion(int id, ColeccionGenerica<Habitacion> listaHabitaciones) /** POR ID **/
     {
         Habitacion encontrado = null;
 

@@ -207,20 +207,24 @@ public class Main
             do
             {
                 System.out.println("\nBienvenido al Sistema Administrador " + empleado.getNombre() + "!\n\n");
-                System.out.println("1- Realizar backUp");
-                System.out.println("2- Agregar Recepcionsta");
-                System.out.println("3- Modificar datos Recepcionista");
-                System.out.println("4- Ver Habitaciones");
-                System.out.println("5- Ver Clientes");
-                System.out.println("6- Ver Recepcionistas");
-                System.out.println("7- Consultar Sueldo");
+                System.out.println("1- Agregar Recepcionsta");
+                System.out.println("2- Modificar datos Recepcionista");
+                System.out.println("3- Ver Recepcionistas");
+                System.out.println("4- Ver Clientes");
+                System.out.println("5- Ver Habitaciones");
+                System.out.println("6- Modificar Datos Habitaciones");
+                System.out.println("7- Agregar Habitacione");
+                System.out.println("8- Consultar Sueldo");
+                System.out.println("9- Ver Registros");
+                System.out.println("10- Realizar backUp");
+                System.out.println("11- Leer Archivo Registros");
                 System.out.println("\n0- Volver");
 
                 System.out.println("\nRealice su eleccion: ");
                 seleccionado = teclado.nextInt();
                 teclado.nextLine();
 
-                if(seleccionado > 7 || seleccionado < 0)
+                if(seleccionado > 11 || seleccionado < 0)
                 {
                     System.out.println("\nOpcion invalida. Intente de nuevo");
 
@@ -229,7 +233,7 @@ public class Main
                     empleado.accionesAdmin(teclado, seleccionado, datos);
                 }
 
-            }while(seleccionado > 7 || seleccionado < 0);
+            }while(seleccionado > 11 || seleccionado < 0);
 
         }while (seleccionado != 0);
 

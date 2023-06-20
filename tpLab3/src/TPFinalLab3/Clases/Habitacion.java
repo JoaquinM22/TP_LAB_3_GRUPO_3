@@ -22,10 +22,10 @@ public class Habitacion implements Serializable
     public enum Estado
     {
         /** ATRIBUTOS **/
-        OCUPADO("O"),
-        DISPONIBLE("D"),
-        RESERVADO("R"),
-        MANTENIMIENTO("M");
+        OCUPADO("Ocupado"),
+        DISPONIBLE("Disponible"),
+        RESERVADO("Reservado"),
+        MANTENIMIENTO("Mantenimiento");
 
         private String abreviatura;
 
